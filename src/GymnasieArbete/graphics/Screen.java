@@ -24,7 +24,7 @@ public class Screen {
 		for (int y = 0; y < height; y++) {
 			if (ytime < 0 || ytime >= height) break;
 			for (int x = 0; x < width; x++) {
-				pixels[xtime + ytime * width] = 0xff00ff;
+				pixels[x + y * width] = 0xff00ff;
 			}
 		}
 	}
