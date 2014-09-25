@@ -15,6 +15,7 @@ public class Game extends Canvas implements Runnable {
     public static int width = 300;
     public static int height = width / 16 * 9;
     public static int scale = 3;
+    public static String title = "Game";
    
     private Thread thread;
     private JFrame frame;
@@ -70,6 +71,7 @@ public class Game extends Canvas implements Runnable {
             if(System.currentTimeMillis() - timer > 1000) {
             	timer += 1000;
             	System.out.println(updates + " UPS " + frames + " FPS");
+                frame.setTitle(title + " | " + updates + " UPS " + frames + " FPS");
             	updates = 0;
             	frames = 0;
             }
@@ -105,7 +107,7 @@ public class Game extends Canvas implements Runnable {
         Game game = new Game();
         game.frame.setLayout( new FlowLayout());
         game.frame.setResizable(false);
-        game.frame.setTitle("Game");
+        game.frame.setTitle(title);
         game.frame.add(game);
         game.frame.pack();
         game.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
