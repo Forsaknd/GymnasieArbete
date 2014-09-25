@@ -14,7 +14,11 @@ public class Keyboard implements KeyListener {
 		left = keys[KeyEvent.VK_LEFT] || keys[KeyEvent.VK_A];
 		right = keys[KeyEvent.VK_RIGHT] || keys[KeyEvent.VK_D];
 		
-		System.out.println(up);
+		for (int i = 0; i < keys.length; i++) {
+			if (keys[i]) {
+				System.out.println("KEY PRESSED: " + i);
+			}
+		}
 	}
 	
 	public void keyPressed(KeyEvent e) {
@@ -22,7 +26,7 @@ public class Keyboard implements KeyListener {
 	}
 
 	public void keyReleased(KeyEvent e) {
-		keys[e.getKeyCode()] = true;
+		keys[e.getKeyCode()] = false;
 	}
 
 	public void keyTyped(KeyEvent e) {
