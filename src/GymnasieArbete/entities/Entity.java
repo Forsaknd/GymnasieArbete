@@ -17,5 +17,14 @@ public class Entity {
 
 	public void render(Screen screen) {
 	}
+	
+	public void remove() {
+		//Remove from level
+		removed = true;
+	}
 
+	public boolean isRemoved() {
+		return removed;
+	}
+	
 }
