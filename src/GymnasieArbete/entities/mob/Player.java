@@ -1,5 +1,6 @@
 package GymnasieArbete.entities.mob;
 
+import GymnasieArbete.Game;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.input.Keyboard;
@@ -24,6 +25,7 @@ public class Player extends Mob {
 	}
 	
 	public void update() {
+		if (input.esc) Game.state = Game.STATE.PAUSED;
 		int xa = 0, ya = 0;
 		if (anim < 7500) anim++; 
 		else anim = 0;
