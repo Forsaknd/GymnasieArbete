@@ -11,7 +11,7 @@ public class Tile {
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite);
 	public static Tile grass = new GrassTile(Sprite.grass);
 	public static Tile rock = new RockTile(Sprite.rock);
-	public static Tile plank = new PlankTile(Sprite.plank);
+	public static Tile planks = new PlanksTile(Sprite.planks);
 	public static Tile flower = new FlowerTile(Sprite.flower);
 	
 	public Tile (Sprite sprite) {

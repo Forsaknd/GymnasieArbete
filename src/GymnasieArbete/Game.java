@@ -14,7 +14,7 @@ import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.level.Level;
-import GymnasieArbete.level.RandomLevel;
+import GymnasieArbete.level.SpawnLevel;
      
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -43,8 +43,8 @@ public class Game extends Canvas implements Runnable {
     	screen = new Screen(width, height);
         frame = new JFrame();
     	key = new Keyboard();
-        level = new RandomLevel(64, 64);
-        player = new Player(key);
+        level = new SpawnLevel("/textures/levels/SpawnLevel.png");
+		player = new Player(500, 500, key);
     	
     	addKeyListener(key);
     }
