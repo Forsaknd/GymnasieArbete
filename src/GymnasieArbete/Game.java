@@ -1,6 +1,7 @@
 package GymnasieArbete;
      
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -13,8 +14,9 @@ import javax.swing.JFrame;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.input.Keyboard;
+import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
-import GymnasieArbete.level.SpawnLevel;
+import GymnasieArbete.level.TileCoordinate;
      
 public class Game extends Canvas implements Runnable {
     private static final long serialVersionUID = 1L;
@@ -43,10 +45,16 @@ public class Game extends Canvas implements Runnable {
     	screen = new Screen(width, height);
         frame = new JFrame();
     	key = new Keyboard();
-        level = new SpawnLevel("/textures/levels/SpawnLevel.png");
-		player = new Player(500, 500, key);
+        level = Level.spawn;
+        TileCoordinate playerSpawn = new TileCoordinate(32, 32);
+		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
+		player.init(level);
     	
     	addKeyListener(key);
+    	
+    	Mouse mouse = new Mouse();
+    	addMouseListener(mouse);
+    	addMouseMotionListener (mouse);
     }
     
     public synchronized void start() {
@@ -119,6 +127,8 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		g.setColor(Color.WHITE);
+		g.fillRect(Mouse.getX() - 32, Mouse.getY() -32, 64, 64);
 		g.dispose();
 		bs.show();
     }

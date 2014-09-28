@@ -10,9 +10,16 @@ public class Tile {
 
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite);
 	public static Tile grass = new GrassTile(Sprite.grass);
-	public static Tile rock = new RockTile(Sprite.rock);
-	public static Tile planks = new PlanksTile(Sprite.planks);
 	public static Tile flower = new FlowerTile(Sprite.flower);
+	public static Tile stones = new StonesTile(Sprite.stones);
+	public static Tile gravel = new GravelTile(Sprite.gravel);
+	public static Tile planks = new PlanksTile(Sprite.planks);
+
+	public static final  int col_grass = 0xFF00FF00;
+	public static final  int col_flower = 0xFFFFFF00;
+	public static final  int col_stones = 0xFF8E8E8E;
+	public static final  int col_gravel = 0xFF7F7F00;
+	public static final  int col_planks = 0xFF9d815d;
 	
 	public Tile (Sprite sprite) {
 		this.sprite = sprite;

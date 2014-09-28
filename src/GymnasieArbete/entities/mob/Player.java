@@ -30,8 +30,8 @@ public class Player extends Mob {
 		if (input.up) ya--;
 		if (input.down) ya++;
 		if (input.left) xa--;
-		if (input.right) xa++;
-
+		if (input.right) xa++;	
+			
 		if (xa != 0 || ya != 0) { 
 			move(xa, ya);
 			walking = true;
@@ -45,7 +45,7 @@ public class Player extends Mob {
 		if(dir == 0) {
 			sprite = Sprite.player_up;
 			if (walking) {
-				if (anim % 20 > 10) {
+				if (anim % 30 > 15) {
 					sprite = Sprite.player_up_1;
 				}
 				else {
@@ -56,18 +56,24 @@ public class Player extends Mob {
 		if(dir == 1) {
 			sprite = Sprite.player_right;
 			if (walking) {
-				if (anim % 20 > 10) {
+				if (anim % 40 > 30) {
 					sprite = Sprite.player_right_1;
 				}
-				else {
+				else if (anim % 40 > 20) {
 					sprite = Sprite.player_right_2;
+				}
+				else if (anim % 40 > 10) {
+					sprite = Sprite.player_right_3;
+				}
+				else {
+					sprite = Sprite.player_right_4;
 				}
 			}
 		}
 		if(dir == 2) {
 			sprite = Sprite.player_down;
 			if (walking) {
-				if (anim % 20 > 10) {
+				if (anim % 30 > 15) {
 					sprite = Sprite.player_down_1;
 				}
 				else {
@@ -78,11 +84,17 @@ public class Player extends Mob {
 		if(dir == 3) {
 			sprite = Sprite.player_left;
 			if (walking) {
-				if (anim % 20 > 10) {
+				if (anim % 40 > 30) {
 					sprite = Sprite.player_left_1;
 				}
-				else {
+				else if (anim % 40 > 20) {
 					sprite = Sprite.player_left_2;
+				}
+				else if (anim % 40 > 10) {
+					sprite = Sprite.player_left_3;
+				}
+				else {
+					sprite = Sprite.player_left_4;
 				}
 			}
 		}

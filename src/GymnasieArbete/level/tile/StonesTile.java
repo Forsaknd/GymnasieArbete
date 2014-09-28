@@ -3,9 +3,9 @@ package GymnasieArbete.level.tile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
-public class RockTile extends Tile {
+public class StonesTile extends Tile {
 
-	public RockTile(Sprite sprite) {
+	public StonesTile(Sprite sprite) {
 		super(sprite);
 	}
 
