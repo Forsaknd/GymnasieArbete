@@ -1,6 +1,7 @@
 package GymnasieArbete.entities.mob;
 
 import GymnasieArbete.Game;
+import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -15,6 +16,8 @@ public class Player extends Mob {
 	protected boolean walking = false;
 	protected boolean canshoot = true;
 
+	private int fireRate = 0;
+
 	public Player(Keyboard input) {
 		this.input = input;
 		sprite = Sprite.player_up;
@@ -25,9 +28,11 @@ public class Player extends Mob {
 		this.y = y;
 		this.input = input;
 		sprite = Sprite.player_up;
+		fireRate = PistolProjectile.FIRE_RATE;
 	}
 
 	public void update() {
+		if (fireRate > 0) fireRate--;
 		if (input.esc) Game.state = Game.STATE.PAUSED;
 
 		if (anim < 7500) anim++;
@@ -51,35 +56,34 @@ public class Player extends Mob {
 	}
 
 	private void clear() {
-		for (int i = 0; i < projectiles.size(); i++) {
-			Projectile p = projectiles.get(i);
+		for (int i = 0; i < level.getProjectiles().size(); i++) {
+			Projectile p = level.getProjectiles().get(i);
 			if (p.isRemoved())
-				projectiles.remove(i);
+				level.getProjectiles().remove(i);
 		}
 	}
 
 	private void updateShooting() {
-		if (Mouse.getB() == 1) {
+		if (Mouse.getB() == 1 && fireRate == 0 && canshoot == true) {
 			double dx = Mouse.getX() - Game.getWindowWidth() / 2;
 			double dy = Mouse.getY() - Game.getWindowHeight() / 2;
 			double mdir = Math.atan2(dy, dx);
-			if (canshoot) {
-				
-				shoot(x, y, mdir);
-
-				int ddir = (int) Math.toDegrees(mdir);
-				if (ddir < -45 && ddir > -135) {
-					dir = 0;
-				}
-				if (ddir < 45 && ddir > -45) {
-					dir = 1;
-				}
-				if (ddir <= 120 && ddir >= 60) {
-					dir = 2;
-				}
-				if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
-					dir = 3;
-				}
+			
+			shoot(x, y, mdir);
+			fireRate = PistolProjectile.FIRE_RATE;
+			
+			int ddir = (int) Math.toDegrees(mdir);
+			if (ddir < -45 && ddir > -135) {
+				dir = 0;
+			}
+			if (ddir < 45 && ddir > -45) {
+				dir = 1;
+			}
+			if (ddir <= 120 && ddir >= 60) {
+				dir = 2;
+			}
+			if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
+				dir = 3;
 			}
 		}
 	}

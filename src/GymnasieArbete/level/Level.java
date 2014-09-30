@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.level.tile.Tile;
 
@@ -15,6 +16,7 @@ public class Level {
 	protected int tile_size;
 	
 	private List<Entity> entities = new ArrayList<Entity>();
+	public List<Projectile> projectiles = new ArrayList<Projectile>();
 	
     public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
 
@@ -46,11 +48,30 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
+		
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).update();
+		}
+	}
+	
+	public List<Projectile> getProjectiles() {
+		return projectiles;
 	}
 
 	private void time() {
 	}
-
+	//https://www.youtube.com/watch?v=pYGPCSFGaxQ 5:40
+	//collision entity > tile
+	private boolean collision(int x, int y, int xa, int ya, int size) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) {
+			int xt = ((x + xa) + c % 2 * size) / 16;
+			int yt = ((y + ya) + c / 2 * size) / 16;
+			if (getTile(xt, yt).solid()) solid = true;
+		}
+		return solid;
+	}
+	
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
 		int x0 = xScroll >> 4;
@@ -66,10 +87,18 @@ public class Level {
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).render(screen);
+		}
 	}
 
 	public void add(Entity e) {
 		entities.add(e);
+	}
+	
+	public void addProjectile(Projectile p) {
+		projectiles.add(p);
 	}
 	
 	public Tile getTile(int x, int y) {
