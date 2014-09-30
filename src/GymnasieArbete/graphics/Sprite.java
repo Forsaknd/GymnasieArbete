@@ -14,6 +14,10 @@ public class Sprite {
 	public static Sprite gravel = new Sprite(16, 1, 0, SpriteSheet.tiles);
 	public static Sprite planks = new Sprite(16, 2, 0, SpriteSheet.tiles);
 	
+	//PROJECTILES
+	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
+	
+	//PLAYER
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.player);
 	public static Sprite player_right = new Sprite(32, 1, 0, SpriteSheet.player);
 	public static Sprite player_down = new Sprite(32, 2, 0, SpriteSheet.player);
@@ -24,8 +28,8 @@ public class Sprite {
 	
 	public static Sprite player_right_1 = new Sprite(32, 1, 1, SpriteSheet.player);
 	public static Sprite player_right_2 = new Sprite(32, 1, 2, SpriteSheet.player);
-	public static Sprite player_right_3 = new Sprite(32, 0, 3, SpriteSheet.player);
-	public static Sprite player_right_4 = new Sprite(32, 1, 3, SpriteSheet.player);
+	public static Sprite player_right_3 = new Sprite(32, 1, 3, SpriteSheet.player);
+	public static Sprite player_right_4 = new Sprite(32, 1, 4, SpriteSheet.player);
 	
 	public static Sprite player_down_1 = new Sprite(32, 2, 1, SpriteSheet.player);
 	public static Sprite player_down_2 = new Sprite(32, 2, 2, SpriteSheet.player);
@@ -33,7 +37,14 @@ public class Sprite {
 	public static Sprite player_left_1 = new Sprite(32, 3, 1, SpriteSheet.player);
 	public static Sprite player_left_2 = new Sprite(32, 3, 2, SpriteSheet.player);
 	public static Sprite player_left_3 = new Sprite(32, 3, 3, SpriteSheet.player);
-	public static Sprite player_left_4 = new Sprite(32, 2, 3, SpriteSheet.player);
+	public static Sprite player_left_4 = new Sprite(32, 3, 4, SpriteSheet.player);
+	
+	//PLAYER SHOOTING
+	public static Sprite player_shoot_left_1 = new Sprite(32, 4, 0, SpriteSheet.player);
+	public static Sprite player_shoot_left_2 = new Sprite(32, 4, 1, SpriteSheet.player);
+	
+	public static Sprite player_shoot_right_1 = new Sprite(32, 4, 2, SpriteSheet.player);
+	public static Sprite player_shoot_right_2 = new Sprite(32, 4, 3, SpriteSheet.player);
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		SIZE = size;

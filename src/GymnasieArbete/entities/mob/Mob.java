@@ -1,6 +1,11 @@
 package GymnasieArbete.entities.mob;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.projectile.PistolProjectile;
+import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Sprite;
 
 public abstract class Mob extends Entity {
@@ -9,6 +14,9 @@ public abstract class Mob extends Entity {
 	protected int dir = 0;
 	protected boolean moving = false;
 	protected boolean walking = false;
+	protected boolean canshoot = false;
+	
+	protected List<Projectile> projectiles = new ArrayList<Projectile>();
 
 	public void move(int xa, int ya) {
 		if (xa != 0 && ya != 0) {
@@ -30,6 +38,12 @@ public abstract class Mob extends Entity {
 
 	public void update() {
 	}
+	
+	protected void shoot(int x, int y, double dir) {
+		Projectile p = new PistolProjectile(x-8, y-8, dir);
+		projectiles.add(p);
+		level.add(p);
+	}
 
 	public void render() {
 	}
@@ -43,5 +57,4 @@ public abstract class Mob extends Entity {
 		}
 		return solid;
 	}
-
 }

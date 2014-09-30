@@ -10,7 +10,7 @@ import GymnasieArbete.input.Mouse;
 
 public class Menu {
 	
-	private int xCenter = (Game.width * Game.scale) / 2;
+	private int xCenter = Game.getWindowWidth() / 2;
 	public Rectangle playButton = new Rectangle(xCenter - 60, 150, 100, 50);
 	public Rectangle helpButton = new Rectangle(xCenter - 60, 250, 100, 50);
 	public Rectangle quitButton = new Rectangle(xCenter - 60, 350, 100, 50);

@@ -1,106 +1,139 @@
 package GymnasieArbete.entities.mob;
 
 import GymnasieArbete.Game;
+import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.input.Keyboard;
+import GymnasieArbete.input.Mouse;
 
 public class Player extends Mob {
-	
+
 	private Keyboard input;
 	private Sprite sprite;
 	private int anim = 0;
-	private boolean walking = false;
-	
+	protected boolean walking = false;
+	protected boolean canshoot = true;
+
 	public Player(Keyboard input) {
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
-	
+
 	public Player(int x, int y, Keyboard input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
 		sprite = Sprite.player_up;
 	}
-	
+
 	public void update() {
 		if (input.esc) Game.state = Game.STATE.PAUSED;
-		int xa = 0, ya = 0;
-		if (anim < 7500) anim++; 
+
+		if (anim < 7500) anim++;
 		else anim = 0;
+
+		int xa = 0, ya = 0;
 		if (input.up) ya--;
 		if (input.down) ya++;
 		if (input.left) xa--;
-		if (input.right) xa++;	
-			
-		if (xa != 0 || ya != 0) { 
+		if (input.right) xa++;
+
+		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
-		}
-		else {
+		} else {
 			walking = false;
+		}
+
+		clear();
+		updateShooting();
+	}
+
+	private void clear() {
+		for (int i = 0; i < projectiles.size(); i++) {
+			Projectile p = projectiles.get(i);
+			if (p.isRemoved())
+				projectiles.remove(i);
+		}
+	}
+
+	private void updateShooting() {
+		if (Mouse.getB() == 1) {
+			double dx = Mouse.getX() - Game.getWindowWidth() / 2;
+			double dy = Mouse.getY() - Game.getWindowHeight() / 2;
+			double mdir = Math.atan2(dy, dx);
+			if (canshoot) {
+				
+				shoot(x, y, mdir);
+
+				int ddir = (int) Math.toDegrees(mdir);
+				if (ddir < -45 && ddir > -135) {
+					dir = 0;
+				}
+				if (ddir < 45 && ddir > -45) {
+					dir = 1;
+				}
+				if (ddir <= 120 && ddir >= 60) {
+					dir = 2;
+				}
+				if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
+					dir = 3;
+				}
+			}
 		}
 	}
 	
 	public void render(Screen screen) {
-		if(dir == 0) {
+		if (dir == 0) {
 			sprite = Sprite.player_up;
 			if (walking) {
 				if (anim % 30 > 15) {
 					sprite = Sprite.player_up_1;
-				}
-				else {
+				} else {
 					sprite = Sprite.player_up_2;
 				}
 			}
 		}
-		if(dir == 1) {
+		if (dir == 1) {
 			sprite = Sprite.player_right;
 			if (walking) {
 				if (anim % 40 > 30) {
 					sprite = Sprite.player_right_1;
-				}
-				else if (anim % 40 > 20) {
+				} else if (anim % 40 > 20) {
 					sprite = Sprite.player_right_2;
-				}
-				else if (anim % 40 > 10) {
+				} else if (anim % 40 > 10) {
 					sprite = Sprite.player_right_3;
-				}
-				else {
+				} else {
 					sprite = Sprite.player_right_4;
 				}
 			}
 		}
-		if(dir == 2) {
+		if (dir == 2) {
 			sprite = Sprite.player_down;
 			if (walking) {
 				if (anim % 30 > 15) {
 					sprite = Sprite.player_down_1;
-				}
-				else {
+				} else {
 					sprite = Sprite.player_down_2;
 				}
 			}
 		}
-		if(dir == 3) {
+		if (dir == 3) {
 			sprite = Sprite.player_left;
 			if (walking) {
 				if (anim % 40 > 30) {
 					sprite = Sprite.player_left_1;
-				}
-				else if (anim % 40 > 20) {
+				} else if (anim % 40 > 20) {
 					sprite = Sprite.player_left_2;
-				}
-				else if (anim % 40 > 10) {
+				} else if (anim % 40 > 10) {
 					sprite = Sprite.player_left_3;
-				}
-				else {
+				} else {
 					sprite = Sprite.player_left_4;
 				}
 			}
 		}
-		screen.renderPlayer(x - 16, y - 16, sprite);
+		screen.renderEntity(x - 16, y - 16, sprite);
 	}
-	
+
 }

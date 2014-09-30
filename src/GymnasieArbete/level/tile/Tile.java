@@ -32,4 +32,12 @@ public class Tile {
 		return false;
 	}
 	
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
+	public int getSpriteSize() {
+		return sprite.SIZE;
+	}
+	
 }
