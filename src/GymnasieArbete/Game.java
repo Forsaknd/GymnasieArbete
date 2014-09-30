@@ -11,6 +11,7 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
+import GymnasieArbete.entities.mob.Enemy;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.input.Keyboard;
@@ -31,6 +32,7 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private Level level;
 	private Player player;
+	private Enemy enemy;
 	private Menu menu;
 	private PauseMenu paused;
 	public static boolean running = false;
@@ -56,6 +58,7 @@ public class Game extends Canvas implements Runnable {
 		level = Level.spawn;
 		TileCoordinate playerSpawn = new TileCoordinate(32, 32);
 		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
+		enemy = new Enemy(playerSpawn.x() + 10, playerSpawn.y() + 10);
 		player.init(level);
 		menu = new Menu();
 		paused = new PauseMenu();
@@ -126,6 +129,7 @@ public class Game extends Canvas implements Runnable {
 		if (state == STATE.GAME) {
 			key.update();
 			player.update();
+			enemy.update();
 			level.update();
 		}
 	}
@@ -147,6 +151,7 @@ public class Game extends Canvas implements Runnable {
 			int yScroll = player.y - screen.height / 2;
 			level.render(xScroll, yScroll, screen);
 			player.render(screen);
+			enemy.render(screen);
 
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];

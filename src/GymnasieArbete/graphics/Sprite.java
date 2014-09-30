@@ -17,6 +17,9 @@ public class Sprite {
 	//PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 	
+	//MOBS
+	public static Sprite enemy = new Sprite(32, 0, 0, SpriteSheet.characters);
+	
 	//PLAYER
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.player);
 	public static Sprite player_right = new Sprite(32, 1, 0, SpriteSheet.player);

@@ -24,6 +24,14 @@ public abstract class Projectile extends Entity {
 	protected void move() {
 		
 	}
-	
-	
+
+	protected boolean collision(double xa, double ya) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) {
+			double xt = ((x + xa) + c % 2 * 12 - 6) / 16;
+			double yt = ((y + ya) + c / 2 * 12 + 3 ) / 16;
+			if (level.getTile((int) xt, (int) yt).solid()) solid = true;
+		}
+		return solid;
+	}
 }

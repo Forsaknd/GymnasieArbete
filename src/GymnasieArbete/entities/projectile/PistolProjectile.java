@@ -8,7 +8,7 @@ public class PistolProjectile extends Projectile {
 	public PistolProjectile(int x, int y, double dir) {
 		super(x, y, dir);
 		range = 200;
-		speed = 2;
+		speed = 8;
 		damage = 20;
 		rateOfFire = 15;
 		sprite = Sprite.pistolProjectile;
@@ -21,8 +21,10 @@ public class PistolProjectile extends Projectile {
 	}
 
 	protected void move() {
-		x += nx;
-		y += ny;
+		//if(!collision(nx, ny)) {
+			x += nx;
+			y += ny;
+		//}
 		
 		if (distance() > range) remove();
 	}
