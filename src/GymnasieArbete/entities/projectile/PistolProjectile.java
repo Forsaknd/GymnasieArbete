@@ -10,7 +10,7 @@ public class PistolProjectile extends Projectile {
 	public PistolProjectile(int x, int y, double dir) {
 		super(x, y, dir);
 		range = 125;
-		speed = 10;
+		speed = 3;
 		damage = 20;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);
@@ -22,10 +22,16 @@ public class PistolProjectile extends Projectile {
 	}
 
 	protected void move() {
-		//if(!collision(nx, ny)) {
+		if(!level.tileCollision(x, y, nx, ny, sprite.SIZE)) {
 			x += nx;
 			y += ny;
-		//}
+		}
+		/*else if {level.mobCollision(x, y, nx, ny, sprite.SIZE)) {
+			
+		}*/
+		else {
+			remove();
+		}
 		
 		if (distance() > range) remove();
 	}

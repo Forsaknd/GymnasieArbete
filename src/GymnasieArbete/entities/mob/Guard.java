@@ -3,12 +3,12 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
-public class Enemy extends Mob {
+public class Guard extends Mob {
 
 	private int health;
 	private Sprite sprite;
 	
-	public Enemy(int x, int y) {
+	public Guard(int x, int y) {
 		this.x = x;
 		this.y = y;
 		sprite = Sprite.enemy;

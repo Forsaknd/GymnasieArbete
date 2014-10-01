@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.mob.Mob;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.level.tile.Tile;
@@ -60,17 +61,27 @@ public class Level {
 
 	private void time() {
 	}
-	//https://www.youtube.com/watch?v=pYGPCSFGaxQ 5:40
+
 	//collision entity > tile
-	private boolean collision(int x, int y, int xa, int ya, int size) {
+	public boolean tileCollision(double x, double y, double xa, double ya, int size) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			int xt = ((x + xa) + c % 2 * size) / 16;
-			int yt = ((y + ya) + c / 2 * size) / 16;
+			int xt = (((int) x + (int) xa) + c % 2 * size / 8 + 6) / 16;
+			int yt = (((int) y + (int) ya) + c / 2 * size / 8 + 6) / 16;
 			if (getTile(xt, yt).solid()) solid = true;
 		}
 		return solid;
 	}
+
+	/*public boolean mobCollision(double x, double y, double xa, double ya, int size) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) {
+			int xt = (((int) x + (int) xa) + c % 2 * size / 8 + 6) / 16;
+			int yt = (((int) y + (int) ya) + c / 2 * size / 8 + 6) / 16;
+			if (getMob(xt, yt).collision()) solid = true;
+		}
+		return solid;
+	}*/
 	
 	public void render(int xScroll, int yScroll, Screen screen) {
 		screen.setOffset(xScroll, yScroll);
@@ -98,6 +109,7 @@ public class Level {
 	}
 	
 	public void addProjectile(Projectile p) {
+		p.init(this);
 		projectiles.add(p);
 	}
 	
@@ -111,4 +123,9 @@ public class Level {
 		return Tile.voidTile;
 	}
 
+	/*public Mob getMob(int x, int y) {
+		if (x < 0 || y < 0 || x >= width || y >= height) return null;
+		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
+		return Tile.voidTile;
+	}*/
 }
