@@ -34,4 +34,12 @@ public abstract class Projectile extends Entity {
 		}
 		return solid;
 	}
+
+	public Sprite getSprite() {
+		return sprite;
+	}
+	
+	public int getSpriteSize() {
+		return sprite.SIZE;
+	}
 }

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
-import GymnasieArbete.entities.mob.Mob;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.level.tile.Tile;
@@ -66,8 +65,8 @@ public class Level {
 	public boolean tileCollision(double x, double y, double xa, double ya, int size) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			int xt = (((int) x + (int) xa) + c % 2 * size / 8 + 6) / 16;
-			int yt = (((int) y + (int) ya) + c / 2 * size / 8 + 6) / 16;
+			int xt = (((int) x + (int) xa) + c % 2 * size * 3 + 4) / 16;
+			int yt = (((int) y + (int) ya) + c / 2 * size * 3 + 4) / 16;
 			if (getTile(xt, yt).solid()) solid = true;
 		}
 		return solid;
@@ -125,7 +124,7 @@ public class Level {
 
 	/*public Mob getMob(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return null;
-		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
+		if (tiles[x + y * width] == .col_grass) return Tile.grass;
 		return Tile.voidTile;
 	}*/
 }

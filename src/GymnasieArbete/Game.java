@@ -11,9 +11,9 @@ import java.awt.image.DataBufferInt;
 
 import javax.swing.JFrame;
 
-import GymnasieArbete.entities.mob.Guard;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
+import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
@@ -32,7 +32,6 @@ public class Game extends Canvas implements Runnable {
 	private Keyboard key;
 	private Level level;
 	private Player player;
-	private Guard guard;
 	private Menu menu;
 	private PauseMenu paused;
 	public static boolean running = false;
@@ -58,7 +57,6 @@ public class Game extends Canvas implements Runnable {
 		level = Level.spawn;
 		TileCoordinate playerSpawn = new TileCoordinate(32, 32);
 		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
-		guard = new Guard(playerSpawn.x() + 10, playerSpawn.y() + 10);
 		player.init(level);
 		menu = new Menu();
 		paused = new PauseMenu();
@@ -129,7 +127,6 @@ public class Game extends Canvas implements Runnable {
 		if (state == STATE.GAME) {
 			key.update();
 			player.update();
-			guard.update();
 			level.update();
 		}
 	}
@@ -151,8 +148,10 @@ public class Game extends Canvas implements Runnable {
 			int yScroll = player.y - screen.height / 2;
 			level.render(xScroll, yScroll, screen);
 			player.render(screen);
-			guard.render(screen);
 
+			Sprite sprite = new Sprite(width-40, 20, 0x0);
+			screen.renderSprite(20, height - 20, sprite, false);
+			screen.renderSprite(20, height - 20, Sprite.pistol, false);
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
@@ -161,7 +160,10 @@ public class Game extends Canvas implements Runnable {
 			//g.fillRect(Mouse.getX() - 32, Mouse.getY() - 32, 64, 64);
 		}
 		else if (state == STATE.MENU) {
-			menu.render(g);
+			menu.render(screen);
+			for (int i = 0; i < pixels.length; i++) {
+				pixels[i] = screen.pixels[i];
+			}
 		}
 		
 		else if (state == STATE.PAUSED) {
@@ -184,5 +186,4 @@ public class Game extends Canvas implements Runnable {
 		game.frame.setVisible(true);
 		game.start();
 	}
-
 }

@@ -137,7 +137,7 @@ public class Player extends Mob {
 				}
 			}
 		}
-		screen.renderEntity(x - 16, y - 16, sprite);
+		screen.renderPlayer(x - 16, y - 16, sprite);
 	}
 
 }

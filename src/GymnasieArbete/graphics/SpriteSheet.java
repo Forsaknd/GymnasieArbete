@@ -11,9 +11,11 @@ public class SpriteSheet {
 	public final int SIZE;
 	public int[] pixels;
 
+	public static SpriteSheet background = new SpriteSheet("/textures/sheets/spritesheet_background.png", 300);
 	public static SpriteSheet tiles = new SpriteSheet("/textures/sheets/spritesheet_tiles.png", 256);
 	public static SpriteSheet characters = new SpriteSheet("/textures/sheets/spritesheet_characters.png", 256);
 	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 160);
+	public static SpriteSheet items = new SpriteSheet("/textures/sheets/spritesheet_items.png", 128);
 	public static SpriteSheet projectiles = new SpriteSheet("/textures/sheets/spritesheet_projectiles.png", 64);
 	
 	public SpriteSheet(String path, int size) {
@@ -22,7 +24,7 @@ public class SpriteSheet {
 		pixels = new int[SIZE * SIZE];
 		load();
 	}
-
+	
 	private void load() {
 		try {
 			BufferedImage image = ImageIO.read(SpriteSheet.class.getResource(path));

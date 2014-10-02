@@ -4,9 +4,11 @@ public class Sprite {
 
 	public final int SIZE;
 	private int x, y;
+	private int width, height;
 	public int[] pixels;
 	private SpriteSheet sheet;
 
+	//TILES
 	public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
 	public static Sprite flower = new Sprite(16, 3, 0, SpriteSheet.tiles);
@@ -14,11 +16,17 @@ public class Sprite {
 	public static Sprite gravel = new Sprite(16, 1, 0, SpriteSheet.tiles);
 	public static Sprite planks = new Sprite(16, 2, 0, SpriteSheet.tiles);
 	
+	//MENU BACKGROUND
+	public static Sprite background = new Sprite(300, 0, 0, SpriteSheet.background);
+	
+	//ITEMS
+	public static Sprite pistol = new Sprite(16, 0, 0, SpriteSheet.items);
+	
 	//PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 	
 	//MOBS
-	public static Sprite enemy = new Sprite(32, 0, 0, SpriteSheet.characters);
+	public static Sprite guard = new Sprite(32, 0, 0, SpriteSheet.characters);
 	
 	//PLAYER
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.player);
@@ -51,6 +59,8 @@ public class Sprite {
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		SIZE = size;
+		this.width = size;
+		this.height = size;
 		pixels = new int[SIZE * SIZE];
 		this.x = x * size;
 		this.y = y * size;
@@ -58,18 +68,36 @@ public class Sprite {
 		load();
 	}
 
+	public Sprite(int width, int height, int color) {
+		SIZE = -1;
+		this.width = width;;
+		this.height = height;
+		pixels = new int[width * height];
+		setColor(color);
+	}
+
 	public Sprite(int size, int color) {
 		SIZE = size;
+		this.width = size;
+		this.height = size;
 		pixels = new int[SIZE * SIZE];
 		setColor(color);
 	}	
 	
 	private void setColor(int color) {
-		for (int i = 0; i < SIZE*SIZE; i++) {
+		for (int i = 0; i < width * height; i++) {
 			pixels[i] = color;
 		}		
 	}
 
+	public int getWidth() {
+		return width;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
 	private void load() {
 		for (int y = 0; y < SIZE; y++) {
 			for (int x = 0; x < SIZE; x++) {
@@ -77,5 +105,4 @@ public class Sprite {
 			}
 		}
 	}
-
 }
