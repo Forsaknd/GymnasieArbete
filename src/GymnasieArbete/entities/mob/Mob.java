@@ -28,7 +28,7 @@ public abstract class Mob extends Entity {
 		if (!collision(xa, ya)) {
 			x += xa;
 			y += ya;
-		}
+		} 
 	}
 
 	public void update() {
@@ -36,7 +36,7 @@ public abstract class Mob extends Entity {
 	
 	protected void shoot(int x, int y, double dir) {
 		Projectile p = new PistolProjectile(x-8, y-8, dir);
-		level.addProjectile(p);
+		level.add(p);
 	}
 
 	public void render() {
@@ -46,7 +46,7 @@ public abstract class Mob extends Entity {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
 			int xt = ((x + xa) + c % 2 * 12 - 6) / 16;
-			int yt = ((y + ya) + c / 2 * 12 + 3 ) / 16;
+			int yt = ((y + ya) + c / 2 * 12 + 3) / 16;
 			if (level.getTile(xt, yt).solid()) solid = true;
 		}
 		return solid;

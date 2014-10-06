@@ -9,6 +9,7 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	private static int mouseX = -1;
 	private static int mouseY = -1;
 	private static int mouseB = -1;
+	private static int mmouseB = -1;
 	
 	public static int getX() {
 		return mouseX;
@@ -22,6 +23,10 @@ public class Mouse implements MouseListener, MouseMotionListener {
 		return mouseB;
 	}
 
+	public static int getMenuB() {
+		return mmouseB;
+	}
+	
 	public void mouseDragged(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
@@ -33,6 +38,14 @@ public class Mouse implements MouseListener, MouseMotionListener {
 	}
 
 	public void mouseClicked(MouseEvent e) {
+		try {
+				mmouseB = e.getButton();
+				Thread.sleep(1);
+				mmouseB = -1;
+			}
+		catch (Exception x) {
+			x.printStackTrace();
+		}
 	}
 
 	public void mousePressed(MouseEvent e) {

@@ -1,16 +1,17 @@
 package GymnasieArbete.entities.projectile;
 
+import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
 public class PistolProjectile extends Projectile {
 	
-	public static final int FIRE_RATE = 20;
+	public static final int FIRE_RATE = 5;
 
 	public PistolProjectile(int x, int y, double dir) {
 		super(x, y, dir);
-		range = 125;
-		speed = 4;
+		range = 150;
+		speed = 2;
 		damage = 20;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);
@@ -18,16 +19,16 @@ public class PistolProjectile extends Projectile {
 	}
 
 	public void update() {
-		if(level.tileCollision(x, y, nx, ny, 2)) remove();
+		if(level.tileCollision((int) (x + nx), (int) (y + ny), 2, 7, 7)) {
+			level.add(new ParticleSpawner((int) x + 5, (int) y + 9, 40, 30, level));
+			remove();
+		} else
 		move();
 	}
 
 	protected void move() {
 			x += nx;
 			y += ny;
-		/*else if {level.mobCollision(x, y, nx, ny, sprite.SIZE)) {
-			
-		}*/
 		if (distance() > range) remove();
 	}
 	

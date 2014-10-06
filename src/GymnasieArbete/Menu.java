@@ -1,11 +1,5 @@
 package GymnasieArbete;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.input.Mouse;
@@ -17,32 +11,32 @@ public class Menu {
 	public void render(Screen screen) {
 		screen.renderSprite(0, 0, Sprite.background, false);	
 		
-		if (Mouse.getB() == 1) {
+		if (Mouse.getMenuB() == 1) {
 			int mx = Mouse.getX();
 			int my = Mouse.getY();
 			if (mx >= xCenter - 110 && mx <= xCenter + 110) {
 				if (my >= 215 && my <= 275) {
-				Game.state = Game.STATE.GAME;
+					Game.state = Game.STATE.GAME;
 				}
 			}
 		}
 
-		if (Mouse.getB() == 1) {
+		if (Mouse.getMenuB() == 1) {
 			int mx = Mouse.getX();
 			int my = Mouse.getY();
 			if (mx >= xCenter - 110 && mx <= xCenter + 110) {
 				if (my >= 310 && my <= 380) {
-				Game.state = Game.STATE.GAME;
+					Game.state = Game.STATE.GAME;
 				}
 			}
 		}
 
-		if (Mouse.getB() == 1) {
+		if (Mouse.getMenuB() == 1) {
 			int mx = Mouse.getX();
 			int my = Mouse.getY();
 			if (mx >= xCenter - 105 && mx <= xCenter + 105) {
 				if (my >= 410 && my <= 480) {
-				Game.running = false;
+					Game.running = false;
 				}
 			}
 		}

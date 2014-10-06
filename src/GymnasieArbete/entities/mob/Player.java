@@ -72,18 +72,20 @@ public class Player extends Mob {
 			shoot(x, y, mdir);
 			fireRate = PistolProjectile.FIRE_RATE;
 			
-			int ddir = (int) Math.toDegrees(mdir);
-			if (ddir < -45 && ddir > -135) {
-				dir = 0;
-			}
-			if (ddir < 45 && ddir > -45) {
-				dir = 1;
-			}
-			if (ddir <= 120 && ddir >= 60) {
-				dir = 2;
-			}
-			if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
-				dir = 3;
+			if (!walking) {
+				int ddir = (int) Math.toDegrees(mdir);
+				if (ddir < -45 && ddir > -135) {
+					dir = 0;
+				}
+				if (ddir < 45 && ddir > -45) {
+					dir = 1;
+				}
+				if (ddir <= 120 && ddir >= 60) {
+					dir = 2;
+				}
+				if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
+					dir = 3;
+				}
 			}
 		}
 	}

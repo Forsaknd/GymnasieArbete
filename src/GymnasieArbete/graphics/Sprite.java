@@ -25,6 +25,10 @@ public class Sprite {
 	//PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 	
+	//PARTICLES
+	public static Sprite particle_normal = new Sprite(2, 0xAAAAAA);
+	public static Sprite particle_planks = new Sprite(2, 0xA52A2A);
+	
 	//MOBS
 	public static Sprite guard = new Sprite(32, 0, 0, SpriteSheet.characters);
 	
