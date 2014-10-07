@@ -20,7 +20,7 @@ public class PistolProjectile extends Projectile {
 
 	public void update() {
 		if(level.tileCollision((int) (x + nx), (int) (y + ny), 2, 7, 7)) {
-			level.add(new ParticleSpawner((int) x + 5, (int) y + 9, 40, 30, level));
+			level.add(new ParticleSpawner((int) x + 5, (int) y + 6, 40, 20, level));
 			remove();
 		} else
 		move();
