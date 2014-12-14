@@ -5,7 +5,7 @@ import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.graphics.SpriteSheet;
 
-public class Zombie extends Mob {
+public class Critter extends Mob {
 	
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.zombie_down, 32, 32, 5, 15);
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.zombie_up, 32, 32, 5, 15);
@@ -14,16 +14,27 @@ public class Zombie extends Mob {
 
 	private AnimatedSprite animSprite = down;
 	
+	private int time = 0;
 	private int xa = 0;
 	private int ya = 0;
 	
-	public Zombie(int x, int y) {
+	public Critter(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
 		sprite = Sprite.zombie;
 	}
 	
 	public void update() {
+		time++;
+		//if time % 60 == 0 / = 1 second
+		if (time % (random.nextInt(50) + 60) == 0) {
+			xa = random.nextInt(3) - 1;
+			ya = random.nextInt(3) - 1;
+			if (random.nextInt(4) == 0) {
+				xa = 0;
+				ya = 0;
+			}
+		}
 		if (walking) animSprite.update();
 		else animSprite.setFrame(0);
 		
@@ -52,7 +63,7 @@ public class Zombie extends Mob {
 	
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
-		screen.renderMob(x, y, this);
+		screen.renderMob(x, y, sprite);
 	}
 	
 }

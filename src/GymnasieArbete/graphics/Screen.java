@@ -2,6 +2,8 @@ package GymnasieArbete.graphics;
 
 import java.util.Random;
 
+import GymnasieArbete.entities.mob.Mob;
+import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.level.tile.Tile;
 
@@ -63,11 +65,13 @@ public class Screen {
 		}
 		for (int y = 0; y < sprite.getHeight(); y++) {
 			int ya = y + yp;
+			int ys = y;
 			for (int x = 0; x < sprite.getWidth(); x++) {
 				int xa = x + xp;
+				int xs = x;
 				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
 					continue;
-				int col = sprite.pixels[x + y * sprite.getWidth()];
+				int col = sprite.pixels[xs + ys * sprite.getWidth()];
 				if (col != 0xffff00ff)
 					pixels[xa + ya * width] = col;
 			}
@@ -96,13 +100,15 @@ public class Screen {
 		yp -= yOffset;
 		for (int y = 0; y < p.getSpriteSize(); y++) {
 			int ya = y + yp;
+			int ys = y;
 			for (int x = 0; x < p.getSpriteSize(); x++) {
 				int xa = x + xp;
+				int xs = x;
 				if (xa < -p.getSpriteSize() || xa >= width || ya < 0 || ya >= height)
 					break;
 				if (xa < 0)
 					xa = 0;
-				int col = p.getSprite().pixels[x + y * p.getSprite().SIZE];
+				int col = p.getSprite().pixels[xs + ys * p.getSprite().SIZE];
 				if (col != 0xffff00ff)
 					pixels[xa + ya * width] = col;
 			}
@@ -114,13 +120,36 @@ public class Screen {
 		yp -= yOffset;
 		for (int y = 0; y < sprite.SIZE; y++) {
 			int ya = y + yp;
+			int ys = y;
 			for (int x = 0; x < sprite.SIZE; x++) {
 				int xa = x + xp;
+				int xs = x;
 				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height)
 					break;
 				if (xa < 0)
 					xa = 0;
-				int col = sprite.pixels[x + y * sprite.SIZE];
+				int col = sprite.pixels[xs + ys * sprite.SIZE];
+				if (col != 0xffff00ff)
+					pixels[xa + ya * width] = col;
+			}
+		}
+	}
+
+	public void renderMob(int xp, int yp, Mob mob) {
+		xp -= xOffset;
+		yp -= yOffset;
+		for (int y = 0; y < mob.getSprite().SIZE; y++) {
+			int ya = y + yp;
+			int ys = y;
+			for (int x = 0; x < mob.getSprite().SIZE; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if (xa < -mob.getSprite().SIZE || xa >= width || ya < 0 || ya >= height)
+					break;
+				if (xa < 0)
+					xa = 0;
+				int col = mob.getSprite().pixels[xs + ys * mob.getSprite().SIZE];
+				if ((mob instanceof Zombie) && col == 0xffe3ccc7) col = 0xffBA0015;
 				if (col != 0xffff00ff)
 					pixels[xa + ya * width] = col;
 			}
