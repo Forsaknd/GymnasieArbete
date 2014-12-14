@@ -6,10 +6,11 @@ public class Sprite {
 	private int x, y;
 	private int width, height;
 	public int[] pixels;
-	private SpriteSheet sheet;
+	protected SpriteSheet sheet;
 
 	//TILES
-	public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
+	//public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
+	public static Sprite voidSprite = new Sprite(16, 0, 0, SpriteSheet.tiles);
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
 	public static Sprite gravel = new Sprite(16, 1, 0, SpriteSheet.tiles);
 	public static Sprite planksh = new Sprite(16, 2, 0, SpriteSheet.tiles);
@@ -33,37 +34,18 @@ public class Sprite {
 	public static Sprite particle_planks = new Sprite(2, 0xA52A2A);
 	
 	//MOBS
-	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.characters);
+	public static Sprite zombie = new Sprite(32, 0, 0, SpriteSheet.mobs);
 	
 	//PLAYER
-	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.player);
-	public static Sprite player_right = new Sprite(32, 1, 0, SpriteSheet.player);
-	public static Sprite player_down = new Sprite(32, 2, 0, SpriteSheet.player);
-	public static Sprite player_left = new Sprite(32, 3, 0, SpriteSheet.player);
-	
-	public static Sprite player_up_1 = new Sprite(32, 0, 1, SpriteSheet.player);
-	public static Sprite player_up_2 = new Sprite(32, 0, 2, SpriteSheet.player);
-	
-	public static Sprite player_right_1 = new Sprite(32, 1, 1, SpriteSheet.player);
-	public static Sprite player_right_2 = new Sprite(32, 1, 2, SpriteSheet.player);
-	public static Sprite player_right_3 = new Sprite(32, 1, 3, SpriteSheet.player);
-	public static Sprite player_right_4 = new Sprite(32, 1, 4, SpriteSheet.player);
-	
-	public static Sprite player_down_1 = new Sprite(32, 2, 1, SpriteSheet.player);
-	public static Sprite player_down_2 = new Sprite(32, 2, 2, SpriteSheet.player);
-	
-	public static Sprite player_left_1 = new Sprite(32, 3, 1, SpriteSheet.player);
-	public static Sprite player_left_2 = new Sprite(32, 3, 2, SpriteSheet.player);
-	public static Sprite player_left_3 = new Sprite(32, 3, 3, SpriteSheet.player);
-	public static Sprite player_left_4 = new Sprite(32, 3, 4, SpriteSheet.player);
-	
-	//PLAYER SHOOTING
-	public static Sprite player_shoot_left_1 = new Sprite(32, 4, 0, SpriteSheet.player);
-	public static Sprite player_shoot_left_2 = new Sprite(32, 4, 1, SpriteSheet.player);
-	
-	public static Sprite player_shoot_right_1 = new Sprite(32, 4, 2, SpriteSheet.player);
-	public static Sprite player_shoot_right_2 = new Sprite(32, 4, 3, SpriteSheet.player);
+	public static Sprite player = new Sprite(32, 0, 0, SpriteSheet.player);
 
+	protected Sprite(SpriteSheet sheet, int width, int height) {
+		SIZE = (width == height) ? width : -1;
+		this.width = width;
+		this.height = height;
+		this.sheet = sheet;
+	}
+	
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		SIZE = size;
 		this.width = size;
@@ -90,6 +72,13 @@ public class Sprite {
 		pixels = new int[SIZE * SIZE];
 		setColor(color);
 	}	
+
+	public Sprite(int[] pixels, int width, int height) {
+		SIZE = (width == height) ? width : -1;
+		this.width = width;
+		this.height = height;
+		this.pixels = pixels;
+	}
 	
 	private void setColor(int color) {
 		for (int i = 0; i < width * height; i++) {
@@ -106,9 +95,9 @@ public class Sprite {
 	}
 	
 	private void load() {
-		for (int y = 0; y < SIZE; y++) {
-			for (int x = 0; x < SIZE; x++) {
-				pixels[x + y * SIZE] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.SIZE];
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
+				pixels[x + y * width] = sheet.pixels[(x + this.x) + (y + this.y) * sheet.WIDTH];
 			}
 		}
 	}

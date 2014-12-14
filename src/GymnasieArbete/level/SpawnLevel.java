@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import GymnasieArbete.entities.mob.Dummy;
+import GymnasieArbete.entities.mob.Zombie;
 
 public class SpawnLevel extends Level{
 	
@@ -24,7 +24,9 @@ public class SpawnLevel extends Level{
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file!");
 		}
-		add(new Dummy(38, 32));
+		for (int i = 0; i < 100; i++) {
+			add(new Zombie(38, 32));
+		}
 	}
 	
 	protected void generateLevel() {

@@ -3,8 +3,10 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
+import GymnasieArbete.graphics.SpriteSheet;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 
@@ -12,37 +14,52 @@ public class Player extends Mob {
 
 	private Keyboard input;
 	private Sprite sprite;
-	private int anim = 0;
 	protected boolean walking = false;
 	protected boolean canshoot = true;
+	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3, 10);
+	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3, 10);
+	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 5, 10);
+	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 5, 10);
 
+	private AnimatedSprite animSprite = down;
+	
 	private int fireRate = 0;
 
 	public Player(Keyboard input) {
 		this.input = input;
-		sprite = Sprite.player_up;
+		sprite = Sprite.player;
+		animSprite = down;
 	}
 
 	public Player(int x, int y, Keyboard input) {
 		this.x = x;
 		this.y = y;
 		this.input = input;
-		sprite = Sprite.player_up;
+		sprite = Sprite.player;
 		fireRate = PistolProjectile.FIRE_RATE;
 	}
 
 	public void update() {
+		if (walking) animSprite.update();
+		else animSprite.setFrame(0);
 		if (fireRate > 0) fireRate--;
 		if (input.esc) Game.state = Game.STATE.PAUSED;
-
-		if (anim < 7500) anim++;
-		else anim = 0;
-
+		
 		int xa = 0, ya = 0;
-		if (input.up) ya--;
-		if (input.down) ya++;
-		if (input.left) xa--;
-		if (input.right) xa++;
+		if (input.up) {
+			animSprite = up;
+			ya--;
+		} else if (input.down) {
+			animSprite = down;
+			ya++;
+		}
+		if (input.left) {
+			animSprite = left;
+			xa--;
+		} else if (input.right) {
+			animSprite = right;
+			xa++;
+		}
 
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
@@ -75,70 +92,23 @@ public class Player extends Mob {
 			if (!walking) {
 				int ddir = (int) Math.toDegrees(mdir);
 				if (ddir < -45 && ddir > -135) {
-					dir = 0;
+					animSprite = up;
 				}
 				if (ddir < 45 && ddir > -45) {
-					dir = 1;
+					animSprite = right;
 				}
 				if (ddir <= 120 && ddir >= 60) {
-					dir = 2;
+					animSprite = down;
 				}
 				if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
-					dir = 3;
+					animSprite = left;
 				}
 			}
 		}
 	}
 	
 	public void render(Screen screen) {
-		if (dir == 0) {
-			sprite = Sprite.player_up;
-			if (walking) {
-				if (anim % 30 > 15) {
-					sprite = Sprite.player_up_1;
-				} else {
-					sprite = Sprite.player_up_2;
-				}
-			}
-		}
-		if (dir == 1) {
-			sprite = Sprite.player_right;
-			if (walking) {
-				if (anim % 40 > 30) {
-					sprite = Sprite.player_right_1;
-				} else if (anim % 40 > 20) {
-					sprite = Sprite.player_right_2;
-				} else if (anim % 40 > 10) {
-					sprite = Sprite.player_right_3;
-				} else {
-					sprite = Sprite.player_right_4;
-				}
-			}
-		}
-		if (dir == 2) {
-			sprite = Sprite.player_down;
-			if (walking) {
-				if (anim % 30 > 15) {
-					sprite = Sprite.player_down_1;
-				} else {
-					sprite = Sprite.player_down_2;
-				}
-			}
-		}
-		if (dir == 3) {
-			sprite = Sprite.player_left;
-			if (walking) {
-				if (anim % 40 > 30) {
-					sprite = Sprite.player_left_1;
-				} else if (anim % 40 > 20) {
-					sprite = Sprite.player_left_2;
-				} else if (anim % 40 > 10) {
-					sprite = Sprite.player_left_3;
-				} else {
-					sprite = Sprite.player_left_4;
-				}
-			}
-		}
+		sprite = animSprite.getSprite();
 		screen.renderMob(x - 16, y - 16, sprite);
 	}
 

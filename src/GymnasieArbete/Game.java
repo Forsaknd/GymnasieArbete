@@ -14,6 +14,7 @@ import javax.swing.JFrame;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
+import GymnasieArbete.graphics.SpriteSheet;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
@@ -148,7 +149,8 @@ public class Game extends Canvas implements Runnable {
 			int yScroll = player.y - screen.height / 2;
 			level.render(xScroll, yScroll, screen);
 			player.render(screen);
-
+			//screen.renderSheet(40, 40, SpriteSheet.player, false);
+			
 			Sprite sprite = new Sprite(width-40, 20, 0x0);
 			screen.renderSprite(20, height - 20, sprite, false);
 			screen.renderSprite(20, height - 20, Sprite.pistol, false);
