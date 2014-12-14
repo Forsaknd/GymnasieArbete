@@ -140,10 +140,13 @@ public class Level {
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
+		if (tiles[x + y * width] == Tile.col_gravel) return Tile.gravel;
+		if (tiles[x + y * width] == Tile.col_planksh) return Tile.planksh;
+		if (tiles[x + y * width] == Tile.col_planksv) return Tile.planksv;
+		if (tiles[x + y * width] == Tile.col_planksc) return Tile.planksc;
 		if (tiles[x + y * width] == Tile.col_stones) return Tile.stones;
 		if (tiles[x + y * width] == Tile.col_flower) return Tile.flower;
-		if (tiles[x + y * width] == Tile.col_gravel) return Tile.gravel;
-		if (tiles[x + y * width] == Tile.col_planks) return Tile.planks;
+		if (tiles[x + y * width] == Tile.col_watershallow) return Tile.watershallow;
 		return Tile.voidTile;
 	}
 

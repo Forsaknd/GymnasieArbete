@@ -11,10 +11,13 @@ public class Sprite {
 	//TILES
 	public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
-	public static Sprite flower = new Sprite(16, 3, 0, SpriteSheet.tiles);
-	public static Sprite stones = new Sprite(16, 4, 0, SpriteSheet.tiles);
 	public static Sprite gravel = new Sprite(16, 1, 0, SpriteSheet.tiles);
-	public static Sprite planks = new Sprite(16, 2, 0, SpriteSheet.tiles);
+	public static Sprite planksh = new Sprite(16, 2, 0, SpriteSheet.tiles);
+	public static Sprite planksv = new Sprite(16, 3, 0, SpriteSheet.tiles);
+	public static Sprite planksc = new Sprite(16, 4, 0, SpriteSheet.tiles);
+	public static Sprite flower = new Sprite(16, 5, 0, SpriteSheet.tiles);
+	public static Sprite stones = new Sprite(16, 6, 0, SpriteSheet.tiles);
+	public static Sprite watershallow = new Sprite(16, 7, 0, SpriteSheet.tiles);
 	
 	//MENU BACKGROUND
 	public static Sprite background = new Sprite(300, 0, 0, SpriteSheet.background);
@@ -30,7 +33,7 @@ public class Sprite {
 	public static Sprite particle_planks = new Sprite(2, 0xA52A2A);
 	
 	//MOBS
-	public static Sprite guard = new Sprite(32, 0, 0, SpriteSheet.characters);
+	public static Sprite dummy = new Sprite(32, 0, 0, SpriteSheet.characters);
 	
 	//PLAYER
 	public static Sprite player_up = new Sprite(32, 0, 0, SpriteSheet.player);
@@ -71,7 +74,7 @@ public class Sprite {
 		this.sheet = sheet;
 		load();
 	}
-
+	
 	public Sprite(int width, int height, int color) {
 		SIZE = -1;
 		this.width = width;;

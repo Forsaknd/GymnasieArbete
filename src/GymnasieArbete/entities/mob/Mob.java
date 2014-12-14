@@ -3,6 +3,7 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
 public abstract class Mob extends Entity {
@@ -39,7 +40,7 @@ public abstract class Mob extends Entity {
 		level.add(p);
 	}
 
-	public void render() {
+	public void render(Screen screen) {
 	}
 
 	private boolean collision(int xa, int ya) {

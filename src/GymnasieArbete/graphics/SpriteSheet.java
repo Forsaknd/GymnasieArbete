@@ -9,6 +9,7 @@ public class SpriteSheet {
 
 	private String path;
 	public final int SIZE;
+	public final int WIDTH, HEIGHT;
 	public int[] pixels;
 
 	public static SpriteSheet background = new SpriteSheet("/textures/sheets/spritesheet_background.png", 300);
@@ -21,7 +22,18 @@ public class SpriteSheet {
 	public SpriteSheet(String path, int size) {
 		this.path = path;
 		SIZE = size;
+		WIDTH = size;
+		HEIGHT = size;
 		pixels = new int[SIZE * SIZE];
+		load();
+	}
+	
+	public SpriteSheet(String path, int width, int height) {
+		this.path = path;
+		SIZE = -1;
+		WIDTH = width;
+		HEIGHT = height;
+		pixels = new int[WIDTH * HEIGHT];
 		load();
 	}
 	
