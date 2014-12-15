@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.mob.Critter;
 import GymnasieArbete.entities.mob.Player;
+import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.particle.Particle;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
@@ -64,18 +66,15 @@ public class Level {
 
 	private void remove() {
 		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i).isRemoved())
-				entities.remove(i);
+			if (entities.get(i).isRemoved()) entities.remove(i);
 		}
 
 		for (int i = 0; i < projectiles.size(); i++) {
-			if (projectiles.get(i).isRemoved())
-				projectiles.remove(i);
+			if (projectiles.get(i).isRemoved()) projectiles.remove(i);
 		}
 
 		for (int i = 0; i < particles.size(); i++) {
-			if (particles.get(i).isRemoved())
-				particles.remove(i);
+			if (particles.get(i).isRemoved()) particles.remove(i);
 		}
 	}
 
@@ -88,8 +87,7 @@ public class Level {
 		for (int c = 0; c < 4; c++) {
 			int xt = (x - c % 2 * size + xOffset) >> 4;
 			int yt = (y - c / 2 * size + yOffset) >> 4;
-			if (getTile(xt, yt).solid())
-				solid = true;
+			if (getTile(xt, yt).solid()) solid = true;
 		}
 		return solid;
 	}
@@ -153,51 +151,55 @@ public class Level {
 
 	public List<Entity> getEntities(Entity e, int radius) {
 		List<Entity> result = new ArrayList<Entity>();
-		int ex = e.getX();
-		int ey = e.getY();
+		int ex = (int) e.getX();
+		int ey = (int) e.getY();
 		for (int i = 0; i < entities.size(); i++) {
 			Entity entity = entities.get(i);
-			int x = entity.getX();
-			int y = entity.getY();
+			int x = (int) entity.getX();
+			int y = (int) entity.getY();
 			int dx = Math.abs(x - ex);
 			int dy = Math.abs(y - ey);
 			double distance = Math.sqrt((dx * dx) + (dy * dy));
-			if (distance <= radius)
-				result.add(entity);
+			if (distance <= radius) result.add(entity);
 		}
 		return result;
 	}
-	
+
 	public List<Player> getPlayers(Entity e, int radius) {
 		List<Entity> entities = getEntities(e, radius);
 		List<Player> result = new ArrayList<Player>();
 		for (int i = 0; i < entities.size(); i++) {
-			if(entities.get(i) instanceof Player) {
+			if (entities.get(i) instanceof Player) {
 				result.add((Player) entities.get(i));
 			}
 		}
 		return result;
 	}
 
+	public boolean getPlayersCol(Entity e, int size) {
+		List<Entity> entities = getEntities(e, size);
+		boolean result = false;
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i).getClass() == e.getClass()) {
+				if (entities.get(i).equals(e)) result = false;
+				else result = true;
+			} else {
+				result = true;
+			}
+		}
+		return result;
+	}
+
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= width || y >= height)
-			return Tile.voidTile;
-		if (tiles[x + y * width] == Tile.col_grass)
-			return Tile.grass;
-		if (tiles[x + y * width] == Tile.col_gravel)
-			return Tile.gravel;
-		if (tiles[x + y * width] == Tile.col_planksh)
-			return Tile.planksh;
-		if (tiles[x + y * width] == Tile.col_planksv)
-			return Tile.planksv;
-		if (tiles[x + y * width] == Tile.col_planksc)
-			return Tile.planksc;
-		if (tiles[x + y * width] == Tile.col_stones)
-			return Tile.stones;
-		if (tiles[x + y * width] == Tile.col_flower)
-			return Tile.flower;
-		if (tiles[x + y * width] == Tile.col_watershallow)
-			return Tile.watershallow;
+		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
+		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
+		if (tiles[x + y * width] == Tile.col_gravel) return Tile.gravel;
+		if (tiles[x + y * width] == Tile.col_planksh) return Tile.planksh;
+		if (tiles[x + y * width] == Tile.col_planksv) return Tile.planksv;
+		if (tiles[x + y * width] == Tile.col_planksc) return Tile.planksc;
+		if (tiles[x + y * width] == Tile.col_stones) return Tile.stones;
+		if (tiles[x + y * width] == Tile.col_flower) return Tile.flower;
+		if (tiles[x + y * width] == Tile.col_watershallow) return Tile.watershallow;
 		return Tile.voidTile;
 	}
 

@@ -8,59 +8,62 @@ import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.graphics.SpriteSheet;
 
 public class Zombie extends Mob {
-	
+
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.zombie_down, 32, 32, 5, 15);
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.zombie_up, 32, 32, 5, 15);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.zombie_left, 32, 32, 5, 15);
 	private AnimatedSprite right = new AnimatedSprite(SpriteSheet.zombie_right, 32, 32, 5, 15);
 
 	private AnimatedSprite animSprite = down;
-	
-	private int xa = 0;
-	private int ya = 0;
-	private int acqrange = 70;
-	
+
+	private double xa = 0, ya = 0;
+	private int acqrange = 80;
+
+	private double speed = 0.5;
+
 	public Zombie(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
 		sprite = Sprite.zombie;
 	}
-	
+
 	public void move() {
 		xa = 0;
 		ya = 0;
-		
+
 		List<Player> players = level.getPlayers(this, acqrange);
-		if(players.size() > 0) {
+		if (players.size() > 0) {
 			Player player = players.get(0);
-			if (x < player.getX() ) {
-				xa++;
+			if (x < player.getX()) {
+				xa += speed;
 			}
-			if (x > player.getX() ) {
-				xa--;
+			if (x > player.getX()) {
+				xa -= speed;
 			}
-			if (y < player.getY() ) {
-				ya++;
+			if (y < player.getY()) {
+				ya += speed;
 			}
-			if (y > player.getY() ) {
-				ya--;
+			if (y > player.getY()) {
+				ya -= speed;
 			}
 		}
-			
+
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
 		} else {
 			walking = false;
 		}
-		
+
 	}
-	
+
 	public void update() {
 		move();
-		if (walking) animSprite.update();
-		else animSprite.setFrame(0);
-		
+		if (walking)
+			animSprite.update();
+		else
+			animSprite.setFrame(0);
+
 		if (ya < 0) {
 			animSprite = up;
 			dir = Direction.UP;
@@ -76,10 +79,10 @@ public class Zombie extends Mob {
 			dir = Direction.RIGHT;
 		}
 	}
-	
+
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
-		screen.renderMob(x- 16, y - 16, this);
+		screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
 	}
-	
+
 }

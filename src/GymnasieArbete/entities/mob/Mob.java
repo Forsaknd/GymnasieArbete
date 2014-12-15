@@ -23,36 +23,49 @@ public abstract class Mob extends Entity {
 			return;
 		}
 
-		if (xa > 0)
-			dir = Direction.RIGHT;
-		if (xa < 0)
-			dir = Direction.LEFT;
-		if (ya > 0)
-			dir = Direction.DOWN;
-		if (ya < 0)
-			dir = Direction.UP;
+		if (xa > 0) dir = Direction.RIGHT;
+		if (xa < 0) dir = Direction.LEFT;
+		if (ya > 0) dir = Direction.DOWN;
+		if (ya < 0) dir = Direction.UP;
 
-		for (int y = 0; y < Math.abs(ya); y++) {
-			if (!collision(abs(xa), ya)) {
-				this.y += abs(ya);
+		while (xa != 0) {
+			if (Math.abs(xa) > 1) {
+				if (!collision(abs(xa), ya)) {
+					this.x += abs(xa);
+				}
+				xa -= abs(xa);
+			} else {
+				if (!collision(abs(xa), ya)) {
+					this.x += xa;
+				}
+				xa = 0;
 			}
 		}
-		for (int x = 0; x < Math.abs(xa); x++) {
-			if (!collision(xa, abs(ya))) {
-				this.x += abs(xa);
+
+		while (ya != 0) {
+			if (Math.abs(ya) > 1) {
+				if (!collision(xa, abs(ya))) {
+					this.y += abs(ya);
+				}
+				ya -= abs(ya);
+			} else {
+				if (!collision(xa, abs(ya))) {
+					this.y += ya;
+				}
+				ya = 0;
 			}
 		}
 	}
 
 	private int abs(double value) {
-		if(value < 0) return -1;
+		if (value < 0) return -1;
 		return 1;
 	}
-	
+
 	public void update() {
 	}
 
-	protected void shoot(int x, int y, double dir) {
+	protected void shoot(double x, double y, double dir) {
 		Projectile p = new PistolProjectile(x - 8, y - 8, dir);
 		level.add(p);
 	}
@@ -67,12 +80,10 @@ public abstract class Mob extends Entity {
 			double yt = ((y + ya) - c / 2 * 16) / 16;
 			int ix = (int) Math.ceil(xt);
 			int iy = (int) Math.ceil(yt);
-			if (c % 2 == 0)
-				ix = (int) Math.floor(xt);
-			if (c / 2 == 0)
-				iy = (int) Math.floor(yt);
-			if (level.getTile(ix, iy).solid())
-				solid = true;
+			if (c % 2 == 0) ix = (int) Math.floor(xt);
+			if (c / 2 == 0) iy = (int) Math.floor(yt);
+			if (level.getTile(ix, iy).solid()) solid = true;
+			if (level.getPlayersCol(this, 16)) solid = true;
 		}
 		return solid;
 	}
