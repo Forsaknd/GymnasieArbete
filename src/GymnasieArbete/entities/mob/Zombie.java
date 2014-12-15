@@ -1,5 +1,7 @@
 package GymnasieArbete.entities.mob;
 
+import java.util.List;
+
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -16,6 +18,7 @@ public class Zombie extends Mob {
 	
 	private int xa = 0;
 	private int ya = 0;
+	private int acqrange = 70;
 	
 	public Zombie(int x, int y) {
 		this.x = x << 4;
@@ -23,7 +26,38 @@ public class Zombie extends Mob {
 		sprite = Sprite.zombie;
 	}
 	
+	public void move() {
+		xa = 0;
+		ya = 0;
+		
+		List<Player> players = level.getPlayers(this, acqrange);
+		if(players.size() > 0) {
+			Player player = players.get(0);
+			if (x < player.getX() ) {
+				xa++;
+			}
+			if (x > player.getX() ) {
+				xa--;
+			}
+			if (y < player.getY() ) {
+				ya++;
+			}
+			if (y > player.getY() ) {
+				ya--;
+			}
+		}
+			
+		if (xa != 0 || ya != 0) {
+			move(xa, ya);
+			walking = true;
+		} else {
+			walking = false;
+		}
+		
+	}
+	
 	public void update() {
+		move();
 		if (walking) animSprite.update();
 		else animSprite.setFrame(0);
 		
@@ -41,18 +75,11 @@ public class Zombie extends Mob {
 			animSprite = right;
 			dir = Direction.RIGHT;
 		}
-
-		if (xa != 0 || ya != 0) {
-			move(xa, ya);
-			walking = true;
-		} else {
-			walking = false;
-		}
 	}
 	
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
-		screen.renderMob(x, y, this);
+		screen.renderMob(x- 16, y - 16, this);
 	}
 	
 }

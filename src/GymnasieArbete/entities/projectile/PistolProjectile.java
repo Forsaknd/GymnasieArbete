@@ -6,7 +6,7 @@ import GymnasieArbete.graphics.Sprite;
 
 public class PistolProjectile extends Projectile {
 	
-	public static final int FIRE_RATE = 5;
+	public static final int FIRE_RATE = 20;
 
 	public PistolProjectile(int x, int y, double dir) {
 		super(x, y, dir);

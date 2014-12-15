@@ -58,7 +58,7 @@ public class Game extends Canvas implements Runnable {
 		level = Level.spawn;
 		TileCoordinate playerSpawn = new TileCoordinate(32, 32);
 		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
-		player.init(level);
+		level.add(player);
 		menu = new Menu();
 		paused = new PauseMenu();
 
@@ -127,7 +127,6 @@ public class Game extends Canvas implements Runnable {
 	public void update() {
 		if (state == STATE.GAME) {
 			key.update();
-			player.update();
 			level.update();
 		}
 	}
@@ -145,10 +144,9 @@ public class Game extends Canvas implements Runnable {
 		
 		if (state == STATE.GAME) {
 			screen.clear();
-			int xScroll = player.x - screen.width / 2;
-			int yScroll = player.y - screen.height / 2;
+			int xScroll = player.getX() - screen.width / 2;
+			int yScroll = player.getY() - screen.height / 2;
 			level.render(xScroll, yScroll, screen);
-			player.render(screen);
 			//screen.renderSheet(40, 40, SpriteSheet.player, false);
 			
 			Sprite sprite = new Sprite(width-40, 20, 0x0);

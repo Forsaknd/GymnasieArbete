@@ -25,6 +25,7 @@ public class SpawnLevel extends Level{
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file!");
 		}
+		//for (int i = 0; i < 1; i++) {
 		for (int i = 0; i < 5; i++) {
 			add(new Critter(38, 32));
 			add(new Zombie(38, 32));

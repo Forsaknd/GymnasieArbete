@@ -8,7 +8,7 @@ import GymnasieArbete.level.Level;
 
 public class Entity {
 
-	public int x, y;
+	protected int x, y;
 	private boolean removed = false;
 	protected Level level;
 	protected final Random random = new Random();
@@ -34,6 +34,14 @@ public class Entity {
 		removed = true;
 	}
 
+	public int getX() {
+		return x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+	
 	public Sprite getSprite() {
 		return sprite;
 	}
