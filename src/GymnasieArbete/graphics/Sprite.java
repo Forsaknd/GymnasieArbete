@@ -8,8 +8,8 @@ public class Sprite {
 	public int[] pixels;
 	protected SpriteSheet sheet;
 
-	//TILES
-	//public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
+	// TILES
+	// public static Sprite voidSprite = new Sprite(16, 0x1B87E0);
 	public static Sprite voidSprite = new Sprite(16, 0, 0, SpriteSheet.tiles);
 	public static Sprite grass = new Sprite(16, 0, 0, SpriteSheet.tiles);
 	public static Sprite gravel = new Sprite(16, 1, 0, SpriteSheet.tiles);
@@ -19,24 +19,24 @@ public class Sprite {
 	public static Sprite flower = new Sprite(16, 5, 0, SpriteSheet.tiles);
 	public static Sprite stones = new Sprite(16, 6, 0, SpriteSheet.tiles);
 	public static Sprite watershallow = new Sprite(16, 7, 0, SpriteSheet.tiles);
-	
-	//MENU BACKGROUND
+
+	// MENU BACKGROUND
 	public static Sprite background = new Sprite(300, 0, 0, SpriteSheet.background);
-	
-	//ITEMS
+
+	// ITEMS
 	public static Sprite pistol = new Sprite(16, 0, 0, SpriteSheet.items);
-	
-	//PROJECTILES
+
+	// PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
-	
-	//PARTICLES
-	public static Sprite particle_normal = new Sprite(2, 0xAAAAAA);
-	public static Sprite particle_planks = new Sprite(2, 0xA52A2A);
-	
-	//MOBS
+
+	// PARTICLES
+	public static Sprite particle_normal = new Sprite(2, 0xA52A2A);
+	public static Sprite particle_blood = new Sprite(2, 0x7F0000);
+
+	// MOBS
 	public static Sprite zombie = new Sprite(32, 0, 0, SpriteSheet.mobs);
-	
-	//PLAYER
+
+	// PLAYER
 	public static Sprite player = new Sprite(32, 0, 0, SpriteSheet.player);
 
 	protected Sprite(SpriteSheet sheet, int width, int height) {
@@ -45,7 +45,7 @@ public class Sprite {
 		this.height = height;
 		this.sheet = sheet;
 	}
-	
+
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {
 		SIZE = size;
 		this.width = size;
@@ -56,10 +56,11 @@ public class Sprite {
 		this.sheet = sheet;
 		load();
 	}
-	
+
 	public Sprite(int width, int height, int color) {
 		SIZE = -1;
-		this.width = width;;
+		this.width = width;
+		;
 		this.height = height;
 		pixels = new int[width * height];
 		setColor(color);
@@ -71,7 +72,7 @@ public class Sprite {
 		this.height = size;
 		pixels = new int[SIZE * SIZE];
 		setColor(color);
-	}	
+	}
 
 	public Sprite(int[] pixels, int width, int height) {
 		SIZE = (width == height) ? width : -1;
@@ -79,21 +80,21 @@ public class Sprite {
 		this.height = height;
 		this.pixels = pixels;
 	}
-	
+
 	private void setColor(int color) {
 		for (int i = 0; i < width * height; i++) {
 			pixels[i] = color;
-		}		
+		}
 	}
 
 	public int getWidth() {
 		return width;
 	}
-	
+
 	public int getHeight() {
 		return height;
 	}
-	
+
 	private void load() {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {

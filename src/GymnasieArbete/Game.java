@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
-import GymnasieArbete.graphics.SpriteSheet;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
@@ -72,11 +71,11 @@ public class Game extends Canvas implements Runnable {
 	public static int getWindowWidth() {
 		return width * scale;
 	}
-	
+
 	public static int getWindowHeight() {
 		return height * scale;
 	}
-	
+
 	public synchronized void start() {
 		running = true;
 		thread = new Thread(this, "Display");
@@ -138,38 +137,36 @@ public class Game extends Canvas implements Runnable {
 			return;
 		}
 
-
 		Graphics g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
-		
+
 		if (state == STATE.GAME) {
 			screen.clear();
 			double xScroll = player.getX() - screen.width / 2;
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
-			//screen.renderSheet(40, 40, SpriteSheet.player, false);
 			
-			Sprite sprite = new Sprite(width-40, 20, 0x0);
-			screen.renderSprite(20, height - 20, sprite, false);
-			screen.renderSprite(20, height - 20, Sprite.pistol, false);
+			//screen.renderSheet(40, 40, SpriteSheet.player, false);
+			//Sprite sprite = new Sprite(width - 40, 20, 0x0);
+			//screen.renderSprite(20, height - 20, sprite, false);
+			//screen.renderSprite(20, height - 20, Sprite.pistol, false);
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
 
 			g.setColor(Color.WHITE);
-			//g.fillRect(Mouse.getX() - 32, Mouse.getY() - 32, 64, 64);
-		}
-		else if (state == STATE.MENU) {
+			// g.fillRect(Mouse.getX() - 32, Mouse.getY() - 32, 64, 64);
+		} else if (state == STATE.MENU) {
 			menu.render(screen);
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
 		}
-		
+
 		else if (state == STATE.PAUSED) {
 			paused.render(g);
 		}
-		
+
 		g.dispose();
 		bs.show();
 	}

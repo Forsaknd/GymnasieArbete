@@ -48,11 +48,9 @@ public class Screen {
 			int ya = y + yp;
 			for (int x = 0; x < sheet.WIDTH; x++) {
 				int xa = x + xp;
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
-					continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
 				int col = sheet.pixels[x + y * sheet.WIDTH];
-				if (col != 0xffff00ff)
-					pixels[xa + ya * width] = col;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}
 		}
 
@@ -69,11 +67,9 @@ public class Screen {
 			for (int x = 0; x < sprite.getWidth(); x++) {
 				int xa = x + xp;
 				int xs = x;
-				if (xa < 0 || xa >= width || ya < 0 || ya >= height)
-					continue;
+				if (xa < 0 || xa >= width || ya < 0 || ya >= height) continue;
 				int col = sprite.pixels[xs + ys * sprite.getWidth()];
-				if (col != 0xffff00ff)
-					pixels[xa + ya * width] = col;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}
 		}
 
@@ -86,10 +82,8 @@ public class Screen {
 			int ya = y + yp;
 			for (int x = 0; x < tile.getSpriteSize(); x++) {
 				int xa = x + xp;
-				if (xa < -tile.getSpriteSize() || xa >= width || ya < 0 || ya >= height)
-					break;
-				if (xa < 0)
-					xa = 0;
+				if (xa < -tile.getSpriteSize() || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < 0) xa = 0;
 				pixels[xa + ya * width] = tile.sprite.pixels[x + y * tile.getSpriteSize()];
 			}
 		}
@@ -104,13 +98,10 @@ public class Screen {
 			for (int x = 0; x < p.getSpriteSize(); x++) {
 				int xa = x + xp;
 				int xs = x;
-				if (xa < -p.getSpriteSize() || xa >= width || ya < 0 || ya >= height)
-					break;
-				if (xa < 0)
-					xa = 0;
+				if (xa < -p.getSpriteSize() || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < 0) xa = 0;
 				int col = p.getSprite().pixels[xs + ys * p.getSprite().SIZE];
-				if (col != 0xffff00ff)
-					pixels[xa + ya * width] = col;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}
 		}
 	}
@@ -124,13 +115,10 @@ public class Screen {
 			for (int x = 0; x < sprite.SIZE; x++) {
 				int xa = x + xp;
 				int xs = x;
-				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height)
-					break;
-				if (xa < 0)
-					xa = 0;
+				if (xa < -sprite.SIZE || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < 0) xa = 0;
 				int col = sprite.pixels[xs + ys * sprite.SIZE];
-				if (col != 0xffff00ff)
-					pixels[xa + ya * width] = col;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}
 		}
 	}
@@ -144,14 +132,11 @@ public class Screen {
 			for (int x = 0; x < mob.getSprite().SIZE; x++) {
 				int xa = x + xp;
 				int xs = x;
-				if (xa < -mob.getSprite().SIZE || xa >= width || ya < 0 || ya >= height)
-					break;
-				if (xa < 0)
-					xa = 0;
+				if (xa < -mob.getSprite().SIZE || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < 0) xa = 0;
 				int col = mob.getSprite().pixels[xs + ys * mob.getSprite().SIZE];
-				if ((mob instanceof Zombie) && col == 0xffe3ccc7) col = 0xffBA0015;
-				if (col != 0xffff00ff)
-					pixels[xa + ya * width] = col;
+				//if ((mob instanceof Zombie) && col == 0xffe3ccc7) col = 0xffBA0015;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}
 		}
 	}

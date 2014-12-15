@@ -8,12 +8,12 @@ import javax.imageio.ImageIO;
 import GymnasieArbete.entities.mob.Critter;
 import GymnasieArbete.entities.mob.Zombie;
 
-public class SpawnLevel extends Level{
-	
+public class SpawnLevel extends Level {
+
 	public SpawnLevel(String path) {
 		super(path);
 	}
-	
+
 	protected void loadLevel(String path) {
 		try {
 			BufferedImage image = ImageIO.read(SpawnLevel.class.getResource(path));
@@ -25,14 +25,13 @@ public class SpawnLevel extends Level{
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file!");
 		}
-		//for (int i = 0; i < 1; i++) {
-		for (int i = 0; i < 1; i++) {
-			add(new Critter(36, 32));
+		// for (int i = 0; i < 1; i++) {
+		for (int i = 0; i < 5; i++) {
+			//add(new Critter(36, 32));
 			add(new Zombie(38, 32));
-			add(new Zombie(40, 32));
 		}
 	}
-	
+
 	protected void generateLevel() {
 	}
 

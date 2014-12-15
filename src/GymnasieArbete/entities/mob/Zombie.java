@@ -1,11 +1,14 @@
 package GymnasieArbete.entities.mob;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.graphics.SpriteSheet;
+import GymnasieArbete.level.Node;
+import GymnasieArbete.util.Vector2i;
 
 public class Zombie extends Mob {
 
@@ -18,6 +21,8 @@ public class Zombie extends Mob {
 
 	private double xa = 0, ya = 0;
 	private int acqrange = 80;
+	private int time = 0;
+	private List<Node> path = null;
 
 	private double speed = 0.5;
 
@@ -28,23 +33,33 @@ public class Zombie extends Mob {
 	}
 
 	public void move() {
-		xa = 0;
-		ya = 0;
-
-		List<Player> players = level.getPlayers(this, acqrange);
-		if (players.size() > 0) {
-			Player player = players.get(0);
-			if (x < player.getX()) {
-				xa += speed;
+		List<Player> player = level.getPlayers(this, acqrange);
+		if (player.size() > 0) {
+			xa = 0;
+			ya = 0;
+			int px = (int) player.get(0).getX();
+			int py = (int) player.get(0).getY();
+			Vector2i start = new Vector2i((int) getX() >> 4, (int) getY() >> 4);
+			Vector2i destination = new Vector2i(px >> 4, py >> 4);
+			if (time % 3 == 0) path = level.findPath(start, destination);
+			if (path != null) {
+				if (path.size() > 0) {
+					Vector2i vec = path.get(path.size() - 1).tile;
+					if (x < vec.getX() << 4) xa += speed;
+					if (x > vec.getX() << 4) xa -= speed;
+					if (y < vec.getY() << 4) ya += speed;
+					if (y > vec.getY() << 4) ya -= speed;
+				}
 			}
-			if (x > player.getX()) {
-				xa -= speed;
-			}
-			if (y < player.getY()) {
-				ya += speed;
-			}
-			if (y > player.getY()) {
-				ya -= speed;
+		} else {
+			// if time % 60 == 0 / = 1 second
+			if (time % (random.nextInt(50) + 60) == 0) {
+				xa = (random.nextInt(3) - 1) * speed;
+				ya = (random.nextInt(3) - 1) * speed;
+				if (random.nextInt(4) == 0) {
+					xa = 0;
+					ya = 0;
+				}
 			}
 		}
 
@@ -58,11 +73,10 @@ public class Zombie extends Mob {
 	}
 
 	public void update() {
+		time++;
 		move();
-		if (walking)
-			animSprite.update();
-		else
-			animSprite.setFrame(0);
+		if (walking) animSprite.update();
+		else animSprite.setFrame(0);
 
 		if (ya < 0) {
 			animSprite = up;
@@ -82,7 +96,7 @@ public class Zombie extends Mob {
 
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
-		screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
+		screen.renderMob((int) x - 16, (int) y - 16, sprite);
 	}
 
 }

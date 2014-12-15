@@ -5,7 +5,6 @@ import GymnasieArbete.graphics.Sprite;
 
 public class Tile {
 
-	public int x, y;
 	public Sprite sprite;	
 
 	public static Tile voidTile = new VoidTile(Sprite.voidSprite);

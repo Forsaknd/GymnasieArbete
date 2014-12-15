@@ -22,7 +22,6 @@ public abstract class Projectile extends Entity {
 	}
 	
 	protected void move() {
-		
 	}
 
 	protected boolean collision(double xa, double ya) {

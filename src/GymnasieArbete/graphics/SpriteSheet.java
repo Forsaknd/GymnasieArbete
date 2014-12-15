@@ -28,7 +28,7 @@ public class SpriteSheet {
 	public static SpriteSheet zombie_up = new SpriteSheet(mobs, 1, 0, 1, 5, 32);
 	public static SpriteSheet zombie_left = new SpriteSheet(mobs, 2, 0, 1, 5, 32);
 	public static SpriteSheet zombie_right = new SpriteSheet(mobs, 3, 0, 1, 5, 32);
-	
+
 	private Sprite[] sprites;
 
 	public SpriteSheet(SpriteSheet sheet, int x, int y, int width, int height, int spriteSize) {
@@ -49,7 +49,7 @@ public class SpriteSheet {
 				pixels[x0 + y0 * w] = sheet.pixels[xp + yp * sheet.WIDTH];
 			}
 		}
-		
+
 		int frame = 0;
 		sprites = new Sprite[width * height];
 		for (int ya = 0; ya < height; ya++) {
@@ -64,7 +64,7 @@ public class SpriteSheet {
 				sprites[frame++] = sprite;
 			}
 		}
-		
+
 	}
 
 	public SpriteSheet(String path, int size) {

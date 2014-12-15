@@ -1,5 +1,8 @@
 package GymnasieArbete.entities.projectile;
 
+import java.util.List;
+
+import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -20,10 +23,18 @@ public class PistolProjectile extends Projectile {
 
 	public void update() {
 		if (level.tileCollision((int) (x + nx), (int) (y + ny), 2, 7, 7)) {
-			level.add(new ParticleSpawner((int) x + 5, (int) y + 6, 40, 20, level));
+			level.add(new ParticleSpawner((int) x + 5, (int) y + 6, 40, 20, Sprite.particle_normal, level));
 			remove();
-		} else
+		} else {
 			move();
+		}
+		List<Zombie> zombies = level.getEnemy(this, 32);
+		if (zombies.size() > 0) {
+			for (int i = 0; i < zombies.size(); i++) {
+				level.add(new ParticleSpawner((int) zombies.get(i).getX(), (int) zombies.get(i).getY(), 40, 20, Sprite.particle_blood, level));
+				remove(); 
+			}
+		}
 	}
 
 	protected void move() {

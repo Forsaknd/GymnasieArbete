@@ -42,10 +42,8 @@ public class Player extends Mob {
 	}
 
 	public void update() {
-		if (walking)
-			animSprite.update();
-		else
-			animSprite.setFrame(0);
+		if (walking) animSprite.update();
+		else animSprite.setFrame(0);
 		if (fireRate > 0) fireRate--;
 		if (input.esc) Game.state = Game.STATE.PAUSED;
 
