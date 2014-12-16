@@ -11,7 +11,8 @@ public abstract class Projectile extends Entity {
 	protected double x, y;
 	protected double nx, ny;
 	protected double distance;
-	protected double speed, rateOfFire, range, damage;
+	protected double speed, rateOfFire, range;
+	protected int damage;
 	
 	public Projectile(double x, double y, double dir) {
 		xOrigin = x;
@@ -34,6 +35,13 @@ public abstract class Projectile extends Entity {
 		return solid;
 	}
 
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
 	public Sprite getSprite() {
 		return sprite;
 	}

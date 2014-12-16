@@ -2,6 +2,7 @@ package GymnasieArbete.entities.projectile;
 
 import java.util.List;
 
+import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.Screen;
@@ -22,18 +23,22 @@ public class PistolProjectile extends Projectile {
 	}
 
 	public void update() {
+		List<Entity> entities = level.getallEntities();
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Zombie) {
+				Zombie current = (Zombie) entities.get(i);
+				//creates 16x16 "hitbox"
+				if (x < current.getX() + 17 && x > current.getX() - 17 && y < current.getY() + 17 && y > current.getY() - 17) {
+					current.takeDamage(damage, 25);
+					remove();
+				}
+			}
+		}
 		if (level.tileCollision((int) (x + nx), (int) (y + ny), 2, 7, 7)) {
 			level.add(new ParticleSpawner((int) x + 5, (int) y + 6, 40, 20, Sprite.particle_normal, level));
 			remove();
 		} else {
 			move();
-		}
-		List<Zombie> zombies = level.getEnemy(this, 32);
-		if (zombies.size() > 0) {
-			for (int i = 0; i < zombies.size(); i++) {
-				level.add(new ParticleSpawner((int) zombies.get(i).getX(), (int) zombies.get(i).getY(), 40, 20, Sprite.particle_blood, level));
-				remove(); 
-			}
 		}
 	}
 

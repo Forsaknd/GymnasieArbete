@@ -20,7 +20,7 @@ public class Zombie extends Mob {
 	private AnimatedSprite animSprite = down;
 
 	private double xa = 0, ya = 0;
-	private int acqrange = 80;
+	private int acqrange = 85;
 	private int time = 0;
 	private List<Node> path = null;
 

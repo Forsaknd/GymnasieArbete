@@ -30,8 +30,8 @@ public class Sprite {
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 
 	// PARTICLES
-	public static Sprite particle_normal = new Sprite(2, 0xA52A2A);
-	public static Sprite particle_blood = new Sprite(2, 0x7F0000);
+	public static Sprite particle_normal = new Sprite(2, 0xFFA52A2A);
+	public static Sprite particle_blood = new Sprite(2, 0xFFFF0000);
 
 	// MOBS
 	public static Sprite zombie = new Sprite(32, 0, 0, SpriteSheet.mobs);

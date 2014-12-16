@@ -252,6 +252,36 @@ public class Level {
 		return result;
 	}
 
+	public Entity getEntitiesCol(Entity e, int radius) {
+		Entity result = null;
+		int ex = (int) e.getX();
+		int ey = (int) e.getY();
+		for (int i = 0; i < entities.size(); i++) {
+			Entity entity = entities.get(i);
+			int x = (int) entity.getX();
+			int y = (int) entity.getY();
+			int dx = Math.abs(x - ex);
+			int dy = Math.abs(y - ey);
+			double distance = Math.sqrt((dx * dx) + (dy * dy));
+			if (distance <= radius) result = entity;
+		}
+		return result;
+	}
+
+	public boolean getEntityCol(Entity e, int radius) {
+		boolean result = false;
+		Entity entity = getEntitiesCol(e, radius);
+		if (!entity.isRemoved()) {
+			if (entity.equals(e)) result = false;
+			else result = true;
+		}
+		return result;
+	}
+
+	public List<Entity> getallEntities() {
+		return entities;
+	}
+	
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
@@ -264,10 +294,4 @@ public class Level {
 		if (tiles[x + y * width] == Tile.col_watershallow) return Tile.watershallow;
 		return Tile.voidTile;
 	}
-
-	/*
-	 * public Mob getMob(int x, int y) { if (x < 0 || y < 0 || x >= width || y
-	 * >= height) return null; if (tiles[x + y * width] == .col_grass) return
-	 * Tile.grass; return Tile.voidTile; }
-	 */
 }
