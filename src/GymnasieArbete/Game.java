@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
-import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
@@ -55,7 +54,7 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		key = new Keyboard();
 		level = Level.spawn;
-		TileCoordinate playerSpawn = new TileCoordinate(32, 32);
+		TileCoordinate playerSpawn = new TileCoordinate(26, 30);
 		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
 		level.add(player);
 		menu = new Menu();
@@ -145,7 +144,7 @@ public class Game extends Canvas implements Runnable {
 			double xScroll = player.getX() - screen.width / 2;
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
-			
+			player.getInventory().render(screen);
 			//screen.renderSheet(40, 40, SpriteSheet.player, false);
 			//Sprite sprite = new Sprite(width - 40, 20, 0x0);
 			//screen.renderSprite(20, height - 20, sprite, false);

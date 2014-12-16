@@ -26,7 +26,8 @@ public class SpawnLevel extends Level {
 			System.out.println("Exception! Could not load level file!");
 		}
 		for (int i = 0; i < 1; i++) {
-			add(new Pistol(30, 30));
+			add(new Pistol(24, 30));
+			add(new Pistol(26, 30));
 			add(new Zombie(30, 30));
 			add(new Zombie(32, 30));
 			add(new Zombie(34, 30));

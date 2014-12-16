@@ -2,8 +2,9 @@ package GymnasieArbete.graphics;
 
 import java.util.Random;
 
+import GymnasieArbete.entities.items.Inventory;
+import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.mob.Mob;
-import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.level.tile.Tile;
 
@@ -135,6 +136,24 @@ public class Screen {
 				if (xa < -mob.getSprite().SIZE || xa >= width || ya < 0 || ya >= height) break;
 				if (xa < 0) xa = 0;
 				int col = mob.getSprite().pixels[xs + ys * mob.getSprite().SIZE];
+				//if ((mob instanceof Zombie) && col == 0xffe3ccc7) col = 0xffBA0015;
+				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
+			}
+		}
+	}
+
+	public void renderItem(int xp, int yp, Item item) {
+		xp -= xOffset;
+		yp -= yOffset;
+		for (int y = 0; y < item.getSprite().SIZE; y++) {
+			int ya = y + yp;
+			int ys = y;
+			for (int x = 0; x < item.getSprite().SIZE; x++) {
+				int xa = x + xp;
+				int xs = x;
+				if (xa < -item.getSprite().SIZE || xa >= width || ya < 0 || ya >= height) break;
+				if (xa < 0) xa = 0;
+				int col = item.getSprite().pixels[xs + ys * item.getSprite().SIZE];
 				//if ((mob instanceof Zombie) && col == 0xffe3ccc7) col = 0xffBA0015;
 				if (col != 0xffff00ff) pixels[xa + ya * width] = col;
 			}

@@ -67,7 +67,7 @@ public abstract class Mob extends Entity {
 
 	public void update() {
 	}
-
+	
 	public void takeDamage(int damage, int particleamount) {
 		level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount, Sprite.particle_blood, level));
 		hp -= damage;

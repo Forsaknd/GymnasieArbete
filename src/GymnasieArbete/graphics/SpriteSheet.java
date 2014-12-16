@@ -17,6 +17,7 @@ public class SpriteSheet {
 	public static SpriteSheet mobs = new SpriteSheet("/textures/sheets/spritesheet_mobs.png", 256);
 	public static SpriteSheet items = new SpriteSheet("/textures/sheets/spritesheet_items.png", 128);
 	public static SpriteSheet projectiles = new SpriteSheet("/textures/sheets/spritesheet_projectiles.png", 64);
+	public static SpriteSheet actionbar = new SpriteSheet("/textures/sheets/spritesheet_actionbar.png", 162, 20);
 
 	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 160);
 	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);

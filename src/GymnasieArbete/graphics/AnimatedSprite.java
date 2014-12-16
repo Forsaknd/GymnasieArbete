@@ -9,7 +9,7 @@ public class AnimatedSprite extends Sprite {
 	private int length = -1;
 
 	public AnimatedSprite(SpriteSheet sheet, int width, int height, int length, int rate) {
-		super(sheet, width, height);
+		super(width, height, sheet);
 		this.length = length;
 		this.rate = rate;
 		sprite = sheet.getSprites()[0];

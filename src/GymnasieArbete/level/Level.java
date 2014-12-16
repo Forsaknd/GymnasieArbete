@@ -6,6 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.particle.Particle;
@@ -22,6 +23,7 @@ public class Level {
 	protected int tile_size;
 
 	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Item> items = new ArrayList<Item>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 
@@ -61,10 +63,15 @@ public class Level {
 	}
 
 	public void update() {
+
+		for (int i = 0; i < items.size(); i++) {
+			items.get(i).update();
+		}
+		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
-
+		
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).update();
 		}
@@ -76,6 +83,11 @@ public class Level {
 	}
 
 	private void remove() {
+		
+		for (int i = 0; i < items.size(); i++) {
+			if (items.get(i).isRemoved()) items.remove(i);
+		}
+		
 		for (int i = 0; i < entities.size(); i++) {
 			if (entities.get(i).isRemoved()) entities.remove(i);
 		}
@@ -123,10 +135,15 @@ public class Level {
 				getTile(x, y).render(x, y, screen);
 			}
 		}
+
+		for (int i = 0; i < items.size(); i++) {
+			items.get(i).render(screen);
+		}
+		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
 		}
-
+		
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
 		}
@@ -138,6 +155,9 @@ public class Level {
 
 	public void add(Entity e) {
 		e.init(this);
+		if (e instanceof Item) {
+			items.add((Item) e);
+		}
 		if (e instanceof Particle) {
 			particles.add((Particle) e);
 		} else if (e instanceof Projectile) {
@@ -248,6 +268,23 @@ public class Level {
 			if (entities.get(i) instanceof Player) {
 				result.add((Player) entities.get(i));
 			}
+		}
+		return result;
+	}
+
+	public Item getItemCol(Entity e, int radius) {
+		Item result = null;
+		int ex = (int) e.getX();
+		int ey = (int) e.getY();
+		for (int i = 0; i < items.size(); i++) {
+			Item entity = items.get(i);
+			int x = (int) entity.getX();
+			int y = (int) entity.getY();
+			int dx = Math.abs(x - ex);
+			int dy = Math.abs(y - ey);
+			double distance = Math.sqrt((dx * dx) + (dy * dy));
+			if (distance <= radius) result = entity;
+			else continue;
 		}
 		return result;
 	}

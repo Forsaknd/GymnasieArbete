@@ -1,6 +1,5 @@
 package GymnasieArbete.entities.mob;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.graphics.AnimatedSprite;

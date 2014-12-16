@@ -25,7 +25,10 @@ public class Sprite {
 
 	// ITEMS
 	public static Sprite pistol = new Sprite(16, 0, 0, SpriteSheet.items);
-
+	
+	// ACTIONBAR
+	public static Sprite actionbar = new Sprite(162, 20, SpriteSheet.actionbar);
+	
 	// PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 
@@ -39,11 +42,13 @@ public class Sprite {
 	// PLAYER
 	public static Sprite player = new Sprite(32, 0, 0, SpriteSheet.player);
 
-	protected Sprite(SpriteSheet sheet, int width, int height) {
+	protected Sprite(int width, int height, SpriteSheet sheet) {
 		SIZE = (width == height) ? width : -1;
 		this.width = width;
 		this.height = height;
 		this.sheet = sheet;
+		pixels = new int[width * height];
+		load();
 	}
 
 	public Sprite(int size, int x, int y, SpriteSheet sheet) {

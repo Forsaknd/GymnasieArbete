@@ -1,6 +1,8 @@
 package GymnasieArbete.entities.mob;
 
 import GymnasieArbete.Game;
+import GymnasieArbete.entities.items.Inventory;
+import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.AnimatedSprite;
@@ -12,6 +14,7 @@ import GymnasieArbete.input.Mouse;
 
 public class Player extends Mob {
 
+	private Inventory inventory = new Inventory();
 	private Keyboard input;
 	private Sprite sprite;
 	protected boolean walking = false;
@@ -42,6 +45,7 @@ public class Player extends Mob {
 	}
 
 	public void update() {
+
 		if (walking) animSprite.update();
 		else animSprite.setFrame(0);
 		if (fireRate > 0) fireRate--;
@@ -61,6 +65,14 @@ public class Player extends Mob {
 		} else if (input.right) {
 			animSprite = right;
 			xa += speed;
+		}
+		if (input.space) {
+			Item item = level.getItemCol(this, 16);
+			System.out.println("item found: " + item);
+			if (item != null) {
+				inventory.addItem(item);
+				item.remove();
+			}
 		}
 
 		if (xa != 0 || ya != 0) {
@@ -111,6 +123,10 @@ public class Player extends Mob {
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
 		screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
+	}
+
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 }
