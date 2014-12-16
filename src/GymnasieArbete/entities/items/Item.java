@@ -5,6 +5,8 @@ import GymnasieArbete.graphics.Screen;
 
 public class Item extends Entity {
 	
+	protected String name;
+	
 	public void pickUp() {
 	}
 
@@ -14,6 +16,10 @@ public class Item extends Entity {
 	public void render(Screen screen) {
 	}
 
+	public String getName() {
+		return name;
+	}
+	
 	public void renderInInventory(Screen screen, int x, int y) {
 	}
 }

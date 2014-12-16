@@ -76,20 +76,21 @@ public class Zombie extends Mob {
 		move();
 		if (walking) animSprite.update();
 		else animSprite.setFrame(0);
-
-		if (ya < 0) {
-			animSprite = up;
-			dir = Direction.UP;
-		} else if (ya > 0) {
-			animSprite = down;
-			dir = Direction.DOWN;
-		}
-		if (xa < 0) {
-			animSprite = left;
-			dir = Direction.LEFT;
-		} else if (xa > 0) {
-			animSprite = right;
-			dir = Direction.RIGHT;
+		if (time % 3 == 0) {
+			if (ya < 0) {
+				animSprite = up;
+				dir = Direction.UP;
+			} else if (ya > 0) {
+				animSprite = down;
+				dir = Direction.DOWN;
+			}
+			if (xa < 0) {
+				animSprite = left;
+				dir = Direction.LEFT;
+			} else if (xa > 0) {
+				animSprite = right;
+				dir = Direction.RIGHT;
+			}
 		}
 	}
 

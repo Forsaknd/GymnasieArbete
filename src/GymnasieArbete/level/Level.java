@@ -9,6 +9,7 @@ import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.entities.mob.Zombie;
+import GymnasieArbete.entities.particle.BackgroundParticle;
 import GymnasieArbete.entities.particle.Particle;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
@@ -26,6 +27,7 @@ public class Level {
 	private List<Item> items = new ArrayList<Item>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
+	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
 
 	public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
 
@@ -67,6 +69,10 @@ public class Level {
 		for (int i = 0; i < items.size(); i++) {
 			items.get(i).update();
 		}
+
+		for (int i = 0; i < backgroundParticles.size(); i++) {
+			backgroundParticles.get(i).update();
+		}
 		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
@@ -79,6 +85,7 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update();
 		}
+	
 		remove();
 	}
 
@@ -86,6 +93,10 @@ public class Level {
 		
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).isRemoved()) items.remove(i);
+		}
+
+		for (int i = 0; i < backgroundParticles.size(); i++) {
+			if (backgroundParticles.get(i).isRemoved()) backgroundParticles.remove(i);
 		}
 		
 		for (int i = 0; i < entities.size(); i++) {
@@ -139,6 +150,10 @@ public class Level {
 		for (int i = 0; i < items.size(); i++) {
 			items.get(i).render(screen);
 		}
+
+		for (int i = 0; i < backgroundParticles.size(); i++) {
+			backgroundParticles.get(i).render(screen);
+		}
 		
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).render(screen);
@@ -158,9 +173,13 @@ public class Level {
 		if (e instanceof Item) {
 			items.add((Item) e);
 		}
-		if (e instanceof Particle) {
+		else if (e instanceof Particle) {
 			particles.add((Particle) e);
-		} else if (e instanceof Projectile) {
+		}
+		else if (e instanceof BackgroundParticle) {
+			backgroundParticles.add((BackgroundParticle) e);
+		}
+		else if (e instanceof Projectile) {
 			projectiles.add((Projectile) e);
 		} else {
 			entities.add(e);

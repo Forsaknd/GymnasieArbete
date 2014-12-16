@@ -128,5 +128,4 @@ public class Player extends Mob {
 	public Inventory getInventory() {
 		return inventory;
 	}
-
 }

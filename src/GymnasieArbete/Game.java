@@ -21,10 +21,10 @@ import GymnasieArbete.level.TileCoordinate;
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
-	private static int width = 300;
+	private static int width = 400;
 	private static int height = width / 16 * 9;
 	public static int scale = 3;
-	public static String title = "Prison Break 2D";
+	public static String title = "Game";
 
 	private Thread thread;
 	private JFrame frame;
@@ -33,10 +33,12 @@ public class Game extends Canvas implements Runnable {
 	private Player player;
 	private Menu menu;
 	private PauseMenu paused;
+	public Graphics g;
 	public static boolean running = false;
 
 	private Screen screen;
 
+	private BufferStrategy bs;
 	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
@@ -130,13 +132,13 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void render() {
-		BufferStrategy bs = getBufferStrategy();
+		bs = getBufferStrategy();
 		if (bs == null) {
 			createBufferStrategy(3);
 			return;
 		}
 
-		Graphics g = bs.getDrawGraphics();
+		g = bs.getDrawGraphics();
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 
 		if (state == STATE.GAME) {
@@ -145,14 +147,13 @@ public class Game extends Canvas implements Runnable {
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
 			player.getInventory().render(screen);
-			//screen.renderSheet(40, 40, SpriteSheet.player, false);
-			//Sprite sprite = new Sprite(width - 40, 20, 0x0);
-			//screen.renderSprite(20, height - 20, sprite, false);
-			//screen.renderSprite(20, height - 20, Sprite.pistol, false);
+			// screen.renderSheet(40, 40, SpriteSheet.player, false);
+			// Sprite sprite = new Sprite(width - 40, 20, 0x0);
+			// screen.renderSprite(20, height - 20, sprite, false);
+			// screen.renderSprite(20, height - 20, Sprite.pistol, false);
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
-
 			g.setColor(Color.WHITE);
 			// g.fillRect(Mouse.getX() - 32, Mouse.getY() - 32, 64, 64);
 		} else if (state == STATE.MENU) {

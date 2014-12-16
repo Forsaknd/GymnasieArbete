@@ -20,9 +20,11 @@ public class Inventory {
 	}
 	
 	public void render(Screen screen) {
-		screen.renderSprite(69, 140, sprite, false);
+		int x = (screen.width - 162)/2;
+		int y = (screen.height - 20);
+		screen.renderSprite(x, y, sprite, false);
 		for (int i = 0; i < items.size(); i++) {
-			items.get(i).renderInInventory(screen, 70 + (i * 16), 140);
+			items.get(i).renderInInventory(screen, x + 1 + i * 16, y);
 		}
 	}
 	

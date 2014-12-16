@@ -3,6 +3,7 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -69,10 +70,12 @@ public abstract class Mob extends Entity {
 	}
 	
 	public void takeDamage(int damage, int particleamount) {
-		level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount, Sprite.particle_blood, level));
+		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
 		hp -= damage;
 		if(hp<=0) {
-			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount, Sprite.particle_blood, level));
+			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount*4, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 300, particleamount*7, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 300, particleamount*7, Sprite.particle_blood, level));
 			remove();
 		}
 	}
