@@ -2,6 +2,7 @@ package GymnasieArbete.entities.mob;
 
 import java.util.List;
 
+import GymnasieArbete.entities.Entity;
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -22,6 +23,7 @@ public class Zombie extends Mob {
 	private int acqrange = 85;
 	private int time = 0;
 	private List<Node> path = null;
+	private int damage = 5;
 
 	private double speed = 0.5;
 
@@ -90,6 +92,14 @@ public class Zombie extends Mob {
 			} else if (xa > 0) {
 				animSprite = right;
 				dir = Direction.RIGHT;
+			}
+		}
+
+		if (time % 30 == 0) {
+			Player current = level.getPlayer();
+			// creates 19x19 "hitbox"
+			if (x < current.getX() + 20 && x > current.getX() - 20 && y < current.getY() + 20 && y > current.getY() - 20) {
+				current.takeDamage(damage, 25);
 			}
 		}
 	}
