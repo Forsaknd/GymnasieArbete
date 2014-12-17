@@ -71,7 +71,6 @@ public class Player extends Mob {
 			}
 			if (input.space) {
 				Item item = level.getItemCol(this, 16);
-				System.out.println("item found: " + item);
 				if (item != null) {
 					inventory.addItem(item);
 					item.setOwner(this);
@@ -79,11 +78,12 @@ public class Player extends Mob {
 				}
 			}
 			if (input.g) {
-				if(equipped != null && equipped.type != Item.Type.EMPTY) {
+				if (equipped != null && equipped.type != Item.Type.EMPTY) {
 					inventory.removeItem(equipped);
+					equipped.setPos((int) x, (int) y);
 					level.add(equipped);
-					equipped.setPos((int)x, (int)y);
 					equipped = new Item();
+					canShoot = false;
 				}
 			}
 			for (int i = 0; i < 10; i++) {
@@ -97,7 +97,7 @@ public class Player extends Mob {
 						} else if (current.type == Item.Type.CONSUMABLE && hp.getHealth() < hp.getMaxHealth()) {
 							current.use();
 							inventory.removeItem(current);
-						} else canShoot = false;
+						}
 					}
 				}
 			}
@@ -170,6 +170,20 @@ public class Player extends Mob {
 		}
 	}
 
+	protected boolean collision(double xa, double ya) {
+		boolean solid = false;
+		for (int c = 0; c < 4; c++) {
+			double xt = ((x + xa) - c % 2 * 15) / 16;
+			double yt = ((y + ya) - c / 2 * 15) / 16;
+			int ix = (int) Math.ceil(xt);
+			int iy = (int) Math.ceil(yt);
+			if (c % 2 == 0) ix = (int) Math.floor(xt);
+			if (c / 2 == 0) iy = (int) Math.floor(yt);
+			if (level.getTile(ix, iy).solid()) solid = true;
+		}
+		return solid;
+	}
+
 	public void dropItem(Item item) {
 
 	}
@@ -193,8 +207,5 @@ public class Player extends Mob {
 	public boolean isDead() {
 		return dead;
 	}
-
-	protected boolean collision(double xa, double ya) {
-		return false;
-	}
+	
 }

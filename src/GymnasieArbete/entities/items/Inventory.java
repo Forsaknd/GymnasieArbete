@@ -42,10 +42,9 @@ public class Inventory {
 		for (int i = 0; i < items.size(); i++) {			
 			if(items.get(i).type == Item.Type.EMPTY) {
 				Item empty = items.get(i);
-				System.out.println("EMPTY FOUND: " + empty);
 				int id = getIndex(empty);
-				Collections.swap(items, id, items.size());
-				items.remove(items.size());
+				Collections.swap(items, id, items.size() - 1);
+				items.remove(items.size() - 1);
 				break;
 			}
 		}
@@ -57,7 +56,7 @@ public class Inventory {
 			if(items.get(i).equals(item)) {
 				Item empty = new Item();
 				empty.type = Item.Type.EMPTY;
-				items.add(new Item());
+				items.add(empty);
 				Collections.swap(items, id, items.size() - 1);
 				items.remove(items.size() - 1);
 			}

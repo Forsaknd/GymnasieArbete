@@ -28,11 +28,11 @@ public class Keyboard implements KeyListener {
 		numbers[8] = keys[KeyEvent.VK_9];
 		numbers[9] = keys[KeyEvent.VK_0];
 
-		for (int i = 0; i < keys.length; i++) {
+		/*for (int i = 0; i < keys.length; i++) {
 			if (keys[i]) {
 				System.out.println("KEY PRESSED: " + i);
 			}
-		}
+		}*/
 	}
 
 	public void keyPressed(KeyEvent e) {
