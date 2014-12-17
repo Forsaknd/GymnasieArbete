@@ -35,6 +35,11 @@ public class Entity {
 		removed = true;
 	}
 
+	public void setPos(int x, int y) {
+		this.x = x << 4;
+		this.y = y << 4;
+	}
+	
 	public double getX() {
 		return x;
 	}

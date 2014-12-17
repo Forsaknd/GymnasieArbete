@@ -2,8 +2,6 @@ package GymnasieArbete.entities.mob;
 
 import java.util.List;
 
-import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
-import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -35,7 +33,7 @@ public class Zombie extends Mob {
 	}
 
 	public void move() {
-		Player player = level.getPlayers(this, acqrange);
+		Player player = level.getPlayerInRange(this, acqrange);
 		if (player != null && !player.isDead()) {
 			xa = 0;
 			ya = 0;

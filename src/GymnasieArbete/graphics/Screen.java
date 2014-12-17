@@ -2,7 +2,6 @@ package GymnasieArbete.graphics;
 
 import java.util.Random;
 
-import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.mob.Mob;
 import GymnasieArbete.entities.projectile.Projectile;

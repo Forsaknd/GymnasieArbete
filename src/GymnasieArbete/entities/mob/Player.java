@@ -78,8 +78,15 @@ public class Player extends Mob {
 					item.remove();
 				}
 			}
-
-			for (int i = 0; i < 10; i++)
+			if (input.g) {
+				if(equipped != null && equipped.type != Item.Type.EMPTY) {
+					inventory.removeItem(equipped);
+					level.add(equipped);
+					equipped.setPos((int)x, (int)y);
+					equipped = new Item();
+				}
+			}
+			for (int i = 0; i < 10; i++) {
 				if (input.numbers[i]) {
 					if (inventory.getItems().size() > i) {
 						Item current = inventory.getItem(i);
@@ -87,13 +94,13 @@ public class Player extends Mob {
 							equipped = current;
 							canShoot = true;
 							fireRate = equipped.getFireRate();
-						} else if (current.type == Item.Type.CONSUMABLE) {
+						} else if (current.type == Item.Type.CONSUMABLE && hp.getHealth() < hp.getMaxHealth()) {
 							current.use();
 							inventory.removeItem(current);
-							canShoot = false;
 						} else canShoot = false;
 					}
 				}
+			}
 
 			if (xa != 0 || ya != 0) {
 				move(xa, ya);
@@ -161,6 +168,10 @@ public class Player extends Mob {
 			sprite = animSprite.getSprite();
 			screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
 		}
+	}
+
+	public void dropItem(Item item) {
+
 	}
 
 	public void setEquipped(Item item) {

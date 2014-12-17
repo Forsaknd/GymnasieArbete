@@ -1,6 +1,7 @@
 package GymnasieArbete.entities.items;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import GymnasieArbete.graphics.Screen;
@@ -38,12 +39,44 @@ public class Inventory {
 	
 	public void addItem(Item item) {
 		items.add(item);
+		for (int i = 0; i < items.size(); i++) {			
+			if(items.get(i).type == Item.Type.EMPTY) {
+				Item empty = items.get(i);
+				System.out.println("EMPTY FOUND: " + empty);
+				int id = getIndex(empty);
+				Collections.swap(items, id, items.size());
+				items.remove(items.size());
+				break;
+			}
+		}
 	}
-
+	
 	public void removeItem(Item item) {
-		items.remove(item);
+		int id = getIndex(item);
+		for (int i = 0; i < items.size(); i++) {			
+			if(items.get(i).equals(item)) {
+				Item empty = new Item();
+				empty.type = Item.Type.EMPTY;
+				items.add(new Item());
+				Collections.swap(items, id, items.size() - 1);
+				items.remove(items.size() - 1);
+			}
+		}
 	}
+	
+	public int getIndex(Item item)
+	{
+	    for (int i = 0; i < items.size(); i++)
+	    {
+	        if (items.get(i).equals(item))
+	        {
+	            return i;
+	        }
+	    } 
 
+	    return -1;
+	}
+	
 	public void expandInv() {
 		//this.sprite = Sprite.inventory;
 	}

@@ -6,14 +6,13 @@ import GymnasieArbete.graphics.Screen;
 
 public class Item extends Entity {
 
-	protected int healing = 0;
 	protected int fireRate = 0;
 	
 	protected Player player;
 	protected String name;
 
 	public enum Type {
-		WEAPON, CONSUMABLE;
+		WEAPON, CONSUMABLE, EMPTY;
 	}
 	
 	public Type type;

@@ -41,12 +41,12 @@ public abstract class Mob extends Entity {
 
 		while (xa != 0) {
 			if (Math.abs(xa) > 1) {
-				if (!collision(abs(xa), ya)) {
+				if (!collision(abs(xa), ya) && !entityCollision(abs(xa), ya)) {
 					this.x += abs(xa);
 				}
 				xa -= abs(xa);
 			} else {
-				if (!collision(abs(xa), ya)) {
+				if (!collision(abs(xa), ya) && !entityCollision(xa, abs(ya))) {
 					this.x += xa;
 				}
 				xa = 0;
@@ -122,7 +122,12 @@ public abstract class Mob extends Entity {
 			if (c / 2 == 0) iy = (int) Math.floor(yt);
 			if (level.getTile(ix, iy).solid()) solid = true;
 		}
-		if (level.getEntityCol(this, 17)) solid = true;
+		return solid;
+	}
+
+	protected boolean entityCollision(double xa, double ya) {
+		boolean solid = false;
+		if (level.getEntityCol(this, 20)) solid = true;
 		return solid;
 	}
 }

@@ -30,7 +30,6 @@ public class Level {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
-	private List<Player> players = new ArrayList<Player>();
 
 	public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
 
@@ -126,8 +125,8 @@ public class Level {
 		}
 	}
 
-	private void time() {
-	}
+	//private void time() {
+	//}
 
 	// collision entity > tile
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
@@ -170,12 +169,7 @@ public class Level {
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
-			if(entities.get(i).equals(players.get(0))) continue;
 			entities.get(i).render(screen);
-		}
-
-		for (int i = 0; i < players.size(); i++) {
-			players.get(i).render(screen);
 		}
 
 		for (int i = 0; i < projectiles.size(); i++) {
@@ -191,9 +185,6 @@ public class Level {
 		e.init(this);
 		if (e instanceof Item) {
 			items.add((Item) e);
-		} else if (e instanceof Player) {
-			entities.add(e);
-			players.add((Player) e);
 		} else if (e instanceof Particle) {
 			particles.add((Particle) e);
 		} else if (e instanceof BackgroundParticle) {
@@ -208,16 +199,7 @@ public class Level {
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}
-
-	public Player getPlayer() {
-		for (int i = 0; i < entities.size(); i++) {
-			if (entities.get(i) instanceof Player) {
-				return (Player) entities.get(i);
-			}
-		}
-		return null;
-	}
-
+	
 	public List<Node> findPath(Vector2i start, Vector2i goal) {
 		List<Node> openList = new ArrayList<Node>();
 		List<Node> closedList = new ArrayList<Node>();
@@ -299,7 +281,17 @@ public class Level {
 		return result;
 	}
 
-	public Player getPlayers(Entity e, int radius) {
+	public Player getPlayer() {
+		Player result = null;
+		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Player) {
+				result = (Player) entities.get(i);
+			}
+		}
+		return result;
+	}
+	
+	public Player getPlayerInRange(Entity e, int radius) {
 		List<Entity> entities = getEntities(e, radius);
 		Player result = null;
 		for (int i = 0; i < entities.size(); i++) {
