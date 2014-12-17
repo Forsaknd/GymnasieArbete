@@ -1,13 +1,24 @@
 package GymnasieArbete.entities.items;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 
 public class Item extends Entity {
 	
-	protected String name;
+	protected int fireRate = 0;
 	
-	public void pickUp() {
+	protected Player player;
+	protected String name;
+
+	public enum Type {
+		WEAPON, CONSUMABLE;
+	}
+	
+	public Type type;
+	
+	public int getFireRate() {
+		return fireRate;
 	}
 
 	public void update() {
@@ -15,7 +26,11 @@ public class Item extends Entity {
 
 	public void render(Screen screen) {
 	}
-
+	
+	public void setOwner(Player player) {
+		this.player = player;
+	}
+	
 	public String getName() {
 		return name;
 	}

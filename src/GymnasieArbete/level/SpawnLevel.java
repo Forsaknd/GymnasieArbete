@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.mob.Zombie;
 
 public class SpawnLevel extends Level {
@@ -27,7 +28,7 @@ public class SpawnLevel extends Level {
 		}
 		for (int i = 0; i < 1; i++) {
 			add(new Pistol(24, 30));
-			add(new Pistol(26, 30));
+			add(new Smg(26, 30));
 			add(new Zombie(30, 30));
 			add(new Zombie(32, 30));
 			add(new Zombie(34, 30));

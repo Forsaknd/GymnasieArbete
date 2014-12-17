@@ -147,12 +147,12 @@ public class Level {
 			}
 		}
 
-		for (int i = 0; i < items.size(); i++) {
-			items.get(i).render(screen);
-		}
-
 		for (int i = 0; i < backgroundParticles.size(); i++) {
 			backgroundParticles.get(i).render(screen);
+		}
+
+		for (int i = 0; i < items.size(); i++) {
+			items.get(i).render(screen);
 		}
 		
 		for (int i = 0; i < entities.size(); i++) {

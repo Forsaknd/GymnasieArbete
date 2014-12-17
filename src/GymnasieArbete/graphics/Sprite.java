@@ -25,6 +25,7 @@ public class Sprite {
 
 	// ITEMS
 	public static Sprite pistol = new Sprite(16, 0, 0, SpriteSheet.items);
+	public static Sprite smg = new Sprite(16, 1, 0, SpriteSheet.items);
 	
 	// ACTIONBAR
 	public static Sprite actionbar = new Sprite(162, 20, SpriteSheet.actionbar);
@@ -33,7 +34,8 @@ public class Sprite {
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
 
 	// PARTICLES
-	public static Sprite particle_normal = new Sprite(2, 0xFFA52A2A);
+	public static Sprite particle_normal = new Sprite(2, 0xFFaa7243);
+	public static Sprite particle_shell = new Sprite(2, 0xFFffff00);
 	public static Sprite particle_blood = new Sprite(2, 0xFFFF0000);
 
 	// MOBS

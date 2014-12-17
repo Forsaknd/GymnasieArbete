@@ -3,6 +3,7 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
+import GymnasieArbete.entities.items.Item.Type;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.AnimatedSprite;
@@ -15,10 +16,11 @@ import GymnasieArbete.input.Mouse;
 public class Player extends Mob {
 
 	private Inventory inventory = new Inventory();
+	private Item equipped = new Item();
 	private Keyboard input;
 	private Sprite sprite;
 	protected boolean walking = false;
-	protected boolean canshoot = true;
+	protected boolean canShoot = false;
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3, 10);
 	private AnimatedSprite up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3, 10);
 	private AnimatedSprite left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 5, 10);
@@ -26,7 +28,7 @@ public class Player extends Mob {
 
 	private AnimatedSprite animSprite = down;
 
-	private int fireRate = 0;
+	private int fireRate = 20;
 
 	private double speed = 1;
 
@@ -41,7 +43,6 @@ public class Player extends Mob {
 		this.y = y;
 		this.input = input;
 		sprite = Sprite.player;
-		fireRate = PistolProjectile.FIRE_RATE;
 	}
 
 	public void update() {
@@ -71,10 +72,21 @@ public class Player extends Mob {
 			System.out.println("item found: " + item);
 			if (item != null) {
 				inventory.addItem(item);
+				item.setOwner(this);
 				item.remove();
 			}
 		}
 
+		for (int i = 0; i < 10; i++)
+		if (input.numbers[i]) {
+			equipped = inventory.getItem(i);
+			if (equipped.type == Item.Type.WEAPON) {
+				canShoot = true;
+				fireRate = equipped.getFireRate();
+			}
+			else canShoot = false;
+		}
+			
 		if (xa != 0 || ya != 0) {
 			move(xa, ya);
 			walking = true;
@@ -94,13 +106,13 @@ public class Player extends Mob {
 	}
 
 	private void updateShooting() {
-		if (Mouse.getB() == 1 && fireRate == 0 && canshoot == true) {
+		if (Mouse.getB() == 1 && fireRate == 0 && canShoot == true) {
 			double dx = Mouse.getX() - Game.getWindowWidth() / 2;
 			double dy = Mouse.getY() - Game.getWindowHeight() / 2;
 			double mdir = Math.atan2(dy, dx);
 
-			shoot(x, y, mdir);
-			fireRate = PistolProjectile.FIRE_RATE;
+			shoot(equipped, x, y, mdir);
+			fireRate = equipped.getFireRate();
 
 			if (!walking) {
 				int ddir = (int) Math.toDegrees(mdir);
@@ -120,11 +132,19 @@ public class Player extends Mob {
 		}
 	}
 
+	public void setCanShoot(boolean canShoot) {
+		this.canShoot = canShoot;
+	}
+	
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
 		screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
 	}
 
+	public Item getEquipped() {
+		return equipped;
+	}
+	
 	public Inventory getInventory() {
 		return inventory;
 	}

@@ -3,6 +3,8 @@ package GymnasieArbete.entities.mob;
 import java.util.List;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
+import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -104,6 +106,18 @@ public class Zombie extends Mob {
 		}
 	}
 
+	public void takeDamage(int damage, int particleamount) {
+		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
+		hp -= damage;
+		acqrange = 200;
+		if (hp <= 0) {
+			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
+			remove();
+		}
+	}
+	
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
 		screen.renderMob((int) x - 16, (int) y - 16, sprite);

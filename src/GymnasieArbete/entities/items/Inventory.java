@@ -27,6 +27,14 @@ public class Inventory {
 			items.get(i).renderInInventory(screen, x + 1 + i * 16, y);
 		}
 	}
+
+	public List<Item> getItems() {
+		return items;
+	}
+	
+	public Item getItem(int id) {
+		return items.get(id);
+	}
 	
 	public void addItem(Item item) {
 		items.add(item);

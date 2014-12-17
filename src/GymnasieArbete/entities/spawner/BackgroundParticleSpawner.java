@@ -9,11 +9,11 @@ public class BackgroundParticleSpawner extends Spawner {
 	@SuppressWarnings("unused")
 	private int life;
 
-	public BackgroundParticleSpawner(int x, int y, int life, int amount,Sprite sprite , Level level) {
+	public BackgroundParticleSpawner(int x, int y, int life, double zzOffset, int amount,Sprite sprite , Level level) {
 		super(x, y, Type.BACKGROUNDPARTICLE, amount, level);
 		this.life = life;
 		for (int i = 0; i < amount; i++) {
-			level.add(new BackgroundParticle(x, y, life, sprite));
+			level.add(new BackgroundParticle(x, y, life, zzOffset, sprite));
 		}
 		remove();
 	}

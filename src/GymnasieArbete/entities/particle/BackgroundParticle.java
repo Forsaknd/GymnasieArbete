@@ -14,7 +14,7 @@ public class BackgroundParticle extends Entity {
 	protected double xx, yy, zz;
 	protected double xa, ya, za;
 
-	public BackgroundParticle(int x, int y, int life, Sprite sprite) {
+	public BackgroundParticle(int x, int y, int life, double zzOffset, Sprite sprite) {
 		this.x = x;
 		this.y = y;
 		this.xx = x;
@@ -24,7 +24,7 @@ public class BackgroundParticle extends Entity {
 
 		this.xa = random.nextGaussian();
 		this.ya = random.nextGaussian();
-		this.zz = random.nextFloat() + 2.0;
+		this.zz = random.nextFloat() + zzOffset;
 	}
 
 	public void update() {
