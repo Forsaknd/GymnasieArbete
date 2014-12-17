@@ -20,6 +20,7 @@ public class Player extends Mob {
 	private Keyboard input;
 	private Sprite sprite;
 	private boolean dead = false;
+	private boolean shooting = false;
 	protected boolean walking = false;
 	protected boolean canShoot = false;
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3, 10);
@@ -56,17 +57,26 @@ public class Player extends Mob {
 
 			double xa = 0, ya = 0;
 			if (input.up) {
-				animSprite = up;
+				if (!shooting) {
+					animSprite = up;
+				}
 				ya -= speed;
 			} else if (input.down) {
-				animSprite = down;
+				if (!shooting) {
+					animSprite = down;
+				}
 				ya += speed;
 			}
 			if (input.left) {
-				animSprite = left;
+				if (!shooting) {
+					animSprite = left;
+				}
 				xa -= speed;
 			} else if (input.right) {
-				animSprite = right;
+				if (!shooting) {
+					updateShooting();
+					animSprite = right;
+				}
 				xa += speed;
 			}
 			if (input.space) {
@@ -84,6 +94,22 @@ public class Player extends Mob {
 					level.add(equipped);
 					equipped = new Item();
 					canShoot = false;
+					up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3, 10);
+					down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3, 10);
+					left = new AnimatedSprite(SpriteSheet.player_left, 32, 32, 5, 10);
+					right = new AnimatedSprite(SpriteSheet.player_right, 32, 32, 5, 10);
+					if (dir == Direction.UP) {
+						animSprite = up;
+					}
+					if (dir == Direction.DOWN) {
+						animSprite = down;
+					}
+					if (dir == Direction.LEFT) {
+						animSprite = left;
+					}
+					if (dir == Direction.RIGHT) {
+						animSprite = right;
+					}
 				}
 			}
 			for (int i = 0; i < 10; i++) {
@@ -91,9 +117,27 @@ public class Player extends Mob {
 					if (inventory.getItems().size() > i) {
 						Item current = inventory.getItem(i);
 						if (current.type == Item.Type.WEAPON) {
+
 							equipped = current;
 							canShoot = true;
 							fireRate = equipped.getFireRate();
+							up = equipped.getAnimatedSpriteUp();
+							down = equipped.getAnimatedSpriteDown();
+							left = equipped.getAnimatedSpriteLeft();
+							right = equipped.getAnimatedSpriteRight();
+
+							if (dir == Direction.UP) {
+								animSprite = up;
+							}
+							if (dir == Direction.DOWN) {
+								animSprite = down;
+							}
+							if (dir == Direction.LEFT) {
+								animSprite = left;
+							}
+							if (dir == Direction.RIGHT) {
+								animSprite = right;
+							}
 						} else if (current.type == Item.Type.CONSUMABLE && hp.getHealth() < hp.getMaxHealth()) {
 							current.use();
 							inventory.removeItem(current);
@@ -122,7 +166,10 @@ public class Player extends Mob {
 	}
 
 	private void updateShooting() {
+		if (Mouse.getB() == 1) shooting = true;
+		if (Mouse.getB() == -1) shooting = false;
 		if (Mouse.getB() == 1 && fireRate == 0 && canShoot == true) {
+			shooting = true;
 			double dx = Mouse.getX() - Game.getWindowWidth() / 2;
 			double dy = Mouse.getY() - Game.getWindowHeight() / 2;
 			double mdir = Math.atan2(dy, dx);
@@ -130,20 +177,18 @@ public class Player extends Mob {
 			shoot(equipped, x, y, mdir);
 			fireRate = equipped.getFireRate();
 
-			if (!walking) {
-				int ddir = (int) Math.toDegrees(mdir);
-				if (ddir < -45 && ddir > -135) {
-					animSprite = up;
-				}
-				if (ddir < 45 && ddir > -45) {
-					animSprite = right;
-				}
-				if (ddir <= 120 && ddir >= 60) {
-					animSprite = down;
-				}
-				if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
-					animSprite = left;
-				}
+			int ddir = (int) Math.toDegrees(mdir);
+			if (ddir < -45 && ddir > -135) {
+				animSprite = up;
+			}
+			if (ddir < 45 && ddir > -45) {
+				animSprite = right;
+			}
+			if (ddir <= 135 && ddir >= 45) {
+				animSprite = down;
+			}
+			if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
+				animSprite = left;
 			}
 		}
 	}
@@ -173,8 +218,8 @@ public class Player extends Mob {
 	protected boolean collision(double xa, double ya) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
-			double xt = ((x + xa) - c % 2 * 15) / 16;
-			double yt = ((y + ya) - c / 2 * 15) / 16;
+			double xt = ((x + xa) - c % 2 * 5 - 5) / 16;
+			double yt = ((y + ya) - c / 2 * 12 + 11) / 16;
 			int ix = (int) Math.ceil(xt);
 			int iy = (int) Math.ceil(yt);
 			if (c % 2 == 0) ix = (int) Math.floor(xt);
@@ -207,5 +252,5 @@ public class Player extends Mob {
 	public boolean isDead() {
 		return dead;
 	}
-	
+
 }

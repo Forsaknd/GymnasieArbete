@@ -9,6 +9,9 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import GymnasieArbete.entities.mob.Player;
@@ -94,6 +97,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public void run() {
+		playSound("ambience.wav", true);
 		long lastTime = System.nanoTime();
 		long timer = System.currentTimeMillis();
 		final double ns = 1000000000.0 / 60.0;
@@ -169,6 +173,29 @@ public class Game extends Canvas implements Runnable {
 
 		g.dispose();
 		bs.show();
+	}
+
+	public static synchronized void playSound(final String url, boolean loop) {
+		new Thread(new Runnable() {
+			// The wrapper thread is unnecessary, unless it blocks on the
+			// Clip finishing; see comments.
+			public void run() {
+				try {
+					Clip clip = AudioSystem.getClip();
+					String path = "/sounds/" + url;
+					AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResource(path));
+					clip.open(inputStream);
+					if (!loop) {
+						clip.start();
+					}
+					if (loop) {
+						clip.loop(Clip.LOOP_CONTINUOUSLY);
+					}
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}).start();
 	}
 
 	public static void main(String[] args) {

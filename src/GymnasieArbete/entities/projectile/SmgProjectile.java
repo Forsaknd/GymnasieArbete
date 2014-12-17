@@ -13,7 +13,7 @@ public class SmgProjectile extends Projectile {
 	public SmgProjectile(double x, double y, double dir) {
 		super(x, y, dir);
 		range = 175;
-		speed = 15;
+		speed = 8;
 		damage = 10;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);

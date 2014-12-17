@@ -23,12 +23,27 @@ public class SpriteSheet {
 	public static SpriteSheet hpbar = new SpriteSheet("/textures/sheets/spritesheet_hpbar.png", 100, 14);
 
 	//Player
-	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 160);
+	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 640);
 	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
 	public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
 	public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 5, 32);
 	public static SpriteSheet player_right = new SpriteSheet(player, 3, 0, 1, 5, 32);
-
+	
+	public static SpriteSheet player_pistol_down = new SpriteSheet(player, 4, 0, 1, 3, 32);
+	public static SpriteSheet player_pistol_up = new SpriteSheet(player, 5, 0, 1, 3, 32);
+	public static SpriteSheet player_pistol_left = new SpriteSheet(player, 6, 0, 1, 5, 32);
+	public static SpriteSheet player_pistol_right = new SpriteSheet(player, 7, 0, 1, 5, 32);
+	
+	public static SpriteSheet player_smg_down = new SpriteSheet(player, 8, 0, 1, 3, 32);
+	public static SpriteSheet player_smg_up = new SpriteSheet(player, 9, 0, 1, 3, 32);
+	public static SpriteSheet player_smg_left = new SpriteSheet(player, 10, 0, 1, 5, 32);
+	public static SpriteSheet player_smg_right = new SpriteSheet(player, 11, 0, 1, 5, 32);
+	
+	public static SpriteSheet player_shotgun_down = new SpriteSheet(player, 12, 0, 1, 3, 32);
+	public static SpriteSheet player_shotgun_up = new SpriteSheet(player, 13, 0, 1, 3, 32);
+	public static SpriteSheet player_shotgun_left = new SpriteSheet(player, 14, 0, 1, 5, 32);
+	public static SpriteSheet player_shotgun_right = new SpriteSheet(player, 15, 0, 1, 5, 32);
+	
 	//Zombie
 	public static SpriteSheet zombie_down = new SpriteSheet(mobs, 0, 0, 1, 5, 32);
 	public static SpriteSheet zombie_up = new SpriteSheet(mobs, 1, 0, 1, 5, 32);

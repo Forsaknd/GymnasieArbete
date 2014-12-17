@@ -6,7 +6,7 @@ import GymnasieArbete.level.Level;
 public class Spawner extends Entity {
 
 	public enum Type {
-		MOB, PARTICLE, BACKGROUNDPARTICLE;
+		MOB, PARTICLE, BACKGROUNDPARTICLE, SPRITEPARTICLE;
 	}
 
 	@SuppressWarnings("unused")

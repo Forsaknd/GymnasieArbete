@@ -36,6 +36,10 @@ public class Sprite {
 	
 	// PROJECTILES
 	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
+	public static Sprite muzzleflash_down = new Sprite(16, 0, 1, SpriteSheet.projectiles);
+	public static Sprite muzzleflash_up = new Sprite(16, 1, 1, SpriteSheet.projectiles);
+	public static Sprite muzzleflash_left = new Sprite(16, 2, 1, SpriteSheet.projectiles);
+	public static Sprite muzzleflash_right = new Sprite(16, 3, 1, SpriteSheet.projectiles);
 
 	// PARTICLES
 	public static Sprite particle_normal = new Sprite(2, 0xFFaa7243);

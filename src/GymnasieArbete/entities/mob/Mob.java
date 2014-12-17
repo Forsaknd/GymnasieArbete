@@ -1,5 +1,6 @@
 package GymnasieArbete.entities.mob;
 
+import GymnasieArbete.Game;
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.items.Pistol;
@@ -11,6 +12,7 @@ import GymnasieArbete.entities.projectile.ShotgunProjectile;
 import GymnasieArbete.entities.projectile.SmgProjectile;
 import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
+import GymnasieArbete.entities.spawner.SpriteParticleSpawner;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
@@ -81,6 +83,7 @@ public abstract class Mob extends Entity {
 		hp.setHealth(hp.getHealth() - damage);
 		acqrange = 200;
 		if (hp.getHealth() <= 0) {
+			Game.playSound("splat.wav", false);
 			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
@@ -88,23 +91,36 @@ public abstract class Mob extends Entity {
 		}
 	}
 
-	protected void shoot(Item equipped, double x, double y, double dir) {
+	protected void shoot(Item equipped, double x, double y, double direction) {
+		Game.playSound(equipped.getSound(), false);
 		Projectile p = null;
 		if (equipped instanceof Pistol) {
 			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell, level);
-			p = new PistolProjectile(x - 8, y - 8, dir);
+			p = new PistolProjectile(x - 8, y - 8, direction);
 		} else if (equipped instanceof Smg) {
-			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell, level);
-			p = new SmgProjectile(x - 8, y - 8, dir);
+			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 50, 1, 1, Sprite.particle_shell, level);
+			p = new SmgProjectile(x - 8, y - 8, direction);
 		} else if (equipped instanceof Shotgun) {
-		new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell, level);
-		p = new ShotgunProjectile(x - 8, y - 8, dir);
-		for(int i = -3; i < 3; i++) {
-			System.out.println(dir);
-			Projectile a = new ShotgunProjectile(x - 8, y - 8, dir + (i * 0.15));
-			level.add(a);
+			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell, level);
+			p = new ShotgunProjectile(x - 8, y - 8, direction);
+			for (int i = -3; i < 3; i++) {
+				Projectile a = new ShotgunProjectile(x - 8, y - 8, direction + (i * 0.15));
+				level.add(a);
+			}
 		}
-	}
+		int ddir = (int) Math.toDegrees(direction);
+		if (ddir < -45 && ddir > -135) {
+			new SpriteParticleSpawner((int) x - 1, (int) y - 20, 3, 1, Sprite.muzzleflash_down, level);
+		}
+		if (ddir < 45 && ddir > -45) {
+			new SpriteParticleSpawner((int) x + 14, (int) y - 7, 3, 1, Sprite.muzzleflash_right, level);
+		}
+		if (ddir <= 135 && ddir >= 45) {
+			new SpriteParticleSpawner((int) x - 10, (int) y + 4, 3, 1, Sprite.muzzleflash_up, level);
+		}
+		if (ddir < -135 && ddir > -180 || ddir <= 180 && ddir > 135) {
+			new SpriteParticleSpawner((int) x - 28, (int) y - 7, 3, 1, Sprite.muzzleflash_left, level);
+		}
 		level.add(p);
 	}
 
