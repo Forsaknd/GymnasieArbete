@@ -8,7 +8,7 @@ public class Shotgun extends Item {
 	public Shotgun(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
-		sprite = Sprite.pistol;
+		sprite = Sprite.shotgun;
 		name = "Shotgun";
 		type = Type.WEAPON;
 		fireRate = 50;
