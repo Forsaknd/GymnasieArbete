@@ -13,7 +13,7 @@ public class PistolProjectile extends Projectile {
 	public PistolProjectile(double x, double y, double dir) {
 		super(x, y, dir);
 		range = 150;
-		speed = 5;
+		speed = 10;
 		damage = 10;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);

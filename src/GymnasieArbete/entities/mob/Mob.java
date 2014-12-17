@@ -3,9 +3,11 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Shotgun;
 import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.entities.projectile.ShotgunProjectile;
 import GymnasieArbete.entities.projectile.SmgProjectile;
 import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
@@ -14,9 +16,10 @@ import GymnasieArbete.graphics.Sprite;
 
 public abstract class Mob extends Entity {
 
+	protected int acqrange;
 	protected boolean walking = false;
 	protected boolean canshoot = false;
-	protected int hp = 100;
+	protected Health hp = new Health(100);
 
 	protected enum Direction {
 		UP, DOWN, LEFT, RIGHT
@@ -75,11 +78,12 @@ public abstract class Mob extends Entity {
 
 	public void takeDamage(int damage, int particleamount) {
 		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
-		hp -= damage;
-		if (hp <= 0) {
+		hp.setHealth(hp.getHealth() - damage);
+		acqrange = 200;
+		if (hp.getHealth() <= 0) {
 			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
-			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
-			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			remove();
 		}
 	}
@@ -92,14 +96,22 @@ public abstract class Mob extends Entity {
 		} else if (equipped instanceof Smg) {
 			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell, level);
 			p = new SmgProjectile(x - 8, y - 8, dir);
+		} else if (equipped instanceof Shotgun) {
+		new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell, level);
+		p = new ShotgunProjectile(x - 8, y - 8, dir);
+		for(int i = -3; i < 3; i++) {
+			System.out.println(dir);
+			Projectile a = new ShotgunProjectile(x - 8, y - 8, dir + (i * 0.15));
+			level.add(a);
 		}
+	}
 		level.add(p);
 	}
 
 	public void render(Screen screen) {
 	}
 
-	private boolean collision(double xa, double ya) {
+	protected boolean collision(double xa, double ya) {
 		boolean solid = false;
 		for (int c = 0; c < 4; c++) {
 			double xt = ((x + xa) - c % 2 * 15) / 16;

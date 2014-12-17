@@ -3,15 +3,15 @@ package GymnasieArbete.entities.items;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
-public class Smg extends Item {
+public class Shotgun extends Item {
 	
-	public Smg(int x, int y) {
+	public Shotgun(int x, int y) {
 		this.x = x << 4;
 		this.y = y << 4;
-		sprite = Sprite.smg;
-		name = "SMG";
+		sprite = Sprite.pistol;
+		name = "Shotgun";
 		type = Type.WEAPON;
-		fireRate = 10;
+		fireRate = 50;
 	}
 	
 	public void update() {

@@ -2,7 +2,6 @@ package GymnasieArbete.entities.mob;
 
 import java.util.List;
 
-import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.AnimatedSprite;
@@ -22,7 +21,6 @@ public class Zombie extends Mob {
 	private AnimatedSprite animSprite = down;
 
 	private double xa = 0, ya = 0;
-	private int acqrange = 85;
 	private int time = 0;
 	private List<Node> path = null;
 	private int damage = 5;
@@ -33,15 +31,16 @@ public class Zombie extends Mob {
 		this.x = x << 4;
 		this.y = y << 4;
 		sprite = Sprite.zombie;
+		acqrange = 85;
 	}
 
 	public void move() {
-		List<Player> player = level.getPlayers(this, acqrange);
-		if (player.size() > 0) {
+		Player player = level.getPlayers(this, acqrange);
+		if (player != null && !player.isDead()) {
 			xa = 0;
 			ya = 0;
-			int px = (int) player.get(0).getX();
-			int py = (int) player.get(0).getY();
+			int px = (int) player.getX();
+			int py = (int) player.getY();
 			Vector2i start = new Vector2i((int) getX() >> 4, (int) getY() >> 4);
 			Vector2i destination = new Vector2i(px >> 4, py >> 4);
 			if (time % 3 == 0) path = level.findPath(start, destination);
@@ -99,25 +98,15 @@ public class Zombie extends Mob {
 
 		if (time % 30 == 0) {
 			Player current = level.getPlayer();
-			// creates 19x19 "hitbox"
-			if (x < current.getX() + 20 && x > current.getX() - 20 && y < current.getY() + 20 && y > current.getY() - 20) {
-				current.takeDamage(damage, 25);
+			// creates 19x19 "hitbox" if not dead
+			if (!current.isDead()) {
+				if (x < current.getX() + 20 && x > current.getX() - 20 && y < current.getY() + 20 && y > current.getY() - 20) {
+					current.takeDamage(damage, 25);
+				}
 			}
 		}
 	}
 
-	public void takeDamage(int damage, int particleamount) {
-		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
-		hp -= damage;
-		acqrange = 200;
-		if (hp <= 0) {
-			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
-			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
-			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 10, Sprite.particle_blood, level));
-			remove();
-		}
-	}
-	
 	public void render(Screen screen) {
 		sprite = animSprite.getSprite();
 		screen.renderMob((int) x - 16, (int) y - 16, sprite);

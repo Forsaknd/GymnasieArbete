@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.items.Item;
@@ -22,12 +23,14 @@ public class Level {
 	protected int[] tilesInt;
 	protected int[] tiles;
 	protected int tile_size;
+	protected int time = 0;
 
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Item> items = new ArrayList<Item>();
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
+	private List<Player> players = new ArrayList<Player>();
 
 	public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
 
@@ -64,8 +67,19 @@ public class Level {
 	protected void loadLevel(String path) {
 	}
 
-	public void update() {
+	public void spawnZombies() {
+		time++;
+		if (time % 120 == 0) {
+			if (entities.size() < 100) {
+				Random r = new Random();
+				add(new Zombie(r.nextInt(this.width), r.nextInt(this.height)));
+				time = 0;
+			}
+		}
+	}
 
+	public void update() {
+		spawnZombies();
 		for (int i = 0; i < items.size(); i++) {
 			items.get(i).update();
 		}
@@ -73,11 +87,11 @@ public class Level {
 		for (int i = 0; i < backgroundParticles.size(); i++) {
 			backgroundParticles.get(i).update();
 		}
-		
+
 		for (int i = 0; i < entities.size(); i++) {
 			entities.get(i).update();
 		}
-		
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).update();
 		}
@@ -85,12 +99,12 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update();
 		}
-	
+
 		remove();
 	}
 
 	private void remove() {
-		
+
 		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).isRemoved()) items.remove(i);
 		}
@@ -98,7 +112,7 @@ public class Level {
 		for (int i = 0; i < backgroundParticles.size(); i++) {
 			if (backgroundParticles.get(i).isRemoved()) backgroundParticles.remove(i);
 		}
-		
+
 		for (int i = 0; i < entities.size(); i++) {
 			if (entities.get(i).isRemoved()) entities.remove(i);
 		}
@@ -154,11 +168,16 @@ public class Level {
 		for (int i = 0; i < items.size(); i++) {
 			items.get(i).render(screen);
 		}
-		
+
 		for (int i = 0; i < entities.size(); i++) {
+			if(entities.get(i).equals(players.get(0))) continue;
 			entities.get(i).render(screen);
 		}
-		
+
+		for (int i = 0; i < players.size(); i++) {
+			players.get(i).render(screen);
+		}
+
 		for (int i = 0; i < projectiles.size(); i++) {
 			projectiles.get(i).render(screen);
 		}
@@ -172,14 +191,14 @@ public class Level {
 		e.init(this);
 		if (e instanceof Item) {
 			items.add((Item) e);
-		}
-		else if (e instanceof Particle) {
+		} else if (e instanceof Player) {
+			entities.add(e);
+			players.add((Player) e);
+		} else if (e instanceof Particle) {
 			particles.add((Particle) e);
-		}
-		else if (e instanceof BackgroundParticle) {
+		} else if (e instanceof BackgroundParticle) {
 			backgroundParticles.add((BackgroundParticle) e);
-		}
-		else if (e instanceof Projectile) {
+		} else if (e instanceof Projectile) {
 			projectiles.add((Projectile) e);
 		} else {
 			entities.add(e);
@@ -280,12 +299,12 @@ public class Level {
 		return result;
 	}
 
-	public List<Player> getPlayers(Entity e, int radius) {
+	public Player getPlayers(Entity e, int radius) {
 		List<Entity> entities = getEntities(e, radius);
-		List<Player> result = new ArrayList<Player>();
+		Player result = null;
 		for (int i = 0; i < entities.size(); i++) {
 			if (entities.get(i) instanceof Player) {
-				result.add((Player) entities.get(i));
+				result = (Player) entities.get(i);
 			}
 		}
 		return result;
@@ -337,7 +356,7 @@ public class Level {
 	public List<Entity> getallEntities() {
 		return entities;
 	}
-	
+
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;

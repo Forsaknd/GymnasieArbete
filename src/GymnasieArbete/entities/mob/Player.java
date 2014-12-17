@@ -3,9 +3,9 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
-import GymnasieArbete.entities.items.Item.Type;
-import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
+import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.AnimatedSprite;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
@@ -19,6 +19,7 @@ public class Player extends Mob {
 	private Item equipped = new Item();
 	private Keyboard input;
 	private Sprite sprite;
+	private boolean dead = false;
 	protected boolean walking = false;
 	protected boolean canShoot = false;
 	private AnimatedSprite down = new AnimatedSprite(SpriteSheet.player_down, 32, 32, 3, 10);
@@ -43,59 +44,62 @@ public class Player extends Mob {
 		this.y = y;
 		this.input = input;
 		sprite = Sprite.player;
+		dead = false;
 	}
 
 	public void update() {
+		if (!dead) {
+			if (walking) animSprite.update();
+			else animSprite.setFrame(0);
+			if (fireRate > 0) fireRate--;
+			if (input.esc) Game.state = Game.STATE.PAUSED;
 
-		if (walking) animSprite.update();
-		else animSprite.setFrame(0);
-		if (fireRate > 0) fireRate--;
-		if (input.esc) Game.state = Game.STATE.PAUSED;
-
-		double xa = 0, ya = 0;
-		if (input.up) {
-			animSprite = up;
-			ya -= speed;
-		} else if (input.down) {
-			animSprite = down;
-			ya += speed;
-		}
-		if (input.left) {
-			animSprite = left;
-			xa -= speed;
-		} else if (input.right) {
-			animSprite = right;
-			xa += speed;
-		}
-		if (input.space) {
-			Item item = level.getItemCol(this, 16);
-			System.out.println("item found: " + item);
-			if (item != null) {
-				inventory.addItem(item);
-				item.setOwner(this);
-				item.remove();
+			double xa = 0, ya = 0;
+			if (input.up) {
+				animSprite = up;
+				ya -= speed;
+			} else if (input.down) {
+				animSprite = down;
+				ya += speed;
 			}
-		}
-
-		for (int i = 0; i < 10; i++)
-		if (input.numbers[i]) {
-			equipped = inventory.getItem(i);
-			if (equipped.type == Item.Type.WEAPON) {
-				canShoot = true;
-				fireRate = equipped.getFireRate();
+			if (input.left) {
+				animSprite = left;
+				xa -= speed;
+			} else if (input.right) {
+				animSprite = right;
+				xa += speed;
 			}
-			else canShoot = false;
-		}
-			
-		if (xa != 0 || ya != 0) {
-			move(xa, ya);
-			walking = true;
-		} else {
-			walking = false;
-		}
+			if (input.space) {
+				Item item = level.getItemCol(this, 16);
+				System.out.println("item found: " + item);
+				if (item != null) {
+					inventory.addItem(item);
+					item.setOwner(this);
+					item.remove();
+				}
+			}
 
-		clear();
-		updateShooting();
+			for (int i = 0; i < 10; i++)
+				if (input.numbers[i]) {
+					if (inventory.getItems().size() > i) {
+						equipped = inventory.getItem(i);
+						if (equipped.type == Item.Type.WEAPON) {
+							canShoot = true;
+							fireRate = equipped.getFireRate();
+						} else canShoot = false;
+					}
+				}
+
+			if (xa != 0 || ya != 0) {
+				move(xa, ya);
+				walking = true;
+			} else {
+				walking = false;
+			}
+
+			clear();
+			updateShooting();
+		}
 	}
 
 	private void clear() {
@@ -132,20 +136,50 @@ public class Player extends Mob {
 		}
 	}
 
+	public void takeDamage(int damage, int particleamount) {
+		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
+		hp.setHealth(hp.getHealth() - damage);
+		if (hp.getHealth() <= 0) {
+			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
+			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
+			dead = true;
+		}
+		else dead = false;
+	}
+
 	public void setCanShoot(boolean canShoot) {
 		this.canShoot = canShoot;
 	}
-	
+
 	public void render(Screen screen) {
-		sprite = animSprite.getSprite();
-		screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
+		if (!dead) {
+			sprite = animSprite.getSprite();
+			screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
+		}
+	}
+
+	public void setEquipped(Item item) {
+		equipped = item;
 	}
 
 	public Item getEquipped() {
 		return equipped;
 	}
-	
+
 	public Inventory getInventory() {
 		return inventory;
+	}
+
+	public Health getHealth() {
+		return hp;
+	}
+	
+	public boolean isDead() {
+		return dead;
+	}
+	
+	protected boolean collision(double xa, double ya) {
+		return false;
 	}
 }

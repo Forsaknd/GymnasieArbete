@@ -17,14 +17,19 @@ public class SpriteSheet {
 	public static SpriteSheet mobs = new SpriteSheet("/textures/sheets/spritesheet_mobs.png", 256);
 	public static SpriteSheet items = new SpriteSheet("/textures/sheets/spritesheet_items.png", 128);
 	public static SpriteSheet projectiles = new SpriteSheet("/textures/sheets/spritesheet_projectiles.png", 64);
+	
+	//UI
 	public static SpriteSheet actionbar = new SpriteSheet("/textures/sheets/spritesheet_actionbar.png", 162, 20);
+	public static SpriteSheet hpbar = new SpriteSheet("/textures/sheets/spritesheet_hpbar.png", 100, 14);
 
+	//Player
 	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 160);
 	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
 	public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
 	public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 5, 32);
 	public static SpriteSheet player_right = new SpriteSheet(player, 3, 0, 1, 5, 32);
 
+	//Zombie
 	public static SpriteSheet zombie_down = new SpriteSheet(mobs, 0, 0, 1, 5, 32);
 	public static SpriteSheet zombie_up = new SpriteSheet(mobs, 1, 0, 1, 5, 32);
 	public static SpriteSheet zombie_left = new SpriteSheet(mobs, 2, 0, 1, 5, 32);

@@ -43,7 +43,7 @@ public class Game extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
 
 	public static enum STATE {
-		MENU, PAUSED, GAME
+		MENU, PAUSED, GAME, GAMEOVER
 	};
 
 	public static STATE state = STATE.MENU;
@@ -147,6 +147,7 @@ public class Game extends Canvas implements Runnable {
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
 			player.getInventory().render(screen);
+			player.getHealth().render(screen);
 			// screen.renderSheet(40, 40, SpriteSheet.player, false);
 			// Sprite sprite = new Sprite(width - 40, 20, 0x0);
 			// screen.renderSprite(20, height - 20, sprite, false);

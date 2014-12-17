@@ -11,7 +11,7 @@ public class Pistol extends Item {
 		sprite = Sprite.pistol;
 		name = "Pistol";
 		type = Type.WEAPON;
-		fireRate = 20;
+		fireRate = 25;
 	}
 	
 	public void update() {

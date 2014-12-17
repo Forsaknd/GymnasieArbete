@@ -8,13 +8,13 @@ import GymnasieArbete.entities.spawner.ParticleSpawner;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
-public class SmgProjectile extends Projectile {
+public class ShotgunProjectile extends Projectile {
 
-	public SmgProjectile(double x, double y, double dir) {
+	public ShotgunProjectile(double x, double y, double dir) {
 		super(x, y, dir);
-		range = 175;
-		speed = 15;
-		damage = 5;
+		range = 100;
+		speed = 8;
+		damage = 10;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);
 		ny = speed * Math.sin(angle);
@@ -27,7 +27,7 @@ public class SmgProjectile extends Projectile {
 				Zombie current = (Zombie) entities.get(i);
 				//creates 16x16 "hitbox"
 				if (x < current.getX() + 17 && x > current.getX() - 17 && y < current.getY() + 17 && y > current.getY() - 17) {
-					current.takeDamage(damage, 10);
+					current.takeDamage(damage, 12);
 					remove();
 				}
 			}

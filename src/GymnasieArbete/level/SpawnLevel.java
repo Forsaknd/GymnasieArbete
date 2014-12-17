@@ -6,6 +6,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Shotgun;
 import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.mob.Zombie;
 
@@ -27,9 +28,10 @@ public class SpawnLevel extends Level {
 			System.out.println("Exception! Could not load level file!");
 		}
 		for (int i = 0; i < 1; i++) {
+			add(new Shotgun(22, 30));
 			add(new Pistol(24, 30));
 			add(new Smg(26, 30));
-			add(new Zombie(30, 30));
+			/*add(new Zombie(30, 30));
 			add(new Zombie(32, 30));
 			add(new Zombie(34, 30));
 			add(new Zombie(36, 30));
@@ -41,6 +43,18 @@ public class SpawnLevel extends Level {
 			add(new Zombie(36, 32));
 			add(new Zombie(38, 32));
 			add(new Zombie(40, 32));
+			add(new Zombie(30, 34));
+			add(new Zombie(32, 34));
+			add(new Zombie(34, 34));
+			add(new Zombie(36, 34));
+			add(new Zombie(38, 34));
+			add(new Zombie(40, 34));
+			add(new Zombie(30, 36));
+			add(new Zombie(32, 36));
+			add(new Zombie(34, 36));
+			add(new Zombie(36, 36));
+			add(new Zombie(38, 36));
+			add(new Zombie(40, 36));*/
 		}
 	}
 
