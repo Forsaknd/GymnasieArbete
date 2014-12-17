@@ -5,7 +5,8 @@ import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 
 public class Item extends Entity {
-	
+
+	protected int healing = 0;
 	protected int fireRate = 0;
 	
 	protected Player player;
@@ -21,6 +22,9 @@ public class Item extends Entity {
 		return fireRate;
 	}
 
+	public void use() {
+	}
+	
 	public void update() {
 	}
 

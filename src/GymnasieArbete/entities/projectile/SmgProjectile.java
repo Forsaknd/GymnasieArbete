@@ -14,7 +14,7 @@ public class SmgProjectile extends Projectile {
 		super(x, y, dir);
 		range = 175;
 		speed = 15;
-		damage = 5;
+		damage = 10;
 		sprite = Sprite.pistolProjectile;
 		nx = speed * Math.cos(angle);
 		ny = speed * Math.sin(angle);

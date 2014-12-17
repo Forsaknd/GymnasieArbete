@@ -5,11 +5,12 @@ import GymnasieArbete.graphics.Sprite;
 
 public class Health {
 
-	private int hp;
+	private int hp, maxhp;
 	private Sprite curhp;
 	private Sprite border;
 
 	public Health(int hp) {
+		this.maxhp = hp;
 		this.hp = hp;
 		curhp = new Sprite(hp, 13, 0xFF00FF00);
 		border = Sprite.hpbar;
@@ -18,9 +19,13 @@ public class Health {
 	public void setHealth(int hp) {
 		this.hp = hp;
 	}
-
+	
 	public int getHealth() {
 		return hp;
+	}
+	
+	public int getMaxHealth() {
+		return maxhp;
 	}
 
 	public void render(Screen screen) {

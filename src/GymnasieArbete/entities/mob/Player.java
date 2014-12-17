@@ -82,10 +82,15 @@ public class Player extends Mob {
 			for (int i = 0; i < 10; i++)
 				if (input.numbers[i]) {
 					if (inventory.getItems().size() > i) {
-						equipped = inventory.getItem(i);
-						if (equipped.type == Item.Type.WEAPON) {
+						Item current = inventory.getItem(i);
+						if (current.type == Item.Type.WEAPON) {
+							equipped = current;
 							canShoot = true;
 							fireRate = equipped.getFireRate();
+						} else if (current.type == Item.Type.CONSUMABLE) {
+							current.use();
+							inventory.removeItem(current);
+							canShoot = false;
 						} else canShoot = false;
 					}
 				}
@@ -144,8 +149,7 @@ public class Player extends Mob {
 			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			dead = true;
-		}
-		else dead = false;
+		} else dead = false;
 	}
 
 	public void setCanShoot(boolean canShoot) {
@@ -174,11 +178,11 @@ public class Player extends Mob {
 	public Health getHealth() {
 		return hp;
 	}
-	
+
 	public boolean isDead() {
 		return dead;
 	}
-	
+
 	protected boolean collision(double xa, double ya) {
 		return false;
 	}

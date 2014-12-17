@@ -40,6 +40,10 @@ public class Inventory {
 		items.add(item);
 	}
 
+	public void removeItem(Item item) {
+		items.remove(item);
+	}
+
 	public void expandInv() {
 		//this.sprite = Sprite.inventory;
 	}
