@@ -22,8 +22,9 @@ public class Zombie extends Mob {
 	private int time = 0;
 	private List<Node> path = null;
 	private int damage = 5;
-
 	private double speed = 0.5;
+
+	private boolean playaggro = true;
 
 	public Zombie(int x, int y) {
 		this.x = x << 4;
@@ -35,6 +36,8 @@ public class Zombie extends Mob {
 	public void move() {
 		Player player = level.getPlayerInRange(this, acqrange);
 		if (player != null && !player.isDead()) {
+			if (playaggro) playSound("zombieaggro");
+			playaggro = false;
 			xa = 0;
 			ya = 0;
 			int px = (int) player.getX();
@@ -52,6 +55,7 @@ public class Zombie extends Mob {
 				}
 			}
 		} else {
+			playaggro = true;
 			// if time % 60 == 0 / = 1 second
 			if (time % (random.nextInt(50) + 60) == 0) {
 				xa = (random.nextInt(3) - 1) * speed;
@@ -98,8 +102,8 @@ public class Zombie extends Mob {
 			Player current = level.getPlayer();
 			// creates 19x19 "hitbox" if not dead
 			if (!current.isDead()) {
-				if (x < current.getX() + 20 && x > current.getX() - 20 && y < current.getY() + 20 && y > current.getY() - 20) {
-					current.takeDamage(damage, 25);
+				if (x < current.getX() + 22 && x > current.getX() - 22 && y < current.getY() + 28 && y > current.getY() - 20) {
+					current.takeDamage(damage, 25, "zombieplayer");
 				}
 			}
 		}

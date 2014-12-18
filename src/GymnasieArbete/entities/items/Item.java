@@ -11,7 +11,7 @@ public class Item extends Entity {
 	protected AnimatedSprite down;
 	protected AnimatedSprite left;
 	protected AnimatedSprite right;
-	protected int fireRate = 0;
+	protected int fireRate = 0, ammo = 0, maxammo = 0;
 	
 	protected Player player;
 	protected String name;
@@ -23,17 +23,27 @@ public class Item extends Entity {
 	
 	public Type type;
 	
+	public Item() {
+		this.type = Type.EMPTY;
+	}
+	
 	public int getFireRate() {
 		return fireRate;
 	}
 
+	public void setPos(int x, int y) {
+		this.x = x << 4;
+		this.y = y << 4;
+	}
+	
 	public void use() {
 	}
 	
 	public void update() {
 	}
-
+	
 	public void render(Screen screen) {
+		screen.renderItem((int) x - 8, (int) y - 8, this);
 	}
 	
 	public void setOwner(Player player) {
@@ -46,6 +56,22 @@ public class Item extends Entity {
 	
 	public String getName() {
 		return name;
+	}
+
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
+	
+	public void addAmmo(int ammo) {
+		this.ammo += ammo;
+	}
+	
+	public int getAmmo() {
+		return ammo;
+	}
+
+	public int getMaxAmmo() {
+		return maxammo;
 	}
 	
 	public AnimatedSprite getAnimatedSpriteUp() {

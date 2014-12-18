@@ -4,10 +4,12 @@ import GymnasieArbete.Game;
 import GymnasieArbete.entities.Entity;
 import GymnasieArbete.entities.items.Item;
 import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Rifle;
 import GymnasieArbete.entities.items.Shotgun;
 import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.projectile.PistolProjectile;
 import GymnasieArbete.entities.projectile.Projectile;
+import GymnasieArbete.entities.projectile.RifleProjectile;
 import GymnasieArbete.entities.projectile.ShotgunProjectile;
 import GymnasieArbete.entities.projectile.SmgProjectile;
 import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
@@ -78,33 +80,63 @@ public abstract class Mob extends Entity {
 	public void update() {
 	}
 
-	public void takeDamage(int damage, int particleamount) {
-		level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
-		hp.setHealth(hp.getHealth() - damage);
-		acqrange = 200;
+	public void takeDamage(int damage, int particleamount, String sound) {
 		if (hp.getHealth() <= 0) {
+			playSound(sound + "die");
 			Game.playSound("splat.wav", false);
 			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			remove();
+		} else {
+			playSound(sound + "hit");
+			level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
+			hp.setHealth(hp.getHealth() - damage);
+			acqrange = 200;
+		}
+	}
+
+	public void playSound(String type) {
+		if (type.equals("zombieaggro")) {
+			Game.playSound("zombie/growl_" + random.nextInt(9) + ".wav", false);
+		}
+		if (type.equals("zombiehit")) {
+			Game.playSound("zombie/hit_" + random.nextInt(8) + ".wav", false);
+		}
+		if (type.equals("zombieplayerhit")) {
+			Game.playSound("zombie/strike_" + random.nextInt(3) + ".wav", false);
+		}
+		if (type.equals("zombiedie")) {
+			Game.playSound("zombie/hit_" + random.nextInt(8) + ".wav", false);
+		}
+		if (type.equals("playerdie")) {
+			// Game.playSound("zombie/hit_" + random.nextInt(8) + ".wav",
+			// false);
 		}
 	}
 
 	protected void shoot(Item equipped, double x, double y, double direction) {
 		Game.playSound(equipped.getSound(), false);
 		Projectile p = null;
+		int r = random.nextInt(2);
 		if (equipped instanceof Pistol) {
-			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell, level);
-			p = new PistolProjectile(x - 8, y - 8, direction);
+			if (r == 1) new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_left, level);
+			else new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_right, level);
+			p = new PistolProjectile(x, y + 1, direction);
 		} else if (equipped instanceof Smg) {
-			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 50, 1, 1, Sprite.particle_shell, level);
-			p = new SmgProjectile(x - 8, y - 8, direction);
+			if (r == 1) new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_left, level);
+			else new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_right, level);
+			p = new SmgProjectile(x, y + 1, direction);
+		} else if (equipped instanceof Rifle) {
+			if (r == 1) new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_left, level);
+			else new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shell_right, level);
+			p = new RifleProjectile(x, y + 1, direction);
 		} else if (equipped instanceof Shotgun) {
-			new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell, level);
-			p = new ShotgunProjectile(x - 8, y - 8, direction);
+			if (r == 1) new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell_left, level);
+			else new BackgroundParticleSpawner((int) x - 3, (int) y + 10, 100, 1, 1, Sprite.particle_shotgunshell_right, level);
+			p = new ShotgunProjectile(x, y + 4, direction);
 			for (int i = -3; i < 3; i++) {
-				Projectile a = new ShotgunProjectile(x - 8, y - 8, direction + (i * 0.15));
+				Projectile a = new ShotgunProjectile(x, y - 4, direction + (i * 0.15));
 				level.add(a);
 			}
 		}

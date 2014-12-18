@@ -1,18 +1,15 @@
 package GymnasieArbete.entities.items;
 
 import GymnasieArbete.graphics.Screen;
-import GymnasieArbete.graphics.Sprite;
 
 public class Medical extends Item {
 
 	protected int healing = 0;
 
-	public Medical(int x, int y, String name, int healing, Sprite sprite) {
+	public Medical(int x, int y, String name) {
 		this.x = x << 4;
 		this.y = y << 4;
 		this.name = name;
-		this.healing = healing;
-		this.sprite = sprite;
 		type = Type.CONSUMABLE;
 	}
 

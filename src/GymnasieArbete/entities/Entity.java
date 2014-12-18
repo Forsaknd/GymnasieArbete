@@ -16,7 +16,7 @@ public class Entity {
 
 	public Entity() {
 	}
-
+	
 	public Entity(int x, int y, Sprite sprite) {
 		this.x = x;
 		this.y = y;
@@ -33,11 +33,6 @@ public class Entity {
 	public void remove() {
 		// Remove from level
 		removed = true;
-	}
-
-	public void setPos(int x, int y) {
-		this.x = x << 4;
-		this.y = y << 4;
 	}
 	
 	public double getX() {

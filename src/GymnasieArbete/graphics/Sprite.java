@@ -29,23 +29,26 @@ public class Sprite {
 	public static Sprite shotgun = new Sprite(16, 2, 0, SpriteSheet.items);
 	public static Sprite bandage = new Sprite(16, 3, 0, SpriteSheet.items);
 	public static Sprite medkit = new Sprite(16, 4, 0, SpriteSheet.items);
+	public static Sprite rifle = new Sprite(16, 5, 0, SpriteSheet.items);
 	
 	// ACTIONBAR
 	public static Sprite actionbar = new Sprite(162, 20, SpriteSheet.actionbar);
 	public static Sprite hpbar = new Sprite(100, 14, SpriteSheet.hpbar);
 	
 	// PROJECTILES
-	public static Sprite pistolProjectile = new Sprite(16, 0, 0, SpriteSheet.projectiles);
-	public static Sprite muzzleflash_down = new Sprite(16, 0, 1, SpriteSheet.projectiles);
-	public static Sprite muzzleflash_up = new Sprite(16, 1, 1, SpriteSheet.projectiles);
-	public static Sprite muzzleflash_left = new Sprite(16, 2, 1, SpriteSheet.projectiles);
-	public static Sprite muzzleflash_right = new Sprite(16, 3, 1, SpriteSheet.projectiles);
+	public static Sprite bullet = new Sprite(2,0xFFf1e7d9);
+	public static Sprite muzzleflash_down = new Sprite(16, 0, 1, SpriteSheet.particles);
+	public static Sprite muzzleflash_up = new Sprite(16, 1, 1, SpriteSheet.particles);
+	public static Sprite muzzleflash_left = new Sprite(16, 2, 1, SpriteSheet.particles);
+	public static Sprite muzzleflash_right = new Sprite(16, 3, 1, SpriteSheet.particles);
 
 	// PARTICLES
-	public static Sprite particle_normal = new Sprite(2, 0xFFaa7243);
-	public static Sprite particle_shell = new Sprite(2, 0xFFffff00);
-	public static Sprite particle_shotgunshell = new Sprite(2, 0xFFff0000);
-	public static Sprite particle_blood = new Sprite(2, 0xFFFF0000);
+	public static Sprite particle_normal = new Sprite(2, 0xFFb17847);
+	public static Sprite particle_shell_left = new Sprite(16, 0, 0, SpriteSheet.particles);
+	public static Sprite particle_shell_right = new Sprite(16, 1, 0, SpriteSheet.particles);
+	public static Sprite particle_shotgunshell_left = new Sprite(16, 2, 0, SpriteSheet.particles);
+	public static Sprite particle_shotgunshell_right = new Sprite(16, 3, 0, SpriteSheet.particles);
+	public static Sprite particle_blood = new Sprite(2, 0xFFe71e1e);
 
 	// MOBS
 	public static Sprite zombie = new Sprite(32, 0, 0, SpriteSheet.mobs);

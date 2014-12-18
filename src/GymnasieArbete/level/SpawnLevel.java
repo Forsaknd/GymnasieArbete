@@ -10,6 +10,7 @@ import GymnasieArbete.entities.items.Medkit;
 import GymnasieArbete.entities.items.Pistol;
 import GymnasieArbete.entities.items.Shotgun;
 import GymnasieArbete.entities.items.Smg;
+import GymnasieArbete.entities.items.Rifle;
 
 public class SpawnLevel extends Level {
 
@@ -34,6 +35,7 @@ public class SpawnLevel extends Level {
 			add(new Smg(26, 30));
 			add(new Bandage(20, 30));
 			add(new Medkit(18, 30));
+			add(new Rifle(16, 30));
 			/*add(new Zombie(30, 30));
 			add(new Zombie(32, 30));
 			add(new Zombie(34, 30));

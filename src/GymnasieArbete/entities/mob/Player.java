@@ -3,6 +3,10 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
+import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Rifle;
+import GymnasieArbete.entities.items.Shotgun;
+import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.entities.spawner.BackgroundParticleSpawner;
 import GymnasieArbete.entities.spawner.ParticleSpawner;
@@ -12,9 +16,11 @@ import GymnasieArbete.graphics.Sprite;
 import GymnasieArbete.graphics.SpriteSheet;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
+import GymnasieArbete.util.HUD;
 
 public class Player extends Mob {
 
+	private HUD hud;
 	private Inventory inventory = new Inventory();
 	private Item equipped = new Item();
 	private Keyboard input;
@@ -31,6 +37,7 @@ public class Player extends Mob {
 	private AnimatedSprite animSprite = down;
 
 	private int fireRate = 20;
+	private int time = 0;
 
 	private double speed = 1;
 
@@ -46,10 +53,12 @@ public class Player extends Mob {
 		this.input = input;
 		sprite = Sprite.player;
 		dead = false;
+		hud = new HUD(this);
 	}
 
 	public void update() {
 		if (!dead) {
+			if (equipped.type == Item.Type.WEAPON) hud.setEquipped(equipped);
 			if (walking) animSprite.update();
 			else animSprite.setFrame(0);
 			if (fireRate > 0) fireRate--;
@@ -83,16 +92,39 @@ public class Player extends Mob {
 			if (input.space) {
 				Item item = level.getItemCol(this, 16);
 				if (item != null) {
+					hud.newMessage("Picked up " + item.getName(), 3000);
 					inventory.addItem(item);
 					item.setOwner(this);
 					item.remove();
 				}
 			}
+			if (input.r) {
+				if (equipped != null && equipped.type == Item.Type.WEAPON) {
+					if (equipped.getAmmo() < equipped.getMaxAmmo()) {
+						hud.newMessage(equipped.getName() + " reloaded", 3000);
+						equipped.setAmmo(equipped.getMaxAmmo());
+					}
+				}
+			}
 			if (input.g) {
 				if (equipped != null && equipped.type != Item.Type.EMPTY) {
+					Item temp = new Item();
+					if (equipped instanceof Pistol) {
+						temp = new Pistol((int) x + 4 >> 4, (int) y + 4 >> 4);
+						temp.setAmmo(equipped.getAmmo());
+					} else if (equipped instanceof Smg) {
+						temp = new Smg((int) x + 4 >> 4, (int) y + 4 >> 4);
+						temp.setAmmo(equipped.getAmmo());
+					} else if (equipped instanceof Shotgun) {
+						temp = new Shotgun((int) x + 4 >> 4, (int) y + 4 >> 4);
+						temp.setAmmo(equipped.getAmmo());
+					} else if (equipped instanceof Rifle) {
+						temp = new Rifle((int) x + 4 >> 4, (int) y + 4 >> 4);
+						temp.setAmmo(equipped.getAmmo());
+					}
+					level.add(temp);
+					hud.newMessage("Used " + equipped.getName(), 3000);
 					inventory.removeItem(equipped);
-					equipped.setPos((int) x, (int) y);
-					level.add(equipped);
 					equipped = new Item();
 					canShoot = false;
 					up = new AnimatedSprite(SpriteSheet.player_up, 32, 32, 3, 10);
@@ -118,7 +150,6 @@ public class Player extends Mob {
 					if (inventory.getItems().size() > i) {
 						Item current = inventory.getItem(i);
 						if (current.type == Item.Type.WEAPON) {
-
 							equipped = current;
 							canShoot = true;
 							fireRate = equipped.getFireRate();
@@ -139,7 +170,9 @@ public class Player extends Mob {
 							if (dir == Direction.RIGHT) {
 								animSprite = right;
 							}
+
 						} else if (current.type == Item.Type.CONSUMABLE && hp.getHealth() < hp.getMaxHealth()) {
+							hud.newMessage("Used " + current.getName(), 3000);
 							current.use();
 							inventory.removeItem(current);
 						}
@@ -150,12 +183,19 @@ public class Player extends Mob {
 			if (xa != 0 || ya != 0) {
 				move(xa, ya);
 				walking = true;
+				time++;
+				int r = random.nextInt(3);
+				if (time % 23 == 0) {
+					Game.playSound("player/step_" + r + ".wav", false);
+					time = 0;
+				}
 			} else {
 				walking = false;
 			}
 
 			clear();
 			updateShooting();
+			updateAmmo();
 		}
 	}
 
@@ -177,6 +217,7 @@ public class Player extends Mob {
 
 			shoot(equipped, x, y, mdir);
 			fireRate = equipped.getFireRate();
+			equipped.addAmmo(-1);
 
 			int ddir = (int) Math.toDegrees(mdir);
 			if (ddir < -45 && ddir > -135) {
@@ -192,6 +233,11 @@ public class Player extends Mob {
 				animSprite = left;
 			}
 		}
+	}
+
+	private void updateAmmo() {
+		if (equipped.getAmmo() == 0) canShoot = false;
+		else if (equipped.getAmmo() > 0) canShoot = true;
 	}
 
 	public void takeDamage(int damage, int particleamount) {
@@ -244,6 +290,10 @@ public class Player extends Mob {
 
 	public Inventory getInventory() {
 		return inventory;
+	}
+
+	public HUD getHUD() {
+		return hud;
 	}
 
 	public Health getHealth() {

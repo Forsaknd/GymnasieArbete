@@ -28,6 +28,8 @@ public class Game extends Canvas implements Runnable {
 	private static int height = width / 16 * 9;
 	public static int scale = 3;
 	public static String title = "Game";
+	private static Clip hit;
+	private static Clip step;
 
 	private Thread thread;
 	private JFrame frame;
@@ -36,7 +38,7 @@ public class Game extends Canvas implements Runnable {
 	private Player player;
 	private Menu menu;
 	private PauseMenu paused;
-	public Graphics g;
+	private Graphics g;
 	public static boolean running = false;
 
 	private Screen screen;
@@ -149,8 +151,9 @@ public class Game extends Canvas implements Runnable {
 			double xScroll = player.getX() - screen.width / 2;
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
-			player.getInventory().render(screen);
-			player.getHealth().render(screen);
+			if (player.getHUD() != null) {
+				player.getHUD().render(screen, g);
+			}
 			// screen.renderSheet(40, 40, SpriteSheet.player, false);
 			// Sprite sprite = new Sprite(width - 40, 20, 0x0);
 			// screen.renderSprite(20, height - 20, sprite, false);
@@ -174,30 +177,40 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-
+	
 	public static synchronized void playSound(final String url, boolean loop) {
-		new Thread(new Runnable() {
-			// The wrapper thread is unnecessary, unless it blocks on the
-			// Clip finishing; see comments.
-			public void run() {
-				try {
-					Clip clip = AudioSystem.getClip();
-					String path = "/sounds/" + url;
-					AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResource(path));
-					clip.open(inputStream);
-					if (!loop) {
-						clip.start();
-					}
-					if (loop) {
-						clip.loop(Clip.LOOP_CONTINUOUSLY);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
+		try {
+			if (url.contains("hit")) {
+				if (hit != null) hit.stop();
+				hit = AudioSystem.getClip();
+				String path = "/sounds/" + url;
+				AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResource(path));
+				hit.open(inputStream);
+				hit.start();
+			} else if (url.contains("step")) {
+				if (step != null) step.stop();
+				step = AudioSystem.getClip();
+				String path = "/sounds/" + url;
+				AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResource(path));
+				step.open(inputStream);
+				step.start();
+			} else {
+				Clip clip = AudioSystem.getClip();
+				String path = "/sounds/" + url;
+				AudioInputStream inputStream = AudioSystem.getAudioInputStream(Game.class.getResource(path));
+				clip.open(inputStream);
+				if (!loop) {
+					clip.start();
+				}
+				if (loop) {
+					clip.loop(Clip.LOOP_CONTINUOUSLY);
 				}
 			}
-		}).start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
-
+	
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setLayout(new FlowLayout());

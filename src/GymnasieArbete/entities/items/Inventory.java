@@ -55,7 +55,6 @@ public class Inventory {
 		for (int i = 0; i < items.size(); i++) {			
 			if(items.get(i).equals(item)) {
 				Item empty = new Item();
-				empty.type = Item.Type.EMPTY;
 				items.add(empty);
 				Collections.swap(items, id, items.size() - 1);
 				items.remove(items.size() - 1);

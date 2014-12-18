@@ -98,7 +98,7 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update();
 		}
-
+		
 		remove();
 	}
 
@@ -125,8 +125,8 @@ public class Level {
 		}
 	}
 
-	//private void time() {
-	//}
+	// private void time() {
+	// }
 
 	// collision entity > tile
 	public boolean tileCollision(int x, int y, int size, int xOffset, int yOffset) {
@@ -185,6 +185,7 @@ public class Level {
 		e.init(this);
 		if (e instanceof Item) {
 			items.add((Item) e);
+			System.out.println("ITEM DROP: " + " x: " + e.getX() + " y: " + e.getY());
 		} else if (e instanceof Particle) {
 			particles.add((Particle) e);
 		} else if (e instanceof BackgroundParticle) {
@@ -195,11 +196,11 @@ public class Level {
 			entities.add(e);
 		}
 	}
-
+	
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}
-	
+
 	public List<Node> findPath(Vector2i start, Vector2i goal) {
 		List<Node> openList = new ArrayList<Node>();
 		List<Node> closedList = new ArrayList<Node>();
@@ -290,7 +291,7 @@ public class Level {
 		}
 		return result;
 	}
-	
+
 	public Player getPlayerInRange(Entity e, int radius) {
 		List<Entity> entities = getEntities(e, radius);
 		Player result = null;

@@ -16,7 +16,7 @@ public class SpriteSheet {
 	public static SpriteSheet tiles = new SpriteSheet("/textures/sheets/spritesheet_tiles.png", 256);
 	public static SpriteSheet mobs = new SpriteSheet("/textures/sheets/spritesheet_mobs.png", 256);
 	public static SpriteSheet items = new SpriteSheet("/textures/sheets/spritesheet_items.png", 128);
-	public static SpriteSheet projectiles = new SpriteSheet("/textures/sheets/spritesheet_projectiles.png", 64);
+	public static SpriteSheet particles = new SpriteSheet("/textures/sheets/spritesheet_particles.png", 64);
 	
 	//UI
 	public static SpriteSheet actionbar = new SpriteSheet("/textures/sheets/spritesheet_actionbar.png", 162, 20);
