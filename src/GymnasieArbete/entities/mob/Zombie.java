@@ -38,7 +38,7 @@ public class Zombie extends Mob {
 			xa = 0;
 			ya = 0;
 			int px = (int) player.getX();
-			int py = (int) player.getY();
+			int py = (int) player.getY() + 15;
 			Vector2i start = new Vector2i((int) getX() >> 4, (int) getY() >> 4);
 			Vector2i destination = new Vector2i(px >> 4, py >> 4);
 			if (time % 3 == 0) path = level.findPath(start, destination);
