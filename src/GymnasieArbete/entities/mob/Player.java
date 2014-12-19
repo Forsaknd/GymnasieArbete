@@ -92,7 +92,7 @@ public class Player extends Mob {
 			if (input.space) {
 				Item item = level.getItemCol(this, 16);
 				if (item != null) {
-					hud.newMessage("Picked up " + item.getName(), 3000);
+					hud.newMessage("Picked up " + item.getName(), 1500);
 					inventory.addItem(item);
 					item.setOwner(this);
 					item.remove();
@@ -101,7 +101,7 @@ public class Player extends Mob {
 			if (input.r) {
 				if (equipped != null && equipped.type == Item.Type.WEAPON) {
 					if (equipped.getAmmo() < equipped.getMaxAmmo()) {
-						hud.newMessage(equipped.getName() + " reloaded", 3000);
+						hud.newMessage(equipped.getName() + " reloaded", 1500);
 						equipped.setAmmo(equipped.getMaxAmmo());
 					}
 				}
@@ -123,7 +123,7 @@ public class Player extends Mob {
 						temp.setAmmo(equipped.getAmmo());
 					}
 					level.add(temp);
-					hud.newMessage("Used " + equipped.getName(), 3000);
+					hud.newMessage("Used " + equipped.getName(), 1500);
 					inventory.removeItem(equipped);
 					equipped = new Item();
 					canShoot = false;
