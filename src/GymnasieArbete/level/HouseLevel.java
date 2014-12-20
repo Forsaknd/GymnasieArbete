@@ -13,12 +13,12 @@ import GymnasieArbete.entities.items.Shotgun;
 import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.util.Vector2i;
 
-public class SpawnLevel extends Level {
+public class HouseLevel extends Level {
 
-	public SpawnLevel(String path) {
+	public HouseLevel(String path) {
 		super(path);
-		spawnLoc = new Vector2i(26 << 4, 30 << 4);
-		exitLoc = new Vector2i(30, 30);
+		spawnLoc = new Vector2i(5 << 4, 5 << 4);
+		exitLoc = new Vector2i(10, 5);
 	}
 
 	protected void loadLevel(String path) {

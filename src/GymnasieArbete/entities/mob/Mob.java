@@ -81,6 +81,7 @@ public abstract class Mob extends Entity {
 	}
 
 	public void takeDamage(int damage, int particleamount, String sound) {
+		hp.setHealth(hp.getHealth() - damage);
 		if (hp.getHealth() <= 0) {
 			playSound(sound + "die");
 			Game.playSound("splat.wav", false);
@@ -91,7 +92,6 @@ public abstract class Mob extends Entity {
 		} else {
 			playSound(sound + "hit");
 			level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
-			hp.setHealth(hp.getHealth() - damage);
 			acqrange = 200;
 		}
 	}

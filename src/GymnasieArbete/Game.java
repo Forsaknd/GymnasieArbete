@@ -20,6 +20,7 @@ import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
 import GymnasieArbete.level.Level;
 import GymnasieArbete.level.TileCoordinate;
+import GymnasieArbete.util.Vector2i;
 
 public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
@@ -61,8 +62,8 @@ public class Game extends Canvas implements Runnable {
 		frame = new JFrame();
 		key = new Keyboard();
 		level = Level.spawn;
-		TileCoordinate playerSpawn = new TileCoordinate(26, 30);
-		player = new Player(playerSpawn.x(), playerSpawn.y(), key);
+		Vector2i playerSpawn = level.getSpawnLoc();
+		player = new Player(playerSpawn.getX(), playerSpawn.getY(), key);
 		level.add(player);
 		menu = new Menu();
 		paused = new PauseMenu();
@@ -133,6 +134,13 @@ public class Game extends Canvas implements Runnable {
 		if (state == STATE.GAME) {
 			key.update();
 			level.update();
+			if (level.getExitLoc().equals(new Vector2i((int) player.getX() >> 4, (int) player.getY() >> 4))) {
+				level.removeAll();
+				level = Level.house;
+				Vector2i playerSpawn = level.getSpawnLoc();
+				player = new Player(playerSpawn.getX(), playerSpawn.getY(), key);
+				level.add(player);
+			}
 		}
 	}
 
@@ -177,7 +185,7 @@ public class Game extends Canvas implements Runnable {
 		g.dispose();
 		bs.show();
 	}
-	
+
 	public static synchronized void playSound(final String url, boolean loop) {
 		try {
 			if (url.contains("hit")) {
@@ -210,7 +218,7 @@ public class Game extends Canvas implements Runnable {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		Game game = new Game();
 		game.frame.setLayout(new FlowLayout());

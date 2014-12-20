@@ -11,15 +11,15 @@ public class TileCoordinate {
 		this.y = y * TILE_SIZE;
 	}
 	
-	public int x() {
+	public int getX() {
 		return x;
 	}
 	
-	public int y() {
+	public int getY() {
 		return y;
 	}
 	
-	public int[] xy() {
+	public int[] getXY() {
 		int[] r = new int[2];
 		r[0] = x;
 		r[1] = y;

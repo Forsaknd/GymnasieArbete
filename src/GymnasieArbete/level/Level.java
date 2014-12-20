@@ -24,6 +24,8 @@ public class Level {
 	protected int[] tiles;
 	protected int tile_size;
 	protected int time = 0;
+	protected Vector2i exitLoc;
+	protected Vector2i spawnLoc;
 
 	private List<Entity> entities = new ArrayList<Entity>();
 	private List<Item> items = new ArrayList<Item>();
@@ -32,6 +34,7 @@ public class Level {
 	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
 
 	public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
+	public static Level house = new HouseLevel("/levels/HouseLevel.png");
 
 	private Comparator<Node> nodeSorter = new Comparator<Node>() {
 		@Override
@@ -53,7 +56,7 @@ public class Level {
 		loadLevel(path);
 		generateLevel();
 	}
-
+	
 	protected void generateLevel() {
 		for (int y = 0; y < 64; y++) {
 			for (int x = 0; x < 64; x++) {
@@ -125,6 +128,29 @@ public class Level {
 		}
 	}
 
+	public void removeAll() {
+
+		for (int i = 0; i < items.size(); i++) {
+			items.remove(i);
+		}
+
+		for (int i = 0; i < backgroundParticles.size(); i++) {
+			backgroundParticles.remove(i);
+		}
+
+		for (int i = 0; i < entities.size(); i++) {
+			entities.remove(i);
+		}
+
+		for (int i = 0; i < projectiles.size(); i++) {
+			projectiles.remove(i);
+		}
+
+		for (int i = 0; i < particles.size(); i++) {
+			particles.remove(i);
+		}
+	}
+
 	// private void time() {
 	// }
 
@@ -185,7 +211,6 @@ public class Level {
 		e.init(this);
 		if (e instanceof Item) {
 			items.add((Item) e);
-			System.out.println("ITEM DROP: " + " x: " + e.getX() + " y: " + e.getY());
 		} else if (e instanceof Particle) {
 			particles.add((Particle) e);
 		} else if (e instanceof BackgroundParticle) {
@@ -350,6 +375,14 @@ public class Level {
 		return entities;
 	}
 
+	public Vector2i getExitLoc() {
+		return exitLoc;
+	}
+
+	public Vector2i getSpawnLoc() {
+		return spawnLoc;
+	}
+	
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;
