@@ -19,6 +19,8 @@ public class HouseLevel extends Level {
 		super(path);
 		spawnLoc = new Vector2i(5 << 4, 5 << 4);
 		exitLoc = new Vector2i(10, 5);
+		name = "house";
+		nextlevel = "spawn";
 	}
 
 	protected void loadLevel(String path) {

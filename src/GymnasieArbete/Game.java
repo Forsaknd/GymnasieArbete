@@ -18,8 +18,9 @@ import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.input.Keyboard;
 import GymnasieArbete.input.Mouse;
+import GymnasieArbete.level.HouseLevel;
 import GymnasieArbete.level.Level;
-import GymnasieArbete.level.TileCoordinate;
+import GymnasieArbete.level.SpawnLevel;
 import GymnasieArbete.util.Vector2i;
 
 public class Game extends Canvas implements Runnable {
@@ -36,6 +37,7 @@ public class Game extends Canvas implements Runnable {
 	private JFrame frame;
 	private Keyboard key;
 	private Level level;
+	private LevelHandler lh;
 	private Player player;
 	private Menu menu;
 	private PauseMenu paused;
@@ -58,16 +60,20 @@ public class Game extends Canvas implements Runnable {
 		Dimension size = new Dimension(Game.width * Game.scale, Game.height * Game.scale);
 		setPreferredSize(size);
 
+		lh = new LevelHandler();
+		lh.addLevel(new SpawnLevel("/levels/SpawnLevel.png"));
+		lh.addLevel(new HouseLevel("/levels/HouseLevel.png"));
+		level = lh.getCurrentLevel();
+		
 		screen = new Screen(width, height);
 		frame = new JFrame();
 		key = new Keyboard();
-		level = Level.spawn;
 		Vector2i playerSpawn = level.getSpawnLoc();
 		player = new Player(playerSpawn.getX(), playerSpawn.getY(), key);
 		level.add(player);
 		menu = new Menu();
 		paused = new PauseMenu();
-
+		
 		addKeyListener(key);
 
 		Mouse mouse = new Mouse();
@@ -132,15 +138,12 @@ public class Game extends Canvas implements Runnable {
 
 	public void update() {
 		if (state == STATE.GAME) {
+			if (level.getExitLoc().equals(new Vector2i((int) player.getX() >> 4, (int) player.getY() >> 4))) {
+				lh.nextLevel(player, level);
+				level = lh.getCurrentLevel();
+			}
 			key.update();
 			level.update();
-			if (level.getExitLoc().equals(new Vector2i((int) player.getX() >> 4, (int) player.getY() >> 4))) {
-				level.removeAll();
-				level = Level.house;
-				Vector2i playerSpawn = level.getSpawnLoc();
-				player = new Player(playerSpawn.getX(), playerSpawn.getY(), key);
-				level.add(player);
-			}
 		}
 	}
 

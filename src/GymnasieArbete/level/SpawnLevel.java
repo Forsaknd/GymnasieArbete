@@ -19,6 +19,8 @@ public class SpawnLevel extends Level {
 		super(path);
 		spawnLoc = new Vector2i(26 << 4, 30 << 4);
 		exitLoc = new Vector2i(30, 30);
+		name = "spawn";
+		nextlevel = "house";
 	}
 
 	protected void loadLevel(String path) {

@@ -33,8 +33,9 @@ public class Level {
 	private List<Particle> particles = new ArrayList<Particle>();
 	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
 
-	public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
-	public static Level house = new HouseLevel("/levels/HouseLevel.png");
+	//public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
+	protected String name;
+	protected String nextlevel;
 
 	private Comparator<Node> nodeSorter = new Comparator<Node>() {
 		@Override
@@ -195,6 +196,7 @@ public class Level {
 		}
 
 		for (int i = 0; i < entities.size(); i++) {
+			if (entities.get(i) instanceof Player) continue;
 			entities.get(i).render(screen);
 		}
 
@@ -205,6 +207,8 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(screen);
 		}
+		
+		getPlayer().render(screen);
 	}
 
 	public void add(Entity e) {
@@ -381,6 +385,14 @@ public class Level {
 
 	public Vector2i getSpawnLoc() {
 		return spawnLoc;
+	}
+
+	public String getName() {
+		return name;
+	}
+	
+	public String getNextLevel() {
+		return nextlevel;
 	}
 	
 	public Tile getTile(int x, int y) {
