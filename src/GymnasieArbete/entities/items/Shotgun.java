@@ -8,7 +8,7 @@ public class Shotgun extends Weapon {
 		super(x, y, "Shotgun");
 		name = "Shotgun";
 		fireRate = 50;
-		maxammo = 6;
+		clipsize = 6;
 		ammo = 6;
 		sprite = Sprite.shotgun;
 		sound = "weapons/shotgun.wav";

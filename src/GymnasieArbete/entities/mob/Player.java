@@ -38,6 +38,7 @@ public class Player extends Mob {
 
 	private int fireRate = 20;
 	private int time = 0;
+	private int ammo = 0;
 
 	private double speed = 1;
 
@@ -92,17 +93,22 @@ public class Player extends Mob {
 			if (input.space) {
 				Item item = level.getItemCol(this, 16);
 				if (item != null) {
-					hud.newMessage("Picked up " + item.getName(), 1500);
-					inventory.addItem(item);
 					item.setOwner(this);
+					hud.newMessage("Picked up " + item.getName(), 1500);
+					if (item.type == Item.Type.AMMO) {
+						item.use();
+					} else {
+						inventory.addItem(item);
+					}
 					item.remove();
 				}
 			}
 			if (input.r) {
 				if (equipped != null && equipped.type == Item.Type.WEAPON) {
-					if (equipped.getAmmo() < equipped.getMaxAmmo()) {
+					if (equipped.getAmmo() < equipped.getClipSize()) {
 						hud.newMessage(equipped.getName() + " reloaded", 1500);
-						equipped.setAmmo(equipped.getMaxAmmo());
+						equipped.setAmmo(equipped.getClipSize());
+						ammo -= equipped.getClipSize();
 					}
 				}
 			}
@@ -263,7 +269,7 @@ public class Player extends Mob {
 			if (equipped.getName() == "Rifle") {
 				xOffset = 24;
 				yOffset = 24;
-			} 
+			}
 			screen.renderMob((int) (x - xOffset), (int) (y - yOffset), sprite);
 		}
 	}
@@ -280,6 +286,14 @@ public class Player extends Mob {
 			if (level.getTile(ix, iy).solid()) solid = true;
 		}
 		return solid;
+	}
+
+	public void setAmmo(int ammo) {
+		this.ammo = ammo;
+	}
+
+	public int getAmmo() {
+		return ammo;
 	}
 
 	public void dropItem(Item item) {

@@ -11,14 +11,14 @@ public class Item extends Entity {
 	protected AnimatedSprite down;
 	protected AnimatedSprite left;
 	protected AnimatedSprite right;
-	protected int fireRate = 0, ammo = 0, maxammo = 0;
+	protected int fireRate = 0, ammo = 0, clipsize = 0;
 	
 	protected Player player;
 	protected String name;
 	protected String sound;
 	
 	public enum Type {
-		WEAPON, CONSUMABLE, EMPTY;
+		WEAPON, CONSUMABLE, AMMO, EMPTY;
 	}
 	
 	public Type type;
@@ -70,8 +70,8 @@ public class Item extends Entity {
 		return ammo;
 	}
 
-	public int getMaxAmmo() {
-		return maxammo;
+	public int getClipSize() {
+		return clipsize;
 	}
 	
 	public AnimatedSprite getAnimatedSpriteUp() {

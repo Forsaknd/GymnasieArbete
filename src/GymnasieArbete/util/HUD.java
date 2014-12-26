@@ -39,7 +39,7 @@ public class HUD {
 	}
 
 	public void setEquipped(Item item) {
-		equipped.setText(item.getName() + " " + parent.getEquipped().getAmmo() + " / " + parent.getEquipped().getMaxAmmo());
+		equipped.setText(item.getName() + " " + parent.getEquipped().getAmmo() + " / " + parent.getAmmo());
 	}
 
 	public void render(Screen screen, Graphics g) {
