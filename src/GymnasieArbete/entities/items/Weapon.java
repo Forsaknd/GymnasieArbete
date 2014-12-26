@@ -28,10 +28,10 @@ public class Weapon extends Item {
 			left = new AnimatedSprite(SpriteSheet.player_shotgun_left, 32, 32, 5, 10);
 			right = new AnimatedSprite(SpriteSheet.player_shotgun_right, 32, 32, 5, 10);
 		} else if (name == "Rifle") {
-			up = new AnimatedSprite(SpriteSheet.player_shotgun_up, 32, 32, 3, 10);
-			down = new AnimatedSprite(SpriteSheet.player_shotgun_down, 32, 32, 3, 10);
-			left = new AnimatedSprite(SpriteSheet.player_shotgun_left, 32, 32, 5, 10);
-			right = new AnimatedSprite(SpriteSheet.player_shotgun_right, 32, 32, 5, 10);
+			up = new AnimatedSprite(SpriteSheet.player_rifle_up, 48, 48, 3, 10);
+			down = new AnimatedSprite(SpriteSheet.player_rifle_down, 48, 48, 3, 10);
+			left = new AnimatedSprite(SpriteSheet.player_rifle_left, 48, 48, 5, 10);
+			right = new AnimatedSprite(SpriteSheet.player_rifle_right, 48, 48, 5, 10);
 		}
 	}
 

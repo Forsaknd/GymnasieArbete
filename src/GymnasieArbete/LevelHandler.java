@@ -12,6 +12,7 @@ public class LevelHandler {
 
 	public void addLevel(Level level) {
 		levelMap.put(level.getName(), level);
+		if (currentLevel == null) currentLevel = level;
 	}
 
 	public Level getLevel(String name) {
@@ -19,7 +20,6 @@ public class LevelHandler {
 	}
 
 	public Level getCurrentLevel() {
-		if (currentLevel == null) currentLevel = getLevel("spawn");
 		return currentLevel;
 	}
 

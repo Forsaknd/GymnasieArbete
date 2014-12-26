@@ -12,6 +12,7 @@ import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.particle.BackgroundParticle;
 import GymnasieArbete.entities.particle.Particle;
+import GymnasieArbete.entities.particle.SpriteParticle;
 import GymnasieArbete.entities.projectile.Projectile;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.level.tile.Tile;
@@ -32,8 +33,8 @@ public class Level {
 	private List<Projectile> projectiles = new ArrayList<Projectile>();
 	private List<Particle> particles = new ArrayList<Particle>();
 	private List<BackgroundParticle> backgroundParticles = new ArrayList<BackgroundParticle>();
+	private List<SpriteParticle> spriteParticles = new ArrayList<SpriteParticle>();
 
-	//public static Level spawn = new SpawnLevel("/levels/SpawnLevel.png");
 	protected String name;
 	protected String nextlevel;
 
@@ -57,7 +58,7 @@ public class Level {
 		loadLevel(path);
 		generateLevel();
 	}
-	
+
 	protected void generateLevel() {
 		for (int y = 0; y < 64; y++) {
 			for (int x = 0; x < 64; x++) {
@@ -102,7 +103,11 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).update();
 		}
-		
+
+		for (int i = 0; i < spriteParticles.size(); i++) {
+			spriteParticles.get(i).update();
+		}
+
 		remove();
 	}
 
@@ -127,6 +132,10 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			if (particles.get(i).isRemoved()) particles.remove(i);
 		}
+
+		for (int i = 0; i < spriteParticles.size(); i++) {
+			if (spriteParticles.get(i).isRemoved()) spriteParticles.remove(i);
+		}
 	}
 
 	public void removeAll() {
@@ -149,6 +158,10 @@ public class Level {
 
 		for (int i = 0; i < particles.size(); i++) {
 			particles.remove(i);
+		}
+
+		for (int i = 0; i < spriteParticles.size(); i++) {
+			spriteParticles.remove(i);
 		}
 	}
 
@@ -207,8 +220,12 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(screen);
 		}
-		
+
 		getPlayer().render(screen);
+
+		for (int i = 0; i < spriteParticles.size(); i++) {
+			spriteParticles.get(i).render(screen);
+		}
 	}
 
 	public void add(Entity e) {
@@ -221,11 +238,13 @@ public class Level {
 			backgroundParticles.add((BackgroundParticle) e);
 		} else if (e instanceof Projectile) {
 			projectiles.add((Projectile) e);
+		} else if (e instanceof SpriteParticle) {
+			spriteParticles.add((SpriteParticle) e);
 		} else {
 			entities.add(e);
 		}
 	}
-	
+
 	public List<Projectile> getProjectiles() {
 		return projectiles;
 	}
@@ -390,11 +409,11 @@ public class Level {
 	public String getName() {
 		return name;
 	}
-	
+
 	public String getNextLevel() {
 		return nextlevel;
 	}
-	
+
 	public Tile getTile(int x, int y) {
 		if (x < 0 || y < 0 || x >= width || y >= height) return Tile.voidTile;
 		if (tiles[x + y * width] == Tile.col_grass) return Tile.grass;

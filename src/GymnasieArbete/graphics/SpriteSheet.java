@@ -24,6 +24,7 @@ public class SpriteSheet {
 
 	//Player
 	public static SpriteSheet player = new SpriteSheet("/textures/sheets/spritesheet_player.png", 640);
+	public static SpriteSheet playerbigguns = new SpriteSheet("/textures/sheets/spritesheet_playerbigguns.png", 640);
 	public static SpriteSheet player_down = new SpriteSheet(player, 0, 0, 1, 3, 32);
 	public static SpriteSheet player_up = new SpriteSheet(player, 1, 0, 1, 3, 32);
 	public static SpriteSheet player_left = new SpriteSheet(player, 2, 0, 1, 5, 32);
@@ -43,6 +44,11 @@ public class SpriteSheet {
 	public static SpriteSheet player_shotgun_up = new SpriteSheet(player, 13, 0, 1, 3, 32);
 	public static SpriteSheet player_shotgun_left = new SpriteSheet(player, 14, 0, 1, 5, 32);
 	public static SpriteSheet player_shotgun_right = new SpriteSheet(player, 15, 0, 1, 5, 32);
+	
+	public static SpriteSheet player_rifle_down = new SpriteSheet(playerbigguns, 0, 0, 1, 3, 48);
+	public static SpriteSheet player_rifle_up = new SpriteSheet(playerbigguns, 1, 0, 1, 3, 48);
+	public static SpriteSheet player_rifle_left = new SpriteSheet(playerbigguns, 2, 0, 1, 5, 48);
+	public static SpriteSheet player_rifle_right = new SpriteSheet(playerbigguns, 3, 0, 1, 5, 48);
 	
 	//Zombie
 	public static SpriteSheet zombie_down = new SpriteSheet(mobs, 0, 0, 1, 5, 32);
