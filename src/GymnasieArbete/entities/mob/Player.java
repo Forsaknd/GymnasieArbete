@@ -256,9 +256,15 @@ public class Player extends Mob {
 	}
 
 	public void render(Screen screen) {
+		sprite = animSprite.getSprite();
 		if (!dead) {
-			sprite = animSprite.getSprite();
-			screen.renderMob((int) (x - 16), (int) (y - 16), sprite);
+			int xOffset = 16;
+			int yOffset = 16;
+			if (equipped.getName() == "Rifle") {
+				xOffset = 24;
+				yOffset = 24;
+			} 
+			screen.renderMob((int) (x - xOffset), (int) (y - yOffset), sprite);
 		}
 	}
 
