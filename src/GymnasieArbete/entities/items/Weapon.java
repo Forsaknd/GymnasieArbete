@@ -11,6 +11,7 @@ public class Weapon extends Item {
 		this.x = x << 4;
 		this.y = y << 4;
 		type = Type.WEAPON;
+		ammotype = Ammotype.BULLET;
 
 		if (name == "Pistol") {
 			up = new AnimatedSprite(SpriteSheet.player_pistol_up, 32, 32, 3, 10);

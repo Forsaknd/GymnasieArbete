@@ -8,8 +8,9 @@ public class Smg extends Weapon {
 		super(x, y, "SMG");
 		name = "SMG";
 		fireRate = 10;
+		clipammo = 20;
+		maxammo = 120;
 		clipsize = 20;
-		ammo = 20;
 		sprite = Sprite.smg;
 		sound = "weapons/smg.wav";
 	}

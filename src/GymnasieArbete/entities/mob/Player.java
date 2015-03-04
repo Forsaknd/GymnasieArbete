@@ -3,6 +3,7 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
+import GymnasieArbete.entities.items.Item.Ammotype;
 import GymnasieArbete.entities.items.Pistol;
 import GymnasieArbete.entities.items.Rifle;
 import GymnasieArbete.entities.items.Shotgun;
@@ -21,7 +22,7 @@ import GymnasieArbete.util.HUD;
 public class Player extends Mob {
 
 	private HUD hud;
-	private Inventory inventory = new Inventory();
+	private Inventory inventory;
 	private Item equipped = new Item();
 	private Keyboard input;
 	private Sprite sprite;
@@ -36,16 +37,16 @@ public class Player extends Mob {
 
 	private AnimatedSprite animSprite = down;
 
-	private int fireRate = 20;
-	private int time = 0;
-	private int ammo = 0;
+	private int time = 0, fireRate = 20, clvl = 1, cexp = 0;
 
 	private double speed = 1;
 
 	public Player(Keyboard input) {
 		this.input = input;
 		sprite = Sprite.player;
-		animSprite = down;
+		dead = false;
+		hud = new HUD(this);
+		inventory = new Inventory(this);
 	}
 
 	public Player(int x, int y, Keyboard input) {
@@ -55,11 +56,12 @@ public class Player extends Mob {
 		sprite = Sprite.player;
 		dead = false;
 		hud = new HUD(this);
+		inventory = new Inventory(this);
 	}
 
 	public void update() {
 		if (!dead) {
-			if (equipped.type == Item.Type.WEAPON) hud.setEquipped(equipped);
+			if (equipped.type == Item.Type.WEAPON) hud.updateInfo(equipped);
 			if (walking) animSprite.update();
 			else animSprite.setFrame(0);
 			if (fireRate > 0) fireRate--;
@@ -105,10 +107,16 @@ public class Player extends Mob {
 			}
 			if (input.r) {
 				if (equipped != null && equipped.type == Item.Type.WEAPON) {
-					if (equipped.getAmmo() < equipped.getClipSize()) {
-						hud.newMessage(equipped.getName() + " reloaded", 1500);
-						equipped.setAmmo(equipped.getClipSize());
-						ammo -= equipped.getClipSize();
+					if (equipped.getClipAmmo() < equipped.getClipSize()) {
+						if (inventory.getRelAmmo() >= equipped.getClipSize()) {
+							hud.newMessage(equipped.getName() + " reloaded", 1500);
+							equipped.setClipAmmo(equipped.getClipSize());
+							inventory.setRelAmmo(inventory.getRelAmmo() - equipped.getClipSize());
+						} else if (inventory.getRelAmmo() > 0) {
+							hud.newMessage(equipped.getName() + " reloaded", 1500);
+							equipped.setClipAmmo(inventory.getRelAmmo());
+							inventory.setRelAmmo(inventory.getRelAmmo() - inventory.getRelAmmo());
+						}
 					}
 				}
 			}
@@ -117,19 +125,19 @@ public class Player extends Mob {
 					Item temp = new Item();
 					if (equipped instanceof Pistol) {
 						temp = new Pistol((int) x + 4 >> 4, (int) y + 4 >> 4);
-						temp.setAmmo(equipped.getAmmo());
+						temp.setClipAmmo(equipped.getClipAmmo());
 					} else if (equipped instanceof Smg) {
 						temp = new Smg((int) x + 4 >> 4, (int) y + 4 >> 4);
-						temp.setAmmo(equipped.getAmmo());
+						temp.setClipAmmo(equipped.getClipAmmo());
 					} else if (equipped instanceof Shotgun) {
 						temp = new Shotgun((int) x + 4 >> 4, (int) y + 4 >> 4);
-						temp.setAmmo(equipped.getAmmo());
+						temp.setClipAmmo(equipped.getClipAmmo());
 					} else if (equipped instanceof Rifle) {
 						temp = new Rifle((int) x + 4 >> 4, (int) y + 4 >> 4);
-						temp.setAmmo(equipped.getAmmo());
+						temp.setClipAmmo(equipped.getClipAmmo());
 					}
 					level.add(temp);
-					hud.newMessage("Used " + equipped.getName(), 1500);
+					hud.newMessage("Dropped " + equipped.getName(), 1500);
 					inventory.removeItem(equipped);
 					equipped = new Item();
 					canShoot = false;
@@ -223,7 +231,7 @@ public class Player extends Mob {
 
 			shoot(equipped, x, y, mdir);
 			fireRate = equipped.getFireRate();
-			equipped.addAmmo(-1);
+			equipped.setClipAmmo(equipped.getClipAmmo() - 1);
 
 			int ddir = (int) Math.toDegrees(mdir);
 			if (ddir < -45 && ddir > -135) {
@@ -242,8 +250,8 @@ public class Player extends Mob {
 	}
 
 	private void updateAmmo() {
-		if (equipped.getAmmo() == 0) canShoot = false;
-		else if (equipped.getAmmo() > 0) canShoot = true;
+		if (equipped.getClipAmmo() == 0) canShoot = false;
+		else if (equipped.getClipAmmo() > 0) canShoot = true;
 	}
 
 	public void takeDamage(int damage, int particleamount) {
@@ -288,12 +296,24 @@ public class Player extends Mob {
 		return solid;
 	}
 
-	public void setAmmo(int ammo) {
-		this.ammo = ammo;
+	public void setLevel(int clvl) {
+		this.clvl = clvl;
 	}
 
-	public int getAmmo() {
-		return ammo;
+	public int getLevel() {
+		return clvl;
+	}
+
+	public void setExperience(int cexp) {
+		this.cexp = cexp;
+		if (this.cexp == clvl * 20) {
+			this.cexp = 0;
+			clvl++;
+		}
+	}
+
+	public int getExperience() {
+		return cexp;
 	}
 
 	public void dropItem(Item item) {

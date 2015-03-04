@@ -14,7 +14,7 @@ public class Ammo extends Item {
 	}
 
 	public void use() {
-		player.setAmmo(player.getAmmo() + ammo);
+		player.getInventory().setBAmmo(player.getInventory().getBAmmo() + ammo);
 	}
 
 	public void update() {

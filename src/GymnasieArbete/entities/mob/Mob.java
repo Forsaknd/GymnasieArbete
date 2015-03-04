@@ -80,17 +80,20 @@ public abstract class Mob extends Entity {
 	public void update() {
 	}
 
-	public void takeDamage(int damage, int particleamount, String sound) {
+	public void takeDamage(int damage, int particleamount, String target) {
 		hp.setHealth(hp.getHealth() - damage);
 		if (hp.getHealth() <= 0) {
-			playSound(sound + "die");
+			playSound(target + "die");
 			Game.playSound("splat.wav", false);
 			level.add(new ParticleSpawner((int) x, (int) y, 40, particleamount * 4, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x + 4, (int) y - 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			level.add(new BackgroundParticleSpawner((int) x - 4, (int) y + 4, 1000, 3, particleamount * 8, Sprite.particle_blood, level));
 			remove();
+			if(target == "zombie") {
+				level.getPlayer().setExperience(level.getPlayer().getExperience() + 10);
+			}
 		} else {
-			playSound(sound + "hit");
+			playSound(target + "hit");
 			level.add(new ParticleSpawner((int) x, (int) y, 20, particleamount, Sprite.particle_blood, level));
 			acqrange = 200;
 		}

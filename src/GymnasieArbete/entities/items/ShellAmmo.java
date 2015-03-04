@@ -11,4 +11,7 @@ public class ShellAmmo extends Ammo {
 		sprite = Sprite.ammocrate;
 	}
 
+	public void use() {
+		player.getInventory().setSAmmo(player.getInventory().getSAmmo() + ammo);
+	}
 }

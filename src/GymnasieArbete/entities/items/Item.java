@@ -11,7 +11,7 @@ public class Item extends Entity {
 	protected AnimatedSprite down;
 	protected AnimatedSprite left;
 	protected AnimatedSprite right;
-	protected int fireRate = 0, ammo = 0, clipsize = 0;
+	protected int fireRate = 0, clipammo = 0, clipsize = 0, maxammo = 0;
 	
 	protected Player player;
 	protected String name;
@@ -22,9 +22,16 @@ public class Item extends Entity {
 	}
 	
 	public Type type;
+
+	public enum Ammotype {
+		BULLET, SHELL, UNKOWN;
+	}
+	
+	public Ammotype ammotype;
 	
 	public Item() {
-		this.type = Type.EMPTY;
+		type = Type.EMPTY;
+		ammotype = Ammotype.UNKOWN;
 	}
 	
 	public int getFireRate() {
@@ -58,18 +65,18 @@ public class Item extends Entity {
 		return name;
 	}
 
-	public void setAmmo(int ammo) {
-		this.ammo = ammo;
+	public void setClipAmmo(int clipammo) {
+		this.clipammo = clipammo;
 	}
 	
-	public void addAmmo(int ammo) {
-		this.ammo += ammo;
-	}
-	
-	public int getAmmo() {
-		return ammo;
+	public int getClipAmmo() {
+		return clipammo;
 	}
 
+	public int getMaxAmmo() {
+		return maxammo;
+	}
+	
 	public int getClipSize() {
 		return clipsize;
 	}

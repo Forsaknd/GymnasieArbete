@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Random;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.items.BulletAmmo;
 import GymnasieArbete.entities.items.Item;
+import GymnasieArbete.entities.items.ShellAmmo;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.particle.BackgroundParticle;
@@ -77,6 +79,10 @@ public class Level {
 			if (entities.size() < 100) {
 				Random r = new Random();
 				add(new Zombie(r.nextInt(this.width), r.nextInt(this.height)));
+				
+				add(new ShellAmmo(r.nextInt(this.width), r.nextInt(this.height)));
+				add(new BulletAmmo(r.nextInt(this.width), r.nextInt(this.height)));
+				
 				time = 0;
 			}
 		}

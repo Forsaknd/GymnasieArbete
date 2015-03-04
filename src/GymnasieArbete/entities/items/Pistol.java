@@ -8,8 +8,9 @@ public class Pistol extends Weapon {
 		super(x, y, "Pistol");
 		name = "Pistol";
 		fireRate = 25;
+		clipammo = 12;
+		maxammo = 124;
 		clipsize = 12;
-		ammo = 12;
 		sprite = Sprite.pistol;
 		sound = "weapons/pistol.wav";
 	}

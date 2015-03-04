@@ -4,15 +4,20 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import GymnasieArbete.entities.items.Item.Ammotype;
+import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
 import GymnasieArbete.graphics.Sprite;
 
 public class Inventory {
 
+	private Player parent;
 	private List<Item> items;
 	private Sprite sprite;
+	private int bammo = 0, sammo = 0;
 	
-	public Inventory() {
+	public Inventory(Player parent) {
+		this.parent = parent;
 		items = new ArrayList<Item>();
 		this.sprite = Sprite.actionbar;
 	}
@@ -77,5 +82,38 @@ public class Inventory {
 	
 	public void expandInv() {
 		//this.sprite = Sprite.inventory;
+	}
+	
+	public int getBAmmo() {
+		return bammo;
+	}
+	
+	public void setBAmmo(int bammo) {
+		this.bammo = bammo;
+	}
+	
+	public int getSAmmo() {
+		return sammo;
+	}
+	
+	public void setSAmmo(int sammo) {
+		this.sammo = sammo;
+	}
+	
+	public int getRelAmmo() {
+		if(parent.getEquipped().ammotype == Ammotype.BULLET) {
+			return bammo;
+		} else if (parent.getEquipped().ammotype == Ammotype.SHELL) {
+			return sammo;
+		}
+		return 0;
+	}
+	
+	public void setRelAmmo(int ammo) {
+		if(parent.getEquipped().ammotype == Ammotype.BULLET) {
+			bammo = ammo;
+		} else if (parent.getEquipped().ammotype == Ammotype.SHELL) {
+			sammo = ammo;
+		}
 	}
 }

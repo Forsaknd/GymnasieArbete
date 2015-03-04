@@ -1,5 +1,6 @@
 package GymnasieArbete.entities.items;
 
+import GymnasieArbete.entities.items.Item.Ammotype;
 import GymnasieArbete.graphics.Screen;
 
 public class Medical extends Item {
@@ -11,6 +12,7 @@ public class Medical extends Item {
 		this.y = y << 4;
 		this.name = name;
 		type = Type.CONSUMABLE;
+		ammotype = Ammotype.UNKOWN;
 	}
 
 	public void use() {

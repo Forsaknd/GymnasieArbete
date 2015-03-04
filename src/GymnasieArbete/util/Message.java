@@ -35,8 +35,8 @@ public class Message {
 		}
 	}
 
-	public void setPos(int i) {
-		position.setY(position.getY()-i*12);
+	public void moveUp(int id) {
+		position.setY(position.getY()-(id*12));
 	}
 	
 	public void setText(String text) {
