@@ -3,7 +3,6 @@ package GymnasieArbete.entities.mob;
 import GymnasieArbete.Game;
 import GymnasieArbete.entities.items.Inventory;
 import GymnasieArbete.entities.items.Item;
-import GymnasieArbete.entities.items.Item.Ammotype;
 import GymnasieArbete.entities.items.Pistol;
 import GymnasieArbete.entities.items.Rifle;
 import GymnasieArbete.entities.items.Shotgun;

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import GymnasieArbete.entities.items.Item;
-import GymnasieArbete.entities.items.Item.Ammotype;
 import GymnasieArbete.entities.items.Item.Type;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.graphics.Screen;
