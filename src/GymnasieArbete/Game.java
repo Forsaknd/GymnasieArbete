@@ -165,15 +165,10 @@ public class Game extends Canvas implements Runnable {
 			if (player.getHUD() != null) {
 				player.getHUD().render(screen, g);
 			}
-			// screen.renderSheet(40, 40, SpriteSheet.player, false);
-			// Sprite sprite = new Sprite(width - 40, 20, 0x0);
-			// screen.renderSprite(20, height - 20, sprite, false);
-			// screen.renderSprite(20, height - 20, Sprite.pistol, false);
 			for (int i = 0; i < pixels.length; i++) {
 				pixels[i] = screen.pixels[i];
 			}
 			g.setColor(Color.WHITE);
-			// g.fillRect(Mouse.getX() - 32, Mouse.getY() - 32, 64, 64);
 		} else if (state == STATE.MENU) {
 			menu.render(screen);
 			for (int i = 0; i < pixels.length; i++) {

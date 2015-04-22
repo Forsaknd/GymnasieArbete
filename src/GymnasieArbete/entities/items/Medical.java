@@ -1,6 +1,5 @@
 package GymnasieArbete.entities.items;
 
-import GymnasieArbete.entities.items.Item.Ammotype;
 import GymnasieArbete.graphics.Screen;
 
 public class Medical extends Item {
