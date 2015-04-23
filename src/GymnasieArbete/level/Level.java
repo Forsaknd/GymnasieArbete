@@ -260,8 +260,10 @@ public class Level {
 		for (int i = 0; i < particles.size(); i++) {
 			particles.get(i).render(screen);
 		}
-
-		getPlayer().render(screen);
+		
+		if (getPlayer() != null) {			
+			getPlayer().render(screen);
+		}
 
 		for (int i = 0; i < spriteParticles.size(); i++) {
 			spriteParticles.get(i).render(screen);

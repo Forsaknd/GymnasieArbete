@@ -162,7 +162,7 @@ public class Game extends Canvas implements Runnable {
 			double xScroll = player.getX() - screen.width / 2;
 			double yScroll = player.getY() - screen.height / 2;
 			level.render((int) xScroll, (int) yScroll, screen);
-			if (player.getHUD() != null) {
+			if (player != null && player.getHUD() != null) {
 				player.getHUD().render(screen, g);
 			}
 			for (int i = 0; i < pixels.length; i++) {

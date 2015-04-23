@@ -101,7 +101,7 @@ public class Zombie extends Mob {
 		if (time % 30 == 0) {
 			Player current = level.getPlayer();
 			// creates 19x19 "hitbox" if not dead
-			if (!current.isDead()) {
+			if (current != null && !current.isDead()) {
 				if (x < current.getX() + 22 && x > current.getX() - 22 && y < current.getY() + 28 && y > current.getY() - 20) {
 					current.takeDamage(damage, 25, "zombieplayer");
 				}
