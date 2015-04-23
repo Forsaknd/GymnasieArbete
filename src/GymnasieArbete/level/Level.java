@@ -7,9 +7,15 @@ import java.util.List;
 import java.util.Random;
 
 import GymnasieArbete.entities.Entity;
+import GymnasieArbete.entities.items.Bandage;
 import GymnasieArbete.entities.items.BulletAmmo;
 import GymnasieArbete.entities.items.Item;
+import GymnasieArbete.entities.items.Medkit;
+import GymnasieArbete.entities.items.Pistol;
+import GymnasieArbete.entities.items.Rifle;
 import GymnasieArbete.entities.items.ShellAmmo;
+import GymnasieArbete.entities.items.Shotgun;
+import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.entities.mob.Player;
 import GymnasieArbete.entities.mob.Zombie;
 import GymnasieArbete.entities.particle.BackgroundParticle;
@@ -78,11 +84,39 @@ public class Level {
 		if (time % 120 == 0) {
 			if (entities.size() < 100) {
 				Random r = new Random();
-				add(new Zombie(r.nextInt(this.width), r.nextInt(this.height)));
-				
-				add(new ShellAmmo(r.nextInt(this.width), r.nextInt(this.height)));
-				add(new BulletAmmo(r.nextInt(this.width), r.nextInt(this.height)));
-				
+
+				int enemyOrItem = r.nextInt(3);
+
+				if (enemyOrItem >= 1) {
+					add(new Zombie(r.nextInt(this.width), r.nextInt(this.height)));
+				} else if (enemyOrItem == 0) {
+					int whatToSpawn = r.nextInt(8);
+					if (whatToSpawn == 0) {
+						add(new Pistol(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 1) {
+						add(new Smg(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 2) {
+						add(new Rifle(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 3) {
+						add(new Shotgun(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 4) {
+						add(new ShellAmmo(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 5) {
+						add(new BulletAmmo(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 6) {
+						add(new Bandage(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+					if (whatToSpawn == 7) {
+						add(new Medkit(r.nextInt(this.width), r.nextInt(this.height)));
+					}
+				}
+
 				time = 0;
 			}
 		}

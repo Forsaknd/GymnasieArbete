@@ -8,7 +8,7 @@ public class ShellAmmo extends Ammo {
 		super(x, y, "ShellAmmo");
 		name = "ShellAmmo";
 		ammo = 5;
-		sprite = Sprite.ammocrate;
+		sprite = Sprite.shellammocrate;
 	}
 
 	public void use() {

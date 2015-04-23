@@ -5,14 +5,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import GymnasieArbete.entities.items.Bandage;
-import GymnasieArbete.entities.items.BulletAmmo;
-import GymnasieArbete.entities.items.Medkit;
 import GymnasieArbete.entities.items.Pistol;
-import GymnasieArbete.entities.items.Rifle;
-import GymnasieArbete.entities.items.ShellAmmo;
-import GymnasieArbete.entities.items.Shotgun;
-import GymnasieArbete.entities.items.Smg;
 import GymnasieArbete.util.Vector2i;
 
 public class SpawnLevel extends Level {
@@ -20,7 +13,8 @@ public class SpawnLevel extends Level {
 	public SpawnLevel(String path) {
 		super(path);
 		spawnLoc = new Vector2i(26 << 4, 30 << 4);
-		exitLoc = new Vector2i(30, 30);
+		//exitloc unavailable
+		exitLoc = new Vector2i(400, 400);
 		name = "spawn";
 		nextlevel = "house";
 	}
@@ -36,31 +30,10 @@ public class SpawnLevel extends Level {
 			e.printStackTrace();
 			System.out.println("Exception! Could not load level file!");
 		}
-		for (int i = 0; i < 1; i++) {
-			add(new Shotgun(22, 30));
-			add(new Pistol(24, 30));
-			add(new Smg(26, 30));
-			add(new Bandage(20, 30));
-			add(new Medkit(18, 30));
-			add(new Rifle(16, 30));
-			add(new BulletAmmo(14, 30));
-			add(new ShellAmmo(12, 30));
-			/*
-			 * add(new Zombie(30, 30)); add(new Zombie(32, 30)); add(new
-			 * Zombie(34, 30)); add(new Zombie(36, 30)); add(new Zombie(38,
-			 * 30)); add(new Zombie(40, 30)); add(new Zombie(30, 32)); add(new
-			 * Zombie(32, 32)); add(new Zombie(34, 32)); add(new Zombie(36,
-			 * 32)); add(new Zombie(38, 32)); add(new Zombie(40, 32)); add(new
-			 * Zombie(30, 34)); add(new Zombie(32, 34)); add(new Zombie(34,
-			 * 34)); add(new Zombie(36, 34)); add(new Zombie(38, 34)); add(new
-			 * Zombie(40, 34)); add(new Zombie(30, 36)); add(new Zombie(32,
-			 * 36)); add(new Zombie(34, 36)); add(new Zombie(36, 36)); add(new
-			 * Zombie(38, 36)); add(new Zombie(40, 36));
-			 */
-		}
 	}
 
 	protected void generateLevel() {
+		add(new Pistol(30, 30));
 	}
 
 }

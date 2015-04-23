@@ -31,6 +31,7 @@ public class Sprite {
 	public static Sprite medkit = new Sprite(16, 4, 0, SpriteSheet.items);
 	public static Sprite rifle = new Sprite(16, 5, 0, SpriteSheet.items);
 	public static Sprite ammocrate = new Sprite(16, 6, 0, SpriteSheet.items);
+	public static Sprite shellammocrate = new Sprite(16, 7, 0, SpriteSheet.items);
 	
 	// ACTIONBAR
 	public static Sprite actionbar = new Sprite(162, 20, SpriteSheet.actionbar);
